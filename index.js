@@ -64,7 +64,16 @@ $cards
     },2500);
   });
 
+  //Parte que randomiza las imagenes original y creacion.   
+  for (let i = 0; i <= 9; i++) {
   let numeroImagen = Math.floor(Math.random() * 29) + 1; 
-  // #Esto da un número entre el 1 y el 29.
-  document.documentElement.style.setProperty('--imagen_original', `url('images/foto${numeroImagen}a.jpg')`);
-  document.documentElement.style.setProperty('--imagen_creacion', `url('images/foto${numeroImagen}b.jpg')`);
+  // En cada iteración, 'i' será nuestro sufijo (0, 1, 2, ..., 9)
+  let sufijoVariable = i.toString(); // Convierte el número 'i' a string para usarlo como sufijo
+  console.log("Estoy en el sufijoVariable:", sufijoVariable)
+  console.log("Y su random image fue la: ", numeroImagen)
+  // Asigna la propiedad para la imagen original
+  document.documentElement.style.setProperty(`--imagen_original${sufijoVariable}`, `url('images/foto${numeroImagen}a.jpg')`);
+  // Asigna la propiedad para la imagen de creación
+  document.documentElement.style.setProperty(`--imagen_creacion${sufijoVariable}`, `url('images/foto${numeroImagen}b.jpg')`);
+}
+

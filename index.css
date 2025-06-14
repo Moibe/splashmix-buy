@@ -1,28 +1,172 @@
 :root {
     --color1: rgb(0, 231, 255);
     --color2: rgb(255, 0, 231);
-    --imagen_original: url("");
-    --imagen_creacion: url("");
+    --imagen_original0: url("");
+    --imagen_creacion0: url("");
+    --imagen_original1: url("");
+    --imagen_creacion1: url("");
+    --imagen_original2: url("");
+    --imagen_creacion2: url("");
+    --imagen_original3: url("");
+    --imagen_creacion3: url("");
+    --imagen_original4: url("");
+    --imagen_creacion4: url("");
+    --imagen_original5: url("");
+    --imagen_creacion5: url("");
+    --imagen_original6: url("");
+    --imagen_creacion6: url("");
+    --imagen_original7: url("");
+    --imagen_creacion7: url("");
+    --imagen_original8: url("");
+    --imagen_creacion8: url("");
+    --imagen_original9: url("");
+    --imagen_creacion9: url("");
     --imagen_modelo: url("images/modelo.jpg");
     --imagen_estilo1: url("images/estilo1.jpg");
     --imagen_estilo2: url("images/estilo2.jpg");
     --imagen_estilo3: url("images/estilo3.jpg");
   }
 
+.card.original0 {
+  --front: var(--imagen_original0);
+}
+
+.card.creacion0 {
+  --front: var(--imagen_creacion0);
+}
+
+.card.original1 {
+  --front: var(--imagen_original1);
+}
+
+.card.creacion1 {
+  --front: var(--imagen_creacion1);
+}
+
+.card.original2 {
+  --front: var(--imagen_original2);
+}
+
+.card.creacion2 {
+  --front: var(--imagen_creacion2);
+}
+
+.card.original3 {
+  --front: var(--imagen_original3);
+}
+
+.card.creacion3 {
+  --front: var(--imagen_creacion3);
+}
+
+.card.original4 {
+  --front: var(--imagen_original4);
+}
+
+.card.creacion4 {
+  --front: var(--imagen_creacion4);
+}
+
+.card.original5 {
+  --front: var(--imagen_original5);
+}
+
+.card.creacion5 {
+  --front: var(--imagen_creacion5);
+}
+
+.card.original6 {
+  --front: var(--imagen_original6);
+}
+
+.card.creacion6 {
+  --front: var(--imagen_creacion6);
+}
+
+.card.original7 {
+  --front: var(--imagen_original7);
+}
+
+.card.creacion7 {
+  --front: var(--imagen_creacion7);
+}
+
+.card.original8 {
+  --front: var(--imagen_original8);
+}
+
+.card.creacion8 {
+  --front: var(--imagen_creacion8);
+}
+
+.card.original9 {
+  --front: var(--imagen_original9);
+}
+
+.card.creacion9 {
+  --front: var(--imagen_creacion9);
+}
+
+
 section {
     height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
+    
 }
 
 div{
-  border: 0px solid rgb(46, 14, 227);
+  border: 0px solid rgb(183, 247, 36);
 }
 
-.contenedor-s2{
-  border: 0px solid rgb(127, 108, 235);
+#contenedor {
+  border: 3px solid rgb(0, 0, 0);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Para que se centre verticalmente */
+
+  /* NUEVO: Para que ocupe el 90% del ancho de la ventana */
+  width: 90vw; /* Usa 'vw' para el ancho de la ventana */
+  max-width: 90vw; /* Opcional pero recomendado para sobrescribir cualquier max-width de Bootstrap */
+}
+
+/* El resto de tu CSS para los contenedores rosas y las filas... */
+/* Modifica la primera fila para que sus columnas se centren horizontalmente si hay espacio */
+#contenedor > .row:first-of-type {
+  width: 100%; /* Asegura que la fila ocupe todo el ancho disponible del #contenedor */
+  justify-content: center;
+  align-items: center;
+}
+
+/* Modifica la segunda fila para centrar el contenido (el botón) */
+#contenedor > .row:last-of-type {
+  width: 100%; /* Asegura que la fila ocupe todo el ancho disponible del #contenedor */
+  justify-content: center;
+  align-items: center;
+}
+
+.contenedor-izquierdo{
+  border: 3px solid rgb(127, 108, 235);
   position: relative;
+  /* height: 700px; */
+}
+
+.contenedor-derecho{
+  border: 3px solid rgb(127, 108, 235);
+  position: relative;
+  /* height: 700px; */
+}
+
+#fondo {
+  border: 3px solid rgb(127, 108, 235);
+  position: relative;
+}
+
+.tabla_tabulator{
+  border: 0px solid rgb(14, 182, 84);
 }
 
 .nuevo-contenedor {
@@ -39,6 +183,22 @@ div{
   filter: drop-shadow(50px 50px 100px rgba(255, 255, 255, 0.8));
 }
 
+.sombra_tabla {
+    /* Una sombra muy fuerte y con color para que sea imposible no verla */
+    box-shadow: 0px 0px 0px 10px rgb(214, 247, 28), /* Un borde rojo para ver desbordamiento */
+                0px 8px 30px rgba(0, 0, 0, 0.5); /* Una sombra más pronunciada */
+    border: none; /* Eliminar posibles bordes que interfieran */
+}
+
+/* .sombra_tabla{ */
+  /* width: 85%;
+  height: 85%;
+  margin-left: 10%; */
+  /* filter: drop-shadow(5px 5px 10px rgba(0, 0, 0, 0.5)); */
+  /* filter: drop-shadow(50px 50px rgba(6, 2, 71, 0.8)); */
+  /* box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
+} */
+
 .app-perspective {
   width: 100% !important;
   height: 100% !important;
@@ -51,9 +211,11 @@ div{
 .card {
   width: 71.5vw;
   height: 100vw;
-  /* position: relative; */
+  position: relative;
   overflow: hidden;
-  margin: 20px;
+  /* margin: 20px; */
+  margin-top: 100px;
+  margin-bottom: 100px;
   overflow: hidden;
   z-index: 10;
   touch-action: none;
@@ -79,14 +241,6 @@ div{
   box-shadow: -20px -20px 30px -25px var(--color1), 20px 20px 30px -25px var(--color2), -7px -7px 10px -5px var(--color1), 7px 7px 10px -5px var(--color2), 0 0 13px 4px rgba(255, 255, 255, 0.3), 0 55px 35px -20px rgba(0, 0, 0, 0.5);
 }
 
-.card.original {
-  --front: var(--imagen_original);
-}
-
-.card.creacion {
-  --front: var(--imagen_creacion);
-}
-
 .card.modelo {
   --front: var(--imagen_modelo);
 }
@@ -100,8 +254,6 @@ div{
 .card.estilo3 {
   --front: var(--imagen_estilo3);
 }
-
-
 
 .main_position_original { 
   position: absolute;
@@ -543,13 +695,13 @@ button_test {
 
 .boton_principal {
   display: inline-block;
-  padding: 12px 24px;
-  background-color: #4285F4; /* azul Google */
+  padding: 6px 12px;
+  background-color: #f442b9; /* azul Google */
   color: white;
   text-decoration: none;
   border: none;
   border-radius: 6px;
-  font-size: 16px;
+  font-size: 14px;
   font-family: inherit;
   cursor: pointer;
   text-align: center;
@@ -561,4 +713,57 @@ button_test {
   background-color: #357ae8; /* azul más oscuro */
   box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15); /* sombra más intensa al hover */
   transform: translateY(-2px); /* pequeño levantamiento */
+}
+
+.negrita-paquete {
+    font-weight: bold;
+}
+
+/* Asegúrate de que este CSS se cargue *después* del CSS de Tabulator.js */
+
+.tabulator .tabulator-row.tabulator-row-even {
+    background-color: #FFFFFF !important; /* Blanco para filas pares */
+}
+
+.tabulator .tabulator-row.tabulator-row-odd {
+    background-color: #FFFFFF !important; /* Blanco para filas impares */
+}
+
+/* O, si prefieres que el fondo sea el color por defecto de su contenedor */
+/*
+.tabulator .tabulator-row.tabulator-row-even,
+.tabulator .tabulator-row.tabulator-row-odd {
+    background-color: transparent !important;
+}
+*/
+
+/* Opcional: También puedes querer eliminar el color de hover si no quieres ese efecto */
+.tabulator .tabulator-row.tabulator-row:hover {
+    background-color: #F0F0F0; /* Un gris muy claro, puedes cambiar a #FFFFFF o transparent */
+}
+
+
+
+
+
+
+
+/* Asegúrate de que este CSS se cargue después de los estilos de Tabulator */
+
+/* Elimina el borde derecho de las celdas */
+.tabulator .tabulator-row .tabulator-cell {
+    border-right: none !important;
+}
+
+/* Elimina el borde derecho de los encabezados de columna */
+.tabulator .tabulator-header .tabulator-col {
+    border-right: none !important;
+}
+
+/* Opcional: Si notas que el último borde sigue apareciendo en alguna situación (aunque `border-right: none` debería ser suficiente) */
+.tabulator .tabulator-row .tabulator-cell:last-child {
+    border-right: none !important;
+}
+.tabulator .tabulator-header .tabulator-col:last-child {
+    border-right: none !important;
 }
