@@ -121,7 +121,7 @@ div{
 }
 
 #contenedor {
-  border: 3px solid rgb(0, 0, 0);
+  border: 0px solid rgb(0, 0, 0);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -723,6 +723,26 @@ button_test {
 
 .tabulator .tabulator-row.tabulator-row-even {
     background-color: #FFFFFF !important; /* Blanco para filas pares */
+}
+
+.tabulator {
+    /* Define el radio de las esquinas. Puedes ajustar el valor (ej. 8px, 15px, etc.) */
+    border-radius: 8px; /* Aplica redondeo a todas las esquinas */
+    overflow: hidden;   /* Importante para que el contenido interno también se redondee */
+
+    /* Opcional: Si tienes un borde exterior en la tabla, asegúrate de que también se redondee */
+    border: 1px solid #ccc; /* Ejemplo de borde, ajusta o quita si no lo necesitas */
+}
+
+/* Considera también redondear los encabezados y la última fila para una apariencia más uniforme */
+.tabulator .tabulator-header {
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+
+.tabulator .tabulator-footer { /* Si tienes un pie de tabla */
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
 }
 
 .tabulator .tabulator-row.tabulator-row-odd {
