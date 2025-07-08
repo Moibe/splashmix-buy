@@ -1,39 +1,39 @@
 // URL de la nueva API
-const API_URL = 'https://moibe-stripe-kraken.hf.space/creaLinkSesion/';
+export const API_URL = 'https://moibe-stripe-kraken.hf.space/creaLinkSesion/';
 
-// Obtener una referencia al botón
-        const btnGenerarLink = document.getElementById('btnGenerarLink');
-        const mensajeEstado = document.getElementById('mensajeEstado');
+// // Obtener una referencia al botón
+//         const btnGenerarLink = document.getElementById('btnGenerarLink');
+//         const mensajeEstado = document.getElementById('mensajeEstado');
 
-        // Escuchar el evento de clic en el botón
-        btnGenerarLink.addEventListener('click', async () => {
-            mensajeEstado.textContent = 'Generando enlace... por favor espera.';
-            mensajeEstado.style.color = 'blue';
+//         // Escuchar el evento de clic en el botón
+//         btnGenerarLink.addEventListener('click', async () => {
+//             mensajeEstado.textContent = 'Generando enlace... por favor espera.';
+//             mensajeEstado.style.color = 'blue';
 
-// Aquí defines los datos que quieres enviar a la API
-            const priceId = 'price_1RXttZROVpWRmEfBjfC4by5c'; // ¡Importante! Usa un ID de precio real de Stripe para probar
-            const customerEmail = 'fabiolaflores@gmail.com'; // Opcional
-            const customerId = 'cus_SbPSHMEYBeFvf2'; // Opcional
+// // Aquí defines los datos que quieres enviar a la API
+//             const priceId = 'price_1RXttZROVpWRmEfBjfC4by5c'; // ¡Importante! Usa un ID de precio real de Stripe para probar
+//             const customerEmail = 'fabiolaflores@gmail.com'; // Opcional
+//             const customerId = 'cus_SbPSHMEYBeFvf2'; // Opcional
 
-try {
-                // Llama a la función del archivo api.js
-                const resultado = await creaLinkSesion(priceId, customerEmail, customerId);
+// try {
+//                 // Llama a la función del archivo api.js
+//                 const resultado = await creaLinkSesion(priceId, customerEmail, customerId);
 
-                if (resultado && resultado.url) {
-                    mensajeEstado.textContent = '¡Enlace generado! Redirigiendo...';
-                    mensajeEstado.style.color = 'green';
-                    // Redirige al usuario a la URL de Stripe
-                    window.location.href = resultado.url;
-                } else {
-                    mensajeEstado.textContent = 'Error: No se recibió una URL de enlace válida.';
-                    mensajeEstado.style.color = 'red';
-                }
-            } catch (error) {
-                mensajeEstado.textContent = `Error al generar el enlace: ${error.message}`;
-                mensajeEstado.style.color = 'red';
-                console.error('Error en el manejo del clic del botón:', error);
-            }
-        });
+//                 if (resultado && resultado.url) {
+//                     mensajeEstado.textContent = '¡Enlace generado! Redirigiendo...';
+//                     mensajeEstado.style.color = 'green';
+//                     // Redirige al usuario a la URL de Stripe
+//                     window.location.href = resultado.url;
+//                 } else {
+//                     mensajeEstado.textContent = 'Error: No se recibió una URL de enlace válida.';
+//                     mensajeEstado.style.color = 'red';
+//                 }
+//             } catch (error) {
+//                 mensajeEstado.textContent = `Error al generar el enlace: ${error.message}`;
+//                 mensajeEstado.style.color = 'red';
+//                 console.error('Error en el manejo del clic del botón:', error);
+//             }
+//         });
 
 // console.log("Intentando crear link con price_id 'price_123'...");
 // creaLinkSesion('price_1RXttZROVpWRmEfBjfC4by5c')
@@ -47,7 +47,7 @@ try {
  * @param {string} [customerEmail] - El email del cliente (opcional).
  * @param {string} [customerId] - El ID del cliente (opcional).
  */
-async function creaLinkSesion(priceId, customerEmail = null, customerId = null) {
+export async function creaLinkSesion(priceId, customerEmail = null, customerId = null) {
     try {
         // Datos a enviar en la solicitud
         const datosParaEnviar = {
@@ -85,24 +85,23 @@ async function creaLinkSesion(priceId, customerEmail = null, customerId = null) 
             const errorMessage = errorData.message || `Error HTTP! Estado: ${response.status}`;
             throw new Error(`Error en la solicitud: ${errorMessage}`);
         }
+       
+        const rawResponseText = await response.text();
+        console.log('Respuesta cruda de la API:', rawResponseText); // Verás la URL aquí directamente
 
-        // 3. Convertir la respuesta a formato JSON
-        const data = await response.json();
+       // --- ¡EL CAMBIO ES AQUÍ! ---
+        // Limpiar la cadena: primero trim para eliminar espacios en blanco
+        // luego usar replace para eliminar comillas dobles al inicio y al final de la cadena.
+        const cleanUrl = rawResponseText.trim().replace(/^"|"$/g, '');
+        
+        const data = { url: cleanUrl }; // <--- Usa la URL limpia aquí para construir el objeto
 
-        // 4. Mostrar los datos en la consola
-        console.log('Respuesta de la API:', data);
+        console.log('Respuesta de la API (procesada y limpia):', data);
 
-        // Aquí podrías redirigir al usuario o manejar el link recibido
-        if (data && data.url) {
-            console.log('URL de sesión recibida:', data.url);
-            // window.location.href = data.url; // Descomenta esta línea para redirigir
-        }
-
-        return data; // Retorna los datos para que puedan ser usados por quien llama a la función
+        return data; // Retorna el objeto { url: "..." } con la URL limpia
 
     } catch (error) {
-        // 5. Capturar y mostrar cualquier error que ocurra
         console.error('Hubo un problema al crear el link de sesión:', error);
-        throw error; // Propaga el error para un manejo externo si es necesario
+        throw error;
     }
 }
