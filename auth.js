@@ -7,6 +7,8 @@ const googleSignInButtons = document.getElementsByClassName('boton_firebase');
 const messageDivs = document.getElementsByClassName('mensaje_firebase');
 const logoutButton = document.getElementById('logout-button');
 
+console.log("Estoy en auth.js")
+
 // Listener para el botón de inicio de sesión con Google
 Array.from(googleSignInButtons).forEach(button => {
 button.addEventListener('click', () => {
@@ -22,25 +24,27 @@ button.addEventListener('click', () => {
 });
 
 //Listener para el botón de cierre de sesión
-logoutButton.addEventListener('click', () => {
-    firebase.auth().signOut()
-        .then(() => {
-            // El usuario ha cerrado sesión correctamente
-            console.log('Sesión cerrada.');
-            updateUI(null);
-        }).catch((error) => {
-            // Ocurrió un error
-           console.log(`Error al cerrar sesión: ${error.message}`);
-        });
-});
+// logoutButton.addEventListener('click', () => {
+//     firebase.auth().signOut()
+//         .then(() => {
+//             // El usuario ha cerrado sesión correctamente
+//             console.log('Sesión cerrada.');
+//             updateUI(null);
+//         }).catch((error) => {
+//             // Ocurrió un error
+//            console.log(`Error al cerrar sesión: ${error.message}`);
+//         });
+// });
 
 // Listener para detectar el estado de autenticación
 firebase.auth().onAuthStateChanged((user) => {
     if (user) {
         // El usuario ha iniciado sesión
+        console.log("El usuario está logueado...")
         updateUI(user);
     } else {
         // El usuario ha cerrado sesión o no ha iniciado sesión
+        console.log("El usuario no está logueado...")
         updateUI(null);
     }
 });
