@@ -69,8 +69,8 @@ $cards
   let numeroImagen = Math.floor(Math.random() * 29) + 1; 
   // En cada iteración, 'i' será nuestro sufijo (0, 1, 2, ..., 9)
   let sufijoVariable = i.toString(); // Convierte el número 'i' a string para usarlo como sufijo
-  console.log("Estoy en el sufijoVariable:", sufijoVariable)
-  console.log("Y su random image fue la: ", numeroImagen)
+  // console.log("Estoy en el sufijoVariable:", sufijoVariable)
+  // console.log("Y su random image fue la: ", numeroImagen)
   // Asigna la propiedad para la imagen original
   document.documentElement.style.setProperty(`--imagen_original${sufijoVariable}`, `url('images/foto${numeroImagen}a.jpg')`);
   // Asigna la propiedad para la imagen de creación

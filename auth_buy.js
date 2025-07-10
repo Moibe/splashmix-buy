@@ -7,7 +7,7 @@ const googleSignInButtons = document.getElementsByClassName('boton_firebase');
 const messageDivs = document.getElementsByClassName('mensaje_firebase');
 const logoutButton = document.getElementById('logout-button');
 
-console.log("Estoy en auth.js")
+console.log("Estoy en auth_buy.js")
 
 // Listener para el botón de inicio de sesión con Google
 Array.from(googleSignInButtons).forEach(button => {
