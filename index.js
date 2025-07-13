@@ -72,8 +72,8 @@ $cards
   // console.log("Estoy en el sufijoVariable:", sufijoVariable)
   // console.log("Y su random image fue la: ", numeroImagen)
   // Asigna la propiedad para la imagen original
-  document.documentElement.style.setProperty(`--imagen_original${sufijoVariable}`, `url('images/foto${numeroImagen}a.jpg')`);
+  document.documentElement.style.setProperty(`--imagen_original${sufijoVariable}`, `url('imagenes/foto${numeroImagen}a.jpg')`);
   // Asigna la propiedad para la imagen de creación
-  document.documentElement.style.setProperty(`--imagen_creacion${sufijoVariable}`, `url('images/foto${numeroImagen}b.jpg')`);
+  document.documentElement.style.setProperty(`--imagen_creacion${sufijoVariable}`, `url('imagenes/foto${numeroImagen}b.jpg')`);
 }
 

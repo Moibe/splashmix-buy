@@ -21,10 +21,10 @@
     --imagen_creacion8: url("");
     --imagen_original9: url("");
     --imagen_creacion9: url("");
-    --imagen_modelo: url("images/modelo.jpg");
-    --imagen_estilo1: url("images/estilo1.jpg");
-    --imagen_estilo2: url("images/estilo2.jpg");
-    --imagen_estilo3: url("images/estilo3.jpg");
+    --imagen_modelo: url("imagenes/modelo.jpg");
+    --imagen_estilo1: url("imagenes/estilo1.jpg");
+    --imagen_estilo2: url("imagenes/estilo2.jpg");
+    --imagen_estilo3: url("imagenes/estilo3.jpg");
   }
 
 .card.original0 {
