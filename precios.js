@@ -4,10 +4,10 @@ import { creaLinkSesion } from './api.js';
 // Define los datos que serán usados por Tabulator
 export const tabledata = [
     {id:1, nombre: "🃏 Standard", paquete:"$10 USD", costo:"$1.00 x imagen", cxt:"🃏10 imágenes", price_id: "price_1RXttZROVpWRmEfBjfC4by5c",  boton_texto: "Comprar", boton:"<a href='https://app.splashmix.ink/login' class='boton_principal'>Comprar</a>"},
-    {id:2, nombre: "💿💿 Silver", paquete:"$20 USD", costo:"$0.75 x imagen", cxt:"🃏26 imágenes", price_id: "price_1RXttZROVpWRmEfBjfC4by5c", boton_texto: "Comprar", boton:"<a href='https://app.splashmix.ink/login' class='boton_principal'>Comprar</a>"},
-    {id:3, nombre: "🪙🪙🪙 Gold", paquete:"$40 USD", costo:"$0.50 x imagen", cxt:"🃏80 imágenes", price_id: "price_1RXttZROVpWRmEfBjfC4by5c", boton_texto: "Comprar", boton:"<a href='https://app.splashmix.ink/login' class='boton_principal'>Comprar</a>"},
-    {id:4, nombre: "💎💎💎💎 Diamond", paquete:"$80 USD", costo:"$0.25 x imagen", cxt:"🃏320 imágenes", price_id: "price_1RXttZROVpWRmEfBjfC4by5c", boton_texto: "Comprar", boton:"<a href='https://app.splashmix.ink/login' class='boton_principal'>Comprar</a>"},
-    {id:5, nombre: "🪅🪅🪅🪅🪅 Awesome", paquete:"$100 USD", costo:"$0.10 x imagen", cxt:"🃏1000 imágenes", price_id: "price_1RXttZROVpWRmEfBjfC4by5c", boton_texto: "Comprar", boton:"<a href='https://app.splashmix.ink/login' class='boton_principal'>Comprar</a>"},
+    {id:2, nombre: "💿 Silver", paquete:"$20 USD", costo:"$0.75 x imagen", cxt:"🃏26 imágenes", price_id: "price_1RXttZROVpWRmEfBjfC4by5c", boton_texto: "Comprar", boton:"<a href='https://app.splashmix.ink/login' class='boton_principal'>Comprar</a>"},
+    {id:3, nombre: "🪙 Gold", paquete:"$40 USD", costo:"$0.50 x imagen", cxt:"🃏80 imágenes", price_id: "price_1RXttZROVpWRmEfBjfC4by5c", boton_texto: "Comprar", boton:"<a href='https://app.splashmix.ink/login' class='boton_principal'>Comprar</a>"},
+    {id:4, nombre: "💎 Diamond", paquete:"$80 USD", costo:"$0.25 x imagen", cxt:"🃏320 imágenes", price_id: "price_1RXttZROVpWRmEfBjfC4by5c", boton_texto: "Comprar", boton:"<a href='https://app.splashmix.ink/login' class='boton_principal'>Comprar</a>"},
+    {id:5, nombre: "🪅 Awesome", paquete:"$100 USD", costo:"$0.10 x imagen", cxt:"🃏1000 imágenes", price_id: "price_1RXttZROVpWRmEfBjfC4by5c", boton_texto: "Comprar", boton:"<a href='https://app.splashmix.ink/login' class='boton_principal'>Comprar</a>"},
 ];
 
 // Formateador de celdas que llama a la API al hacer clic
@@ -18,6 +18,7 @@ export function botonCellFormatter(cell, formatterParams, onRendered){
 
     const button = document.createElement("button");
     button.textContent = botonTexto;
+    button.style.padding = 10
     button.classList.add("boton_principal");
 
     button.addEventListener("click", async () => {

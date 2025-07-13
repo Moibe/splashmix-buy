@@ -722,68 +722,121 @@ button_test {
 /* Asegúrate de que este CSS se cargue *después* del CSS de Tabulator.js */
 
 .tabulator .tabulator-row.tabulator-row-even {
-    background-color: #FFFFFF !important; /* Blanco para filas pares */
+    background-color: #ffffff !important; /* Blanco para filas pares */
 }
 
 .tabulator {
     /* Define el radio de las esquinas. Puedes ajustar el valor (ej. 8px, 15px, etc.) */
-    border-radius: 8px; /* Aplica redondeo a todas las esquinas */
-    overflow: hidden;   /* Importante para que el contenido interno también se redondee */
+    border-radius: 8px; 
+    overflow: hidden;   
 
     /* Opcional: Si tienes un borde exterior en la tabla, asegúrate de que también se redondee */
-    border: 1px solid #ccc; /* Ejemplo de borde, ajusta o quita si no lo necesitas */
+    border: 1px solid #5a11e2; 
 }
 
 /* Considera también redondear los encabezados y la última fila para una apariencia más uniforme */
-.tabulator .tabulator-header {
+/* .tabulator .tabulator-header {
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
 }
 
-.tabulator .tabulator-footer { /* Si tienes un pie de tabla */
+.tabulator .tabulator-footer { 
     border-bottom-left-radius: 8px;
     border-bottom-right-radius: 8px;
-}
-
-.tabulator .tabulator-row.tabulator-row-odd {
-    background-color: #FFFFFF !important; /* Blanco para filas impares */
-}
+} 
+*/
 
 /* O, si prefieres que el fondo sea el color por defecto de su contenedor */
-/*
+
 .tabulator .tabulator-row.tabulator-row-even,
 .tabulator .tabulator-row.tabulator-row-odd {
     background-color: transparent !important;
 }
-*/
+
 
 /* Opcional: También puedes querer eliminar el color de hover si no quieres ese efecto */
 .tabulator .tabulator-row.tabulator-row:hover {
     background-color: #F0F0F0; /* Un gris muy claro, puedes cambiar a #FFFFFF o transparent */
 }
 
-
-
-
-
-
-
 /* Asegúrate de que este CSS se cargue después de los estilos de Tabulator */
 
 /* Elimina el borde derecho de las celdas */
-.tabulator .tabulator-row .tabulator-cell {
+/* .tabulator .tabulator-row .tabulator-cell {
     border-right: none !important;
-}
+} */
 
 /* Elimina el borde derecho de los encabezados de columna */
-.tabulator .tabulator-header .tabulator-col {
+/* .tabulator .tabulator-header .tabulator-col {
     border-right: none !important;
-}
+} */
 
 /* Opcional: Si notas que el último borde sigue apareciendo en alguna situación (aunque `border-right: none` debería ser suficiente) */
-.tabulator .tabulator-row .tabulator-cell:last-child {
+/* .tabulator .tabulator-row .tabulator-cell:last-child {
     border-right: none !important;
 }
 .tabulator .tabulator-header .tabulator-col:last-child {
     border-right: none !important;
+} */
+
+/* === MODIFICACIONES PARA REDUCIR EL PADDING === */
+
+/* Para las celdas de datos */
+.tabulator .tabulator-row .tabulator-cell {
+    padding: 0px 0px 0px 0px !important; /* Ajusta estos valores */
+    /* border-right: 1px solid #ddd !important; */
+    border-bottom: none !important;
 }
+
+/* Para los encabezados de las columnas */
+/* .tabulator .tabulator-header .tabulator-col {
+    padding: 6px 8px !important;
+    border-right: 1px solid #ddd !important;
+    border-bottom: none !important;
+} */
+
+/* === FIN DE MODIFICACIONES === */
+
+/* --- MODIFICACIONES PARA QUITAR LÍNEAS VERTICALES --- */
+
+/* Para las celdas de datos */
+#tabla_tabulator.tabulator .tabulator-row .tabulator-cell {
+    border-right: none !important; /* ¡Quita el borde derecho! */
+    border-bottom: none !important; /* Asegura que no haya bordes inferiores en las celdas */
+    padding: 5px 0px 0px 0px !important; /* Mantén tu padding preferido */
+}
+
+/* Para los encabezados de las columnas */
+/* #tabla_tabulator.tabulator .tabulator-header .tabulator-col {
+    border-right: none !important; 
+    border-bottom: none !important; 
+    padding: 4px 8px !important; 
+} */
+
+/* Asegurarse de que la última celda/columna tampoco tenga borde derecho (redundante con lo anterior, pero seguro) */
+#tabla_tabulator.tabulator .tabulator-row .tabulator-cell:last-child,
+#tabla_tabulator.tabulator .tabulator-header .tabulator-col:last-child {
+    border-right: none !important;}
+
+/* --- FIN DE MODIFICACIONES --- */
+
+/* --- MODIFICACIONES PARA ELIMINAR EL ARRASTRE VISUAL Y EL CURSOR --- */
+
+/* Eliminar el cursor de redimensión en los encabezados */
+#tabla_tabulator.tabulator .tabulator-col {
+    cursor: default !important; /* Cambia el cursor a la flecha estándar */
+}
+
+/* Ocultar los "manejadores" de redimensión si Tabulator los está creando */
+#tabla_tabulator.tabulator .tabulator-col .tabulator-col-resize-handle {
+    display: none !important; /* Oculta los pequeños divs que permiten el arrastre */
+}
+/* Asegúrate de que las áreas de la cabecera no permitan el texto arrastrable */
+#tabla_tabulator.tabulator .tabulator-header .tabulator-col .tabulator-col-content {
+    -webkit-user-select: none;  /* Desactiva selección de texto en Chrome/Safari */
+    -moz-user-select: none;     /* Desactiva selección de texto en Firefox */
+    -ms-user-select: none;      /* Desactiva selección de texto en IE/Edge */
+    user-select: none;          /* Desactiva selección de texto estándar */
+}
+
+/* --- FIN DE MODIFICACIONES --- */
