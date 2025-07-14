@@ -52,7 +52,7 @@ firebase.auth().onAuthStateChanged((user) => {
 // Función para actualizar la interfaz de usuario
 function updateUI(user) {
     if (user) {
-        console.log("updateUI, actualizando...")
+        console.log("updateUI, actualizando...", user)
         // messageDiv.textContent = ``;
         // googleSignInButton.innerText = 
         
