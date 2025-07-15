@@ -27,13 +27,16 @@ export function botonCellFormatter(cell, formatterParams, onRendered){
         button.textContent = "Cargando...";
         button.disabled = true;
         try {
+            console.log("Estoy en el try del click...")
             // Intentamos obtener el usuario de Firebase
             const firebaseUser = await getFirebaseUser(); // Espera a obtener el objeto de usuario completo
             
             if (firebaseUser) {
                 customerId = firebaseUser.uid; // El UID del usuario de Firebase
+                console.log("Uid obtenido es: ", customerId)
                 // Recuerda el prefijo 'string' si tu backend lo sigue esperando para el email
                 customerEmail = firebaseUser.email ? `string${firebaseUser.email}` : null; 
+                console.log("Correo obtenido es: ", customerEmail)
                 
                 console.log(`[${priceId}] Usuario de Firebase detectado: ID=${customerId}, Email=${customerEmail}`);
             } else {
@@ -41,9 +44,7 @@ export function botonCellFormatter(cell, formatterParams, onRendered){
             }
 
             console.log(`[${priceId}] Iniciando llamada a creaLinkSesion con priceId: ${priceId}, email: ${customerEmail}, customerId: ${customerId}`);
-            console.log(`[${priceId}] Iniciando llamada a creaLinkSesion...`);
-            const result = await creaLinkSesion(priceId, null, null); // Pasa email/id si los tienes
-
+            const result = await creaLinkSesion(priceId, customerEmail, customerId);  
             console.log(`[${priceId}] creaLinkSesion ha resuelto. Resultado:`, result);
 
             if (result && result.url) {
