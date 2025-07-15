@@ -49,6 +49,11 @@ export const API_URL = 'https://moibe-stripe-kraken.hf.space/creaLinkSesion/';
  */
 export async function creaLinkSesion(priceId, customerEmail = null, customerId = null) {
     try {
+        console.log("Estoy en try de creaLinkSesion...")
+        console.log("Donde recibí:")
+        console.log("priceId:", priceId)
+        console.log("customerEmail:", customerEmail)
+        console.log("customerID:", customerId)
         // Datos a enviar en la solicitud
         const datosParaEnviar = {
             price_id: priceId

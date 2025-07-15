@@ -30,8 +30,9 @@ export function botonCellFormatter(cell, formatterParams, onRendered){
             console.log("Estoy en el try del click...")
             // Intentamos obtener el usuario de Firebase
             const firebaseUser = await getFirebaseUser(); // Espera a obtener el objeto de usuario completo
-            
+            console.log("Salí del await getFirebaseUser?")
             if (firebaseUser) {
+                console.log("Entre a firebaseUser....")
                 customerId = firebaseUser.uid; // El UID del usuario de Firebase
                 console.log("Uid obtenido es: ", customerId)
                 // Recuerda el prefijo 'string' si tu backend lo sigue esperando para el email
@@ -40,6 +41,7 @@ export function botonCellFormatter(cell, formatterParams, onRendered){
                 
                 console.log(`[${priceId}] Usuario de Firebase detectado: ID=${customerId}, Email=${customerEmail}`);
             } else {
+                console.log("Entré a firebase else...")
                 console.log(`[${priceId}] No hay usuario de Firebase logueado. Se procederá sin email/ID de cliente.`);
             }
 
@@ -52,13 +54,13 @@ export function botonCellFormatter(cell, formatterParams, onRendered){
                 window.location.href = result.url;
             } else {
                 console.warn(`[${priceId}] Resultado de API no válido:`, result);
-                alert("No se pudo obtener el enlace de pago. Intenta de nuevo.");
+                console.log("No se pudo obtener el enlace de pago. Intenta de nuevo.");
                 button.textContent = botonTexto;
                 button.disabled = false;
             }
         } catch (error) {
             console.error(`[${priceId}] Error durante la llamada a la API o procesamiento:`, error);
-            alert(`Error al generar el enlace: ${error.message}`);
+            console.log(`Error al generar el enlace: ${error.message}`);
             button.textContent = botonTexto;
             button.disabled = false;
         } finally {
