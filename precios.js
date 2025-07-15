@@ -26,6 +26,12 @@ export function botonCellFormatter(cell, formatterParams, onRendered){
         console.log(`[${priceId}] Clic en el botón. Estado: Cargando...`);
         button.textContent = "Cargando...";
         button.disabled = true;
+
+        let customerEmail = null; // Inicializamos a null
+        let customerId = null;    // Inicializamos a null
+
+
+
         try {
             console.log("Estoy en el try del click...")
             // Intentamos obtener el usuario de Firebase
