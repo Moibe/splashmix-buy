@@ -1,6 +1,7 @@
 // precios.js
 
 import { creaLinkSesion } from './api.js';
+import { getFirebaseUser, getFirebaseUserId, getFirebaseUserEmail } from './auth_buy.js'; 
 // Define los datos que serán usados por Tabulator
 export const tabledata = [
     {id:1, nombre: "🃏 Standard", paquete:"$10 USD", costo:"$1.00 x imagen", cxt:"🃏10 imágenes", price_id: "price_1RXttZROVpWRmEfBjfC4by5c",  boton_texto: "Comprar", boton:"<a href='https://app.splashmix.ink/login' class='boton_principal'>Comprar</a>"},
@@ -26,6 +27,20 @@ export function botonCellFormatter(cell, formatterParams, onRendered){
         button.textContent = "Cargando...";
         button.disabled = true;
         try {
+            // Intentamos obtener el usuario de Firebase
+            const firebaseUser = await getFirebaseUser(); // Espera a obtener el objeto de usuario completo
+            
+            if (firebaseUser) {
+                customerId = firebaseUser.uid; // El UID del usuario de Firebase
+                // Recuerda el prefijo 'string' si tu backend lo sigue esperando para el email
+                customerEmail = firebaseUser.email ? `string${firebaseUser.email}` : null; 
+                
+                console.log(`[${priceId}] Usuario de Firebase detectado: ID=${customerId}, Email=${customerEmail}`);
+            } else {
+                console.log(`[${priceId}] No hay usuario de Firebase logueado. Se procederá sin email/ID de cliente.`);
+            }
+
+            console.log(`[${priceId}] Iniciando llamada a creaLinkSesion con priceId: ${priceId}, email: ${customerEmail}, customerId: ${customerId}`);
             console.log(`[${priceId}] Iniciando llamada a creaLinkSesion...`);
             const result = await creaLinkSesion(priceId, null, null); // Pasa email/id si los tienes
 
