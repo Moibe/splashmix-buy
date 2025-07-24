@@ -10,9 +10,9 @@ var table = new Tabulator("#tabla_tabulator", {
 	headerVisible: false,
 	resizableColumns: false, 
  	columns:[ //Define Table Columns
-		{title:"Paquete", field:"nombre", width: "25%", hozAlign:"left", cssClass:"negrita-paquete"},
-		{title:"Costo", field:"paquete", width: "15%", hozAlign:"left"},
-	 	{title:"Imágenes", field:"cxt", width: "20%", hozAlign:"left"},
+		//{title:"Paquete", field:"nombre", width: "25%", hozAlign:"left", cssClass:"negrita-paquete"},
+		{title:"Imágenes", field:"cxt", width: "20%", hozAlign:"left"},		
+		{title:"Costo", field:"paquete", width: "15%", hozAlign:"left"},	 	
 	 	{title:"Costo por Imagen", field:"costo", width: "20%", hozAlign:"right"},
 		{
             title:"Acción", // Título de la columna
