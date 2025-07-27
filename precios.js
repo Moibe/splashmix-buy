@@ -60,6 +60,8 @@ export function botonCellFormatter(cell, formatterParams, onRendered){
 
     console.log(`[${priceId}] Iniciando llamada a creaLinkSesion con priceId: ${priceId}, email: ${customerEmailToSend}, firebase_user: ${currentFirebaseUid}`);
     
+    console.log("A punto de entrar, imagenes es: ", imagenes)
+    console.log("Mode es: ", mode)
     // --- ¡EL CAMBIO CLAVE ESTÁ AQUÍ! ---
     // Ahora pasamos el firebaseUser.uid como el CUARTO argumento (firebaseUser)
     // y dejamos customerId como 'null' (o la variable si la tuvieras de otra fuente)
