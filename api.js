@@ -8,7 +8,7 @@ export const API_URL = 'https://moibe-stripe-kraken.hf.space/creaLinkSesion/';
  * @param {string} [customerId] - El ID del cliente (opcional).
  * @param {string} [firebaseUser] - El ID del usuario de Firebase (opcional). <--- ¡NUEVO PARÁMETRO!
  */
-export async function creaLinkSesion(priceId, customerEmail = null, customerId = null, firebaseUser = null, imagenes = null, mode= null) {
+export async function creaLinkSesion(priceId, customerEmail = null, customerId = null, firebaseUser = null, unidades = null, mode= null) {
     try {
         console.log("Estoy en try de creaLinkSesion...")
         console.log("Donde recibí:")
@@ -32,8 +32,8 @@ export async function creaLinkSesion(priceId, customerEmail = null, customerId =
         if (firebaseUser) { // <--- ¡Añadir firebase_user si existe!
             datosParaEnviar.firebase_user = firebaseUser;
         }
-        if (imagenes) { // <--- ¡Añadir firebase_user si existe!
-            datosParaEnviar.imagenes = imagenes;
+        if (unidades) { // <--- ¡Añadir firebase_user si existe!
+            datosParaEnviar.unidades = unidades;
         }
         if (mode) { // <--- ¡Añadir firebase_user si existe!
             datosParaEnviar.mode = mode;
