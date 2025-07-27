@@ -5,17 +5,17 @@ import { getFirebaseUser, getFirebaseUserId, getFirebaseUserEmail } from './auth
 // Define los datos que serán usados por Tabulator
 export const tabledata = [
     {id:1, nombre: "🃏 Standard", paquete:"$10 USD", costo:"$1.00 x imagen", cxt:"🃏10 imágenes", mode: "payment", price_id: "price_1RoXKPROVpWRmEfBNAIGIqpT",  imagenes: 10, boton_texto: "Comprar", boton:"<a href='' class='boton_principal'>Comprar</a>"},
-    {id:2, nombre: "💿 Silver", paquete:"$20 USD", costo:"$0.75 x imagen", cxt:"🃏40 imágenes", price_id: "price_1RoXapROVpWRmEfBN4SnbudS", imagenes: 40, boton_texto: "Comprar", boton:"<a href='' class='boton_principal'>Comprar</a>"},
-    {id:3, nombre: "🪙 Gold", paquete:"$40 USD", costo:"$0.50 x imagen", cxt:"🃏80 imágenes", price_id: "price_1RoXdZROVpWRmEfBshBNQsZD", imagenes: 80, boton_texto: "Comprar", boton:"<a href='' class='boton_principal'>Comprar</a>"},
-    {id:4, nombre: "💎 Diamond", paquete:"$80 USD", costo:"$0.25 x imagen", cxt:"🃏320 imágenes", price_id: "price_1RoXerROVpWRmEfBj8o2nI74", imagenes: 320, boton_texto: "Comprar", boton:"<a href='' class='boton_principal'>Comprar</a>"},
-    {id:5, nombre: "🪅 Awesome", paquete:"$100 USD", costo:"$0.10 x imagen", cxt:"🃏1000 imágenes", price_id: "price_1RoXioROVpWRmEfBuEBOyLBc", imagenes: 1000, boton_texto: "Comprar", boton:"<a href='' class='boton_principal'>Comprar</a>"},
+    {id:2, nombre: "💿 Silver", paquete:"$20 USD", costo:"$0.75 x imagen", cxt:"🃏40 imágenes", mode: "payment", price_id: "price_1RoXapROVpWRmEfBN4SnbudS", imagenes: 40, boton_texto: "Comprar", boton:"<a href='' class='boton_principal'>Comprar</a>"},
+    {id:3, nombre: "🪙 Gold", paquete:"$40 USD", costo:"$0.50 x imagen", cxt:"🃏80 imágenes", mode: "payment", price_id: "price_1RoXdZROVpWRmEfBshBNQsZD", imagenes: 80, boton_texto: "Comprar", boton:"<a href='' class='boton_principal'>Comprar</a>"},
+    {id:4, nombre: "💎 Diamond", paquete:"$80 USD", costo:"$0.25 x imagen", cxt:"🃏320 imágenes", mode: "payment", price_id: "price_1RoXerROVpWRmEfBj8o2nI74", imagenes: 320, boton_texto: "Comprar", boton:"<a href='' class='boton_principal'>Comprar</a>"},
+    {id:5, nombre: "🪅 Awesome", paquete:"$100 USD", costo:"$0.10 x imagen", cxt:"🃏1000 imágenes", mode: "payment", price_id: "price_1RoXioROVpWRmEfBuEBOyLBc", imagenes: 1000, boton_texto: "Comprar", boton:"<a href='' class='boton_principal'>Comprar</a>"},
 ];
 
 // Formateador de celdas que llama a la API al hacer clic
 export function botonCellFormatter(cell, formatterParams, onRendered){
     const rowData = cell.getData();
     const priceId = rowData.price_id;
-    const imagenes = rowData.imagenes;
+    const unidades = rowData.imagenes;
     const mode = rowData.mode;
     const botonTexto = rowData.boton_texto;
 
@@ -60,12 +60,12 @@ export function botonCellFormatter(cell, formatterParams, onRendered){
 
     console.log(`[${priceId}] Iniciando llamada a creaLinkSesion con priceId: ${priceId}, email: ${customerEmailToSend}, firebase_user: ${currentFirebaseUid}`);
     
-    console.log("A punto de entrar, imagenes es: ", imagenes)
+    console.log("A punto de entrar, imagenes es: ", unidades)
     console.log("Mode es: ", mode)
     // --- ¡EL CAMBIO CLAVE ESTÁ AQUÍ! ---
     // Ahora pasamos el firebaseUser.uid como el CUARTO argumento (firebaseUser)
     // y dejamos customerId como 'null' (o la variable si la tuvieras de otra fuente)
-    const result = await creaLinkSesion(priceId, customerEmailToSend, null, currentFirebaseUid, imagenes, mode); // customerId ahora es 'null' o tu variable si es otra fuente.
+    const result = await creaLinkSesion(priceId, customerEmailToSend, null, currentFirebaseUid, unidades, mode); // customerId ahora es 'null' o tu variable si es otra fuente.
     
     console.log(`[${priceId}] creaLinkSesion ha resuelto. Resultado:`, result);
 
