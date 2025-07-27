@@ -4,17 +4,19 @@ import { creaLinkSesion } from './api.js';
 import { getFirebaseUser, getFirebaseUserId, getFirebaseUserEmail } from './auth_buy.js'; 
 // Define los datos que serán usados por Tabulator
 export const tabledata = [
-    {id:1, nombre: "🃏 Standard", paquete:"$10 USD", costo:"$1.00 x imagen", cxt:"🃏10 imágenes", price_id: "price_1RoXKPROVpWRmEfBNAIGIqpT",  boton_texto: "Comprar", boton:"<a href='' class='boton_principal'>Comprar</a>"},
-    {id:2, nombre: "💿 Silver", paquete:"$20 USD", costo:"$0.75 x imagen", cxt:"🃏40 imágenes", price_id: "price_1RoXapROVpWRmEfBN4SnbudS", boton_texto: "Comprar", boton:"<a href='' class='boton_principal'>Comprar</a>"},
-    {id:3, nombre: "🪙 Gold", paquete:"$40 USD", costo:"$0.50 x imagen", cxt:"🃏80 imágenes", price_id: "price_1RoXdZROVpWRmEfBshBNQsZD", boton_texto: "Comprar", boton:"<a href='' class='boton_principal'>Comprar</a>"},
-    {id:4, nombre: "💎 Diamond", paquete:"$80 USD", costo:"$0.25 x imagen", cxt:"🃏320 imágenes", price_id: "price_1RoXerROVpWRmEfBj8o2nI74", boton_texto: "Comprar", boton:"<a href='' class='boton_principal'>Comprar</a>"},
-    {id:5, nombre: "🪅 Awesome", paquete:"$100 USD", costo:"$0.10 x imagen", cxt:"🃏1000 imágenes", price_id: "price_1RoXioROVpWRmEfBuEBOyLBc", boton_texto: "Comprar", boton:"<a href='' class='boton_principal'>Comprar</a>"},
+    {id:1, nombre: "🃏 Standard", paquete:"$10 USD", costo:"$1.00 x imagen", cxt:"🃏10 imágenes", price_id: "price_1RoXKPROVpWRmEfBNAIGIqpT",  imagenes: 10, boton_texto: "Comprar", boton:"<a href='' class='boton_principal'>Comprar</a>"},
+    {id:2, nombre: "💿 Silver", paquete:"$20 USD", costo:"$0.75 x imagen", cxt:"🃏40 imágenes", price_id: "price_1RoXapROVpWRmEfBN4SnbudS", imagenes: 40, boton_texto: "Comprar", boton:"<a href='' class='boton_principal'>Comprar</a>"},
+    {id:3, nombre: "🪙 Gold", paquete:"$40 USD", costo:"$0.50 x imagen", cxt:"🃏80 imágenes", price_id: "price_1RoXdZROVpWRmEfBshBNQsZD", imagenes: 80, boton_texto: "Comprar", boton:"<a href='' class='boton_principal'>Comprar</a>"},
+    {id:4, nombre: "💎 Diamond", paquete:"$80 USD", costo:"$0.25 x imagen", cxt:"🃏320 imágenes", price_id: "price_1RoXerROVpWRmEfBj8o2nI74", imagenes: 320, boton_texto: "Comprar", boton:"<a href='' class='boton_principal'>Comprar</a>"},
+    {id:5, nombre: "🪅 Awesome", paquete:"$100 USD", costo:"$0.10 x imagen", cxt:"🃏1000 imágenes", price_id: "price_1RoXioROVpWRmEfBuEBOyLBc", imagenes: 1000, boton_texto: "Comprar", boton:"<a href='' class='boton_principal'>Comprar</a>"},
 ];
 
 // Formateador de celdas que llama a la API al hacer clic
 export function botonCellFormatter(cell, formatterParams, onRendered){
     const rowData = cell.getData();
     const priceId = rowData.price_id;
+    const imagenes = rowData.imagenes;
+    const mode = rowData.mode;
     const botonTexto = rowData.boton_texto;
 
     const button = document.createElement("button");
@@ -29,9 +31,11 @@ export function botonCellFormatter(cell, formatterParams, onRendered){
 
         let customerEmail = null; // Inicializamos a null
         let customerId = null;    // Inicializamos a null
+        
 
         try {
-    console.log("Estoy en el try del click...")
+    
+            console.log("Estoy en el try del click...")
     // Intentamos obtener el usuario de Firebase
     const firebaseUserObj = await getFirebaseUser(); // Espera a obtener el objeto de usuario completo
     console.log("Salí del await getFirebaseUser?")
@@ -59,7 +63,7 @@ export function botonCellFormatter(cell, formatterParams, onRendered){
     // --- ¡EL CAMBIO CLAVE ESTÁ AQUÍ! ---
     // Ahora pasamos el firebaseUser.uid como el CUARTO argumento (firebaseUser)
     // y dejamos customerId como 'null' (o la variable si la tuvieras de otra fuente)
-    const result = await creaLinkSesion(priceId, customerEmailToSend, null, currentFirebaseUid); // customerId ahora es 'null' o tu variable si es otra fuente.
+    const result = await creaLinkSesion(priceId, customerEmailToSend, null, currentFirebaseUid, imagenes, mode); // customerId ahora es 'null' o tu variable si es otra fuente.
     
     console.log(`[${priceId}] creaLinkSesion ha resuelto. Resultado:`, result);
 
