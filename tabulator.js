@@ -11,15 +11,15 @@ var table = new Tabulator("#tabla_tabulator", {
 	resizableColumns: false, 
  	columns:[ //Define Table Columns
 		//{title:"Paquete", field:"nombre", width: "25%", hozAlign:"left", cssClass:"negrita-paquete"},
-		{title:"Imágenes", field:"cxt", width: "20%", hozAlign:"left"},		
-		{title:"Costo", field:"paquete", width: "15%", hozAlign:"left"},	 	
-	 	{title:"Costo por Imagen", field:"costo", width: "20%", hozAlign:"right"},
+		{title:"Imágenes", field:"cxt", width: "26%", hozAlign:"center"},		
+		{title:"Costo", field:"paquete", width: "21%", hozAlign:"center"},	 	
+	 	{title:"Costo por Imagen", field:"costo", width: "26%", hozAlign:"center"},
 		{
             title:"Acción", // Título de la columna
             field:"boton_texto", // Usa un campo existente para que Tabulator lo asigne
             formatter: botonCellFormatter, // <-- Aquí usas la función de formato
             hozAlign:"center",
-            width: "20%", // Ajusta el ancho según necesites
+            width: "26%", // Ajusta el ancho según necesites
             headerSort:false // Evita que se ordene por esta columna
         },	
  	],
