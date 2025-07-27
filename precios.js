@@ -38,6 +38,7 @@ export function botonCellFormatter(cell, formatterParams, onRendered){
             console.log("Estoy en el try del click...")
     // Intentamos obtener el usuario de Firebase
     const firebaseUserObj = await getFirebaseUser(); // Espera a obtener el objeto de usuario completo
+    print("El firebaseobj es: ", firebaseUserObj)
     console.log("Salí del await getFirebaseUser?")
     
     let currentFirebaseUid = null; // Variable para almacenar el UID de Firebase
