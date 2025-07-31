@@ -848,3 +848,11 @@ a {
 a:hover {
             text-decoration: underline; /* Opcional: Que aparezca al pasar el ratón */
         }
+
+/* #tabla_tabulator {    
+    padding-left: 15px !important; 
+} */
+
+#tabla_tabulator.tabulator .tabulator-row .tabulator-cell.first-column-padding {
+    padding-left: 30px !important; /* Ajusta este valor para el espacio deseado */
+}

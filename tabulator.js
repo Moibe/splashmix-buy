@@ -10,7 +10,7 @@ var table = new Tabulator("#tabla_tabulator", {
 	resizableColumns: false, 
  	columns:[ //Define Table Columns
 		//{title:"Paquete", field:"nombre", width: "25%", hozAlign:"left", cssClass:"negrita-paquete"},
-		{title:"Imágenes", field:"cxt", width: "26%", hozAlign:"left"},		
+		{title:"Imágenes", field:"cxt", width: "26%", hozAlign:"left", cssClass:"first-column-padding"},		
 		{title:"Costo", field:"paquete", width: "21%", hozAlign:"center"},	 	
 	 	{title:"Costo por Imagen", field:"costo", width: "26%", hozAlign:"center"},
 		{
