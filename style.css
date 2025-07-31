@@ -840,3 +840,11 @@ button_test {
 }
 
 /* --- FIN DE MODIFICACIONES --- */
+
+a {
+            text-decoration: none; /* Quita el subrayado por defecto de TODOS los enlaces */
+        }
+
+a:hover {
+            text-decoration: underline; /* Opcional: Que aparezca al pasar el ratón */
+        }
