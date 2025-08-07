@@ -15,7 +15,7 @@ import { getFirebaseUser, getFirebaseUserId, getFirebaseUserEmail } from './auth
 //PROD
 export const tabledata = [
     {id:1, paquete:"$10 USD", costo:"$1.00 x imagen", cxt:"🃏10 imágenes", mode: "payment", price_id: "price_1RqqYMIYi36CbmfWsiqCShcu",  imagenes: 10, boton_texto: "Comprar", boton:"<a href='' class='boton_principal'>Comprar</a>"},
-    {id:2, paquete:"$1 USD", costo:"$0.75 x imagen", cxt:"🃏1 imagen", mode: "payment", price_id: "price_1Rtb8LIYi36CbmfWXFqh1LdI", imagenes: 40, boton_texto: "Comprar", boton:"<a href='' class='boton_principal'>Comprar</a>"},
+    {id:2, paquete:"$10 MXN", costo:"$0.75 x imagen", cxt:"🃏1 imagen", mode: "payment", price_id: "price_1RtcMnIYi36CbmfWqIOq3tVt", imagenes: 40, boton_texto: "Comprar", boton:"<a href='' class='boton_principal'>Comprar</a>"},
     {id:3, paquete:"$40 USD", costo:"$0.50 x imagen", cxt:"🃏80 imágenes", mode: "payment", price_id: "price_1RqqQtIYi36CbmfWUyyUs48h", imagenes: 80, boton_texto: "Comprar", boton:"<a href='' class='boton_principal'>Comprar</a>"},
     {id:4, paquete:"$80 USD", costo:"$0.25 x imagen", cxt:"🃏320 imágenes", mode: "payment", price_id: "price_1RqqKQIYi36CbmfWVlDxTJk1", imagenes: 320, boton_texto: "Comprar", boton:"<a href='' class='boton_principal'>Comprar</a>"},
     {id:5, paquete:"$100 USD", costo:"$0.10 x imagen", cxt:"🃏1000 imágenes", mode: "payment", price_id: "price_1RqpziIYi36CbmfWJuLkU9Sa", imagenes: 1000, boton_texto: "Comprar", boton:"<a href='' class='boton_principal'>Comprar</a>"},
