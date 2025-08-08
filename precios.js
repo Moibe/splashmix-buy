@@ -6,7 +6,7 @@ import { getFirebaseUser, getFirebaseUserId, getFirebaseUserEmail } from './auth
 //DEV
 export const tabledata = [
     {id:1, nombre: "🃏 Standard", paquete:"$10 USD", costo:"$1.00 x imagen", cxt:"🃏10 imágenes", mode: "payment", price_id: "price_1RoXKPROVpWRmEfBNAIGIqpT",  imagenes: 10, boton_texto: "Comprar", boton:"<a href='' class='boton_principal'>Comprar</a>"},
-    {id:2, nombre: "💿 Silver", paquete:"$20 USD", costo:"$0.75 x imagen", cxt:"🃏40 imágenes", mode: "payment", price_id: "price_1RoXapROVpWRmEfBN4SnbudS", imagenes: 40, boton_texto: "Comprar", boton:"<a href='' class='boton_principal'>Comprar</a>"},
+    {id:2, nombre: "💿 Silver", paquete:"$20 MULTI", costo:"$0.75 x imagen", cxt:"🃏40 imágenes", mode: "payment", price_id: "price_1RteZyROVpWRmEfBCGRb4NDj", imagenes: 40, boton_texto: "Comprar", boton:"<a href='' class='boton_principal'>Comprar</a>"},
     {id:3, nombre: "🪙 Gold", paquete:"$40 USD", costo:"$0.50 x imagen", cxt:"🃏80 imágenes", mode: "payment", price_id: "price_1RoXdZROVpWRmEfBshBNQsZD", imagenes: 80, boton_texto: "Comprar", boton:"<a href='' class='boton_principal'>Comprar</a>"},
     {id:4, nombre: "💎 Diamond", paquete:"$80 USD", costo:"$0.25 x imagen", cxt:"🃏320 imágenes", mode: "payment", price_id: "price_1RoXerROVpWRmEfBj8o2nI74", imagenes: 320, boton_texto: "Comprar", boton:"<a href='' class='boton_principal'>Comprar</a>"},
     {id:5, nombre: "🪅 Awesome", paquete:"$100 USD", costo:"$0.10 x imagen", cxt:"🃏1000 imágenes", mode: "payment", price_id: "price_1RoXioROVpWRmEfBuEBOyLBc", imagenes: 1000, boton_texto: "Comprar", boton:"<a href='' class='boton_principal'>Comprar</a>"},
