@@ -1,5 +1,6 @@
 // tabulator.js
-import { tabledata, botonCellFormatter } from './precios.js'; // Importa tabledata desde precios.js
+import { tabledata } from './tablas_precio.js'; 
+import { botonCellFormatter } from './precios.js'; // Importa tabledata desde precios.js
 
  //create Tabulator on DOM element with id "example-table"
 var table = new Tabulator("#tabla_tabulator", {
