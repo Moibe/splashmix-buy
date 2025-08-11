@@ -1,5 +1,9 @@
-// URL de la nueva API
-export const API_URL = 'https://moibe-stripe-kraken.hf.space/creaLinkSesion/';
+import { environment } from './environment.js';
+
+// URL de la nueva API, ahora definida de forma condicional
+const API_BASE_URL = 'https://moibe-stripe-kraken-';
+const API_ENDPOINT = '/creaLinkSesion/';
+export const API_URL = (environment === 'dev') ? `${API_BASE_URL}dev${API_ENDPOINT}` : `${API_BASE_URL}prod${API_ENDPOINT}`;
 
 /**
  * Función para crear un enlace de sesión enviando datos a la API.
