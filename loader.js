@@ -1,7 +1,7 @@
 // loader.js
 
 // 1. Define la variable del entorno
-const environment = 'dev'; // Cámbialo a 'prod' cuando vayas a producción
+const environment = 'prod'; // Cámbialo a 'prod' cuando vayas a producción
 
 // 2. Determina el nombre del archivo de configuración
 const configFileName = (environment === 'dev') ? 'config_dev.js' : 'config_prod.js';
