@@ -1,8 +1,9 @@
 const firebaseConfig = {
-    apiKey: "AIzaSyAq9PXaK2yBv5WJPCxN2ftYsIS6xmEJMTQ",
-    authDomain: "glassboilerplate.firebaseapp.com",
-    projectId: "glassboilerplate",
-    storageBucket: "glassboilerplate.firebasestorage.app",
-    messagingSenderId: "1059418877993",
-    appId: "1:1059418877993:web:39af816079c772b8822c38"
-  };
+  apiKey: "AIzaSyDGYZJ87hn-RfveqC_BydFQEJTMSvS7eK4",
+  authDomain: "splashmix-88e15.firebaseapp.com",
+  projectId: "splashmix-88e15",
+  storageBucket: "splashmix-88e15.firebasestorage.app",
+  messagingSenderId: "429463695136",
+  appId: "1:429463695136:web:5843b892e8761560f77145",
+  measurementId: "G-PHPJCWFF9L"
+};
