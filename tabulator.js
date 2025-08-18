@@ -6,21 +6,21 @@ import { botonCellFormatter } from './precios.js'; // Importa tabledata desde pr
 var table = new Tabulator("#tabla_tabulator", {
     width:"100%",
     data:tabledata, //assign data to table
- 	layout:"fitDataFill", //fit columns to width of table (optional)
+ 	layout:"fitDataFill", //fitData: extiende la columna aunque tenga q salir un scroll abajo. fitDataFill: extiende la columna mientras no se pase del ancho asignado.
 	headerVisible: false,
 	resizableColumns: false, 
  	columns:[ //Define Table Columns
-		//{title:"Paquete", field:"nombre", width: "25%", hozAlign:"left", cssClass:"negrita-paquete"},
-		{title:"Imágenes", field:"cxt", width: "26%", hozAlign:"left", cssClass:"first-column-padding"},		
-		{title:"Costo", field:"paquete", width: "21%", hozAlign:"center"},	 	
-	 	{title:"Costo por Imagen", field:"costo", width: "26%", hozAlign:"center"},
+		{title:"", field:"cxt", width: "26%", headerHozAlign:"center", headerSort: false, hozAlign:"center", vertAlign:"middle"}, //, cssClass:"first-column-padding"		
+		{title:"", field:"paquete", width: "20%", headerHozAlign:"center", headerSort: false, hozAlign:"center", vertAlign:"middle"},	 	
+	 	{title:"", field:"costo", width: "27%", headerHozAlign:"center", headerSort: false, hozAlign:"center", vertAlign:"middle"},
 		{
-            title:"Acción", // Título de la columna
+            title:"", // Título de la columna
             field:"boton_texto", // Usa un campo existente para que Tabulator lo asigne
             formatter: botonCellFormatter, // <-- Aquí usas la función de formato
             hozAlign:"center",
-            width: "26%", // Ajusta el ancho según necesites
-            headerSort:false // Evita que se ordene por esta columna
+            width: "28%", // Ajusta el ancho según necesites
+            headerSort:false,
+			vertAlign:"middle"
         },	
  	],
 });

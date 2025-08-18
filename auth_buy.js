@@ -1,6 +1,5 @@
 //Conexión con Firebase
 firebase.initializeApp(firebaseConfig);
-const provider = new firebase.auth.GoogleAuthProvider();
 
 let currentFirebaseUser = null; // Variable para almacenar el usuario actual
 
@@ -79,31 +78,31 @@ firebase.auth().onAuthStateChanged((user) => {
     }
 });
 
-// Función para actualizar la interfaz de usuario
-function updateUI(user) {
-    if (user) {
-        console.log("updateUI, actualizando...", user)
-        // messageDiv.textContent = ``;
-        // googleSignInButton.innerText = 
+// // Función para actualizar la interfaz de usuario
+// function updateUI(user) {
+//     if (user) {
+//         console.log("updateUI, actualizando...", user)
+//         // messageDiv.textContent = ``;
+//         // googleSignInButton.innerText = 
         
-        for (const message of messageDivs) {
-            message.innerText = "";
-          }
+//         for (const message of messageDivs) {
+//             message.innerText = "";
+//           }
 
 
-        for (const button of googleSignInButtons) {
-            button.innerText = "Ir a la APP 👉🏻";
-          }
+//         for (const button of googleSignInButtons) {
+//             button.innerText = "Ir a la APP 👉🏻";
+//           }
        
-    } else {
-        // Muestra el botón de inicio de sesión y oculta el de cierre de sesión
-        for (const message of messageDivs) {
-            message.innerText = "¡Prúebalo con tu foto ya mismo!";
-          }
+//     } else {
+//         // Muestra el botón de inicio de sesión y oculta el de cierre de sesión
+//         for (const message of messageDivs) {
+//             message.innerText = "¡Prúebalo con tu foto ya mismo!";
+//           }
 
 
-        for (const button of googleSignInButtons) {
-            button.innerText = "Conecta con Google";
-          }
-    }
-}
+//         for (const button of googleSignInButtons) {
+//             button.innerText = "Conecta con Google";
+//           }
+//     }
+// }

@@ -1,5 +1,6 @@
-import { environment } from './environment.js';
+// import { environment } from './environment.js';
 
+const environment = 'dev';
 // URL de la nueva API, ahora definida de forma condicional
 const API_BASE_URL = 'https://moibe-stripe-kraken-';
 const API_DOMAIN = '.hf.space';
