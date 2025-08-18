@@ -1,4 +1,3 @@
-// loader.js
 import { environment } from './environment.js';
 
 document.body.setAttribute('data-environment', environment);
