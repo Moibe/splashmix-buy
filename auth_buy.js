@@ -40,18 +40,18 @@ const logoutButton = document.getElementById('logout-button');
 console.log("Estoy en auth_buy.js")
 
 // Listener para el botón de inicio de sesión con Google
-Array.from(googleSignInButtons).forEach(button => {
-button.addEventListener('click', () => {
-    firebase.auth().signInWithPopup(provider)
-        .then((result) => {
-            const user = result.user;
-            updateUI(user);
-            redirige(user);            
-        }).catch((error) => {
-            console.log(`Error al iniciar sesión: ${error.message}`);
-        });
-})
-});
+// Array.from(googleSignInButtons).forEach(button => {
+// button.addEventListener('click', () => {
+//     firebase.auth().signInWithPopup(provider)
+//         .then((result) => {
+//             const user = result.user;
+//             updateUI(user);
+//             redirige(user);            
+//         }).catch((error) => {
+//             console.log(`Error al iniciar sesión: ${error.message}`);
+//         });
+// })
+// });
 
 //Listener para el botón de cierre de sesión
 // logoutButton.addEventListener('click', () => {
@@ -112,14 +112,13 @@ function updateUI(user) {
           }
     }
 }
-
-function redirige(user) {
-    user.getIdToken().then((authToken) => {
-      // Redirigir a app.splashmix.ink con el token como parámetro
-      //window.location.href = `http://app.splashmix.ink?authToken=${authToken}`;
-    }).catch((error) => {
-      console.log(`Error al obtener el token: ${error.message}`);
-      // Manejar el error al obtener el token (por ejemplo, redirigir sin token)
-      window.location.href = "https://app.splashmix.ink/login";
-    });
-  }
+// function redirige(user) {
+//     user.getIdToken().then((authToken) => {
+//       // Redirigir a app.splashmix.ink con el token como parámetro
+//       //window.location.href = `http://app.splashmix.ink?authToken=${authToken}`;
+//     }).catch((error) => {
+//       console.log(`Error al obtener el token: ${error.message}`);
+//       // Manejar el error al obtener el token (por ejemplo, redirigir sin token)
+//       window.location.href = "https://app.splashmix.ink/login";
+//     });
+//   }
