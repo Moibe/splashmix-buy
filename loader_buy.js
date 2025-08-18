@@ -1,5 +1,6 @@
-import { environment } from './environment.js';
+// import { environment } from './environment.js';
 
+const environment = 'dev'; // Cámbialo a 'prod' cuando vayas a producción
 document.body.setAttribute('data-environment', environment);
 
 // 2. Determina el nombre del archivo de configuración
