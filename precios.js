@@ -1,6 +1,6 @@
 // precios.js
 import { creaLinkSesion } from './api.js';
-import { getFirebaseUser, getFirebaseUserId, getFirebaseUserEmail } from './auth_buy.js';
+import { getFirebaseUser} from './auth_buy.js';
 
 // Define los datos que serán usados por Tabulator
 //DEV
