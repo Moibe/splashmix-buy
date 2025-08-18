@@ -8,7 +8,7 @@ const initialAuthStateResolved = new Promise(resolve => {
     firebase.auth().onAuthStateChanged((user) => {
         currentFirebaseUser = user; // Actualiza la variable con el usuario actual
         console.log("Firebase Auth State Changed. User:", user ? user.uid : "No user");
-        updateUI(user); // Llama a tu función existente para actualizar la UI
+        //updateUI(user); // Llama a tu función existente para actualizar la UI
         resolve(user); // Resuelve la promesa con el objeto de usuario (o null)
     });
 });
@@ -71,11 +71,11 @@ firebase.auth().onAuthStateChanged((user) => {
     if (user) {
         // El usuario ha iniciado sesión
         console.log("El usuario está logueado...")
-        updateUI(user);
+        //updateUI(user);
     } else {
         // El usuario ha cerrado sesión o no ha iniciado sesión
         console.log("El usuario no está logueado...")
-        updateUI(null);
+        //updateUI(null);
     }
 });
 
@@ -94,11 +94,6 @@ function updateUI(user) {
         for (const button of googleSignInButtons) {
             button.innerText = "Ir a la APP 👉🏻";
           }
-        
-        // logoutButton.style.display = 'block';
-
-        // Muestra un mensaje de bienvenida
-        // messageDiv.textContent = `Bienvenido, ${user.displayName}!`;
        
     } else {
         // Muestra el botón de inicio de sesión y oculta el de cierre de sesión
@@ -112,12 +107,3 @@ function updateUI(user) {
           }
     }
 }
-// function redirige(user) {
-//     user.getIdToken().then((authToken) => {
-//       //window.location.href = `http://app.splashmix.ink?authToken=${authToken}`;
-//     }).catch((error) => {
-//       console.log(`Error al obtener el token: ${error.message}`);
-//       // Manejar el error al obtener el token (por ejemplo, redirigir sin token)
-//       window.location.href = "https://app.splashmix.ink/login";
-//     });
-//   }
