@@ -4,9 +4,6 @@ const provider = new firebase.auth.GoogleAuthProvider();
 
 let currentFirebaseUser = null; // Variable para almacenar el usuario actual
 
-// Promesa que se resuelve una vez que el estado inicial de autenticación de Firebase se ha determinado.
-// Esto es útil si alguna parte de la aplicación necesita esperar a saber si el usuario está logueado o no
-// antes de realizar ciertas acciones (ej. inicializar una parte de la UI que depende del login).
 const initialAuthStateResolved = new Promise(resolve => {
     firebase.auth().onAuthStateChanged((user) => {
         currentFirebaseUser = user; // Actualiza la variable con el usuario actual
