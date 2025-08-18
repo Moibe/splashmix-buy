@@ -64,7 +64,7 @@ $cards
     },2500);
   });
 
-  //Parte que randomiza las imagenes original y creacion.   
+  //Parte que randomiza las imagenes original y creacion. #Despliega 9 de 30 imagenes.  
   for (let i = 0; i <= 9; i++) {
   let numeroImagen = Math.floor(Math.random() * 29) + 1; 
   // En cada iteración, 'i' será nuestro sufijo (0, 1, 2, ..., 9)
