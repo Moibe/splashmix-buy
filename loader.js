@@ -19,16 +19,15 @@ const loadScript = (src, isModule = false) => {
         document.body.appendChild(script);
     });
 };
-
 // 4. Inicia la cadena de carga de scripts
 loadScript(configFileName)
     .then(() => {
         console.log(`El archivo de configuración ${configFileName} se ha cargado correctamente.`);
-        // Una vez que la configuración está lista, carga auth.js
-        return loadScript('auth.js', true);
+        // Una vez que la configuración está lista, carga auth_buy.js
+        return loadScript('auth_buy.js', true);
     })
     .then(() => {
-        console.log('El archivo auth.js se ha cargado correctamente.');
+        console.log('El archivo auth_buy.js se ha cargado correctamente.');
     })
     .catch((error) => {
         console.error(error);
