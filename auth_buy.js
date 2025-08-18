@@ -114,7 +114,6 @@ function updateUI(user) {
 }
 // function redirige(user) {
 //     user.getIdToken().then((authToken) => {
-//       // Redirigir a app.splashmix.ink con el token como parámetro
 //       //window.location.href = `http://app.splashmix.ink?authToken=${authToken}`;
 //     }).catch((error) => {
 //       console.log(`Error al obtener el token: ${error.message}`);
