@@ -3,7 +3,7 @@ name: Submodule Remote Auto Update 📡🛰️
 on:
     push:
         branches:
-            - main
+            - dev
 jobs:
     run_pull:
         name: run pull 
