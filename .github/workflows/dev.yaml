@@ -21,7 +21,7 @@ jobs:
               ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} \
               "cd ${{ secrets.DEV_WORK_DIR }} && git checkout ${{ secrets.DEV_BRANCH }} \
               && git pull origin dev \
-              &&  git submodule update --remote --merge --recursive splashmix-buy \
+              &&  git submodule update --remote --merge --recursive splashmix-buy-dev \
               && git submodule update --recursive --remote \
               && exit"
                 
