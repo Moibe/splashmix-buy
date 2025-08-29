@@ -18,7 +18,7 @@ var table = new Tabulator("#tabla_tabulator", {
             field:"boton_texto", // Usa un campo existente para que Tabulator lo asigne
             formatter: botonCellFormatter, // <-- Aquí usas la función de formato
             hozAlign:"center",
-            width: "28%", // Ajusta el ancho según necesites
+            width: "27%", // Ajusta el ancho según necesites
             headerSort:false,
 			vertAlign:"middle"
         },	
