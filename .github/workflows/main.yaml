@@ -21,7 +21,7 @@ jobs:
               ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} \
               "cd ${{ secrets.WORK_DIR }} && git checkout ${{ secrets.MAIN_BRANCH }} \
               && git pull origin ${{ secrets.MAIN_BRANCH }} \
-              && git submodule update --recursive --remote \
+              # && git submodule update --recursive --remote \
               && exit"
                 
         - name: cleanup
