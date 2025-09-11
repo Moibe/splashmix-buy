@@ -75,3 +75,4 @@ $cards
   document.documentElement.style.setProperty(`--imagen_creacion${sufijoVariable}`, `url('imagenes/foto${numeroImagen}b.jpg')`);
 }
 
+

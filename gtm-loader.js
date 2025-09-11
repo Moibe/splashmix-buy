@@ -8,6 +8,33 @@ function injectGTM() {
     'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
     })(window,document,'script','dataLayer','GTM-585LHZXF');
 
+    // Aquí va tu código de listener del dataLayer
+    // (sin las etiquetas <script> porque ya estás en un archivo .js)
+    window.dataLayer.push = (function(originalPush) {
+      return function() {
+        for (var i = 0; i < arguments.length; i++) {
+          var event = arguments[i];
+          if (event.event === 'gaClientID_ready' && event.gaClientID) {
+            console.log('Client ID listo:', event.gaClientID);
+            // Aquí puedes usar event.gaClientID
+          }
+          else {
+            console.log("Estoy en el ELSE...")
+          }
+        }
+        return originalPush.apply(this, arguments);
+      };
+    })(window.dataLayer.push);
+
+    // En caso de que el evento ya se haya disparado.
+    for (var i = 0; i < window.dataLayer.length; i++) {
+      var event = window.dataLayer[i];
+      if (event && event.event === 'gaClientID_ready' && event.gaClientID) {
+        console.log('Client ID encontrado en dataLayer:', event.gaClientID);
+      }
+    }
+    // Fin de tu código de listener
+
     // Inject the <body> fragment
     const noscript = document.createElement('noscript');
     const iframe = document.createElement('iframe');

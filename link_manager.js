@@ -2,6 +2,7 @@
 console.log("Estoy en link manager...")
 document.addEventListener('DOMContentLoaded', () => {
     // 1. Obtiene el dominio actual de la página.
+   
     const currentDomain = window.location.hostname;
     console.log("El sitio desde el que visualizo es: ", currentDomain)
 
@@ -22,3 +23,4 @@ document.addEventListener('DOMContentLoaded', () => {
         appButton.href = fullAppUrl;
     }
 });
+
