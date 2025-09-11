@@ -31,7 +31,7 @@ function injectGTM() {
           var event = arguments[i];
           if (event.event === 'clientIDLoaded' && event.gaClientID) {
             // Guarda el Client ID en una variable global
-            window.gaClientID = event.gaClientID;
+            window.gaClientID = extraeClienteID(event.gaClientID);
             console.log('Client ID guardado en la variable global:', window.gaClientID);
           }
         }
@@ -41,7 +41,7 @@ function injectGTM() {
 
     for (var i = 0; i < window.dataLayer.length; i++) {
       var event = window.dataLayer[i];
-      if (event && event.event === 'gaClientID_ready' && event.gaClientID) {        
+      if (event && event.event === 'clientIDLoaded' && event.gaClientID) {        
         window.gaClientID = extraeClienteID(event.gaClientID);
         console.log('Client ID encontrado en dataLayer:', window.gaClientID);
         break;
