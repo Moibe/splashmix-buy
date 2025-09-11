@@ -1,5 +1,21 @@
 // gtm-loader.js
 
+function extraeClienteID(miString) {
+// Divide la cadena en un array de substrings
+const partes = miString.split('.');
+
+// La primera parte es 'GA1', la segunda es '1', la tercera es el primer número, y la cuarta es el segundo.
+// Por lo tanto, los números que buscas están en los índices 2 y 3.
+if (partes.length >= 4) {
+  const resultado = `${partes[2]}.${partes[3]}`;
+  console.log(`El resultado es: ${resultado}`); // Salida: 1662972823.1756920429
+  return resultado
+} else {
+  console.log("El formato de la cadena no es el esperado.");
+  return null
+}
+}
+
 function injectGTM() {
     // Inject the <head> fragment
     (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -25,8 +41,8 @@ function injectGTM() {
 
     for (var i = 0; i < window.dataLayer.length; i++) {
       var event = window.dataLayer[i];
-      if (event && event.event === 'gaClientID_ready' && event.gaClientID) {
-        window.gaClientID = event.gaClientID;
+      if (event && event.event === 'gaClientID_ready' && event.gaClientID) {        
+        window.gaClientID = extraeClienteID(event.gaClientID);
         console.log('Client ID encontrado en dataLayer:', window.gaClientID);
         break;
       }
