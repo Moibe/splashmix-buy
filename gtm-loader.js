@@ -14,7 +14,7 @@ function injectGTM() {
       return function() {
         for (var i = 0; i < arguments.length; i++) {
           var event = arguments[i];
-          if (event.event === 'gaClientID_ready' && event.gaClientID) {
+          if (event.event === 'clientIDLoaded' && event.gaClientID) {
             console.log('Client ID listo:', event.gaClientID);
             // Aquí puedes usar event.gaClientID
           }
