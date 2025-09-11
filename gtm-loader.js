@@ -13,7 +13,7 @@ function injectGTM() {
       return function() {
         for (var i = 0; i < arguments.length; i++) {
           var event = arguments[i];
-          if (event.event === 'gaClientID_ready' && event.gaClientID) {
+          if (event.event === 'clientIDLoaded' && event.gaClientID) {
             // Guarda el Client ID en una variable global
             window.gaClientID = event.gaClientID;
             console.log('Client ID guardado en la variable global:', window.gaClientID);
