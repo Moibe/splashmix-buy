@@ -59,7 +59,7 @@ export function botonCellFormatter(cell, formatterParams, onRendered){
         // Recuerda el prefijo 'string' si tu backend lo sigue esperando para el email
         customerEmailToSend = firebaseUserObj.email ? `${firebaseUserObj.email}` : null; 
         console.log("Correo obtenido es: ", customerEmailToSend)
-        
+        console.log(`Client ID: ${window.gaClientID}`);
         console.log(`[${priceId}] Usuario de Firebase detectado: ID=${currentFirebaseUid}, Email=${customerEmailToSend}`);
     } else {
         console.log("Entré a firebase else...")
