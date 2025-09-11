@@ -16,7 +16,7 @@ export const API_URL = (environment === 'dev') ? `${API_BASE_URL}dev${API_DOMAIN
  * @param {string} [customerId] - El ID del cliente (opcional).
  * @param {string} [firebaseUser] - El ID del usuario de Firebase (opcional). <--- ¡NUEVO PARÁMETRO!
  */
-export async function creaLinkSesion(priceId, customerEmail = null, customerId = null, firebaseUser = null, unidades = null, mode= null) {
+export async function creaLinkSesion(priceId, customerEmail = null, customerId = null, firebaseUser = null, unidades = null, mode= null, gaCliente = null) {
     try {
         console.log("Estoy en try de creaLinkSesion...")
         console.log("Donde recibí:")
@@ -24,7 +24,7 @@ export async function creaLinkSesion(priceId, customerEmail = null, customerId =
         console.log("customerEmail:", customerEmail)
         console.log("customerID:", customerId)
         console.log("firebaseUser:", firebaseUser) // <--- ¡Log del nuevo parámetro!
-
+        console.log("gaClientID:", gaCliente)
         // Datos a enviar en la solicitud
         const datosParaEnviar = {
             price_id: priceId
@@ -45,6 +45,9 @@ export async function creaLinkSesion(priceId, customerEmail = null, customerId =
         }
         if (mode) { // <--- ¡Añadir firebase_user si existe!
             datosParaEnviar.mode = mode;
+        }
+        if (gaCliente) { // <--- ¡Añadir firebase_user si existe!
+            datosParaEnviar.gaCliente = gaCliente;
         }
 
         console.log("datos para enviar: ", datosParaEnviar)

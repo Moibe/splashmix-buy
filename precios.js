@@ -23,6 +23,7 @@ import { getFirebaseUser} from './auth_buy.js';
 
 // Formateador de celdas que llama a la API al hacer clic
 export function botonCellFormatter(cell, formatterParams, onRendered){
+    console.log("Estoy en la función botonCellFormatter...")
     const rowData = cell.getData();
     const priceId = rowData.price_id;
     const unidades = rowData.imagenes;
@@ -39,8 +40,9 @@ export function botonCellFormatter(cell, formatterParams, onRendered){
         button.textContent = "Cargando...";
         button.disabled = true;
 
-        let customerEmail = null; // Inicializamos a null
-        let customerId = null;    // Inicializamos a null        
+        // let customerEmail = null; // Inicializamos a null
+        // let customerId = null;    // Inicializamos a null  
+       
 
         try {
     
@@ -49,7 +51,7 @@ export function botonCellFormatter(cell, formatterParams, onRendered){
     console.log("Salí del await getFirebaseUser?")
     
     let currentFirebaseUid = null; // Variable para almacenar el UID de Firebase
-    let customerEmailToSend = null; // Variable para almacenar el email a enviar
+    let customerEmailToSend = null; // Variable para almacenar el email a enviar  
 
     if (firebaseUserObj) {
         console.log("Entre a firebaseUser....")
@@ -73,7 +75,7 @@ export function botonCellFormatter(cell, formatterParams, onRendered){
     
     // Ahora pasamos el firebaseUser.uid como el CUARTO argumento (firebaseUser)
     // y dejamos customerId como 'null' (o la variable si la tuvieras de otra fuente)
-    const result = await creaLinkSesion(priceId, customerEmailToSend, null, currentFirebaseUid, unidades, mode); // customerId ahora es 'null' o tu variable si es otra fuente.
+    const result = await creaLinkSesion(priceId, customerEmailToSend, null, currentFirebaseUid, unidades, mode, window.gaClientID); // customerId ahora es 'null' o tu variable si es otra fuente.
     
     console.log(`[${priceId}] creaLinkSesion ha resuelto. Resultado:`, result);
 
