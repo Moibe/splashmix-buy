@@ -1,4 +1,4 @@
-// tabulator.js
+// tabulador.js
 import { tabledata } from './tablas_precio.js'; 
 import { botonCellFormatter } from './precios.js'; // Importa tabledata desde precios.js
 

@@ -38,33 +38,6 @@ const logoutButton = document.getElementById('logout-button');
 
 console.log("Estoy en auth_buy.js")
 
-// Listener para el botón de inicio de sesión con Google
-// Array.from(googleSignInButtons).forEach(button => {
-// button.addEventListener('click', () => {
-//     firebase.auth().signInWithPopup(provider)
-//         .then((result) => {
-//             const user = result.user;
-//             updateUI(user);
-//             redirige(user);            
-//         }).catch((error) => {
-//             console.log(`Error al iniciar sesión: ${error.message}`);
-//         });
-// })
-// });
-
-//Listener para el botón de cierre de sesión
-// logoutButton.addEventListener('click', () => {
-//     firebase.auth().signOut()
-//         .then(() => {
-//             // El usuario ha cerrado sesión correctamente
-//             console.log('Sesión cerrada.');
-//             updateUI(null);
-//         }).catch((error) => {
-//             // Ocurrió un error
-//            console.log(`Error al cerrar sesión: ${error.message}`);
-//         });
-// });
-
 // Listener para detectar el estado de autenticación
 firebase.auth().onAuthStateChanged((user) => {
     if (user) {

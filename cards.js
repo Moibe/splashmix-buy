@@ -1,11 +1,3 @@
-/*
-
-  using 
-    - an animated gif of sparkles.
-    - an animated gradient as a holo effect.
-    - color-dodge mix blend mode
-  
-*/
 var x;
 var $cards = $(".card");
 var $style = $(".hover");
