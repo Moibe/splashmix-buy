@@ -38,11 +38,7 @@ export function botonCellFormatter(cell, formatterParams, onRendered){
     button.addEventListener("click", async () => {
         console.log(`[${priceId}] Clic en el botón. Estado: Cargando...`);
         button.textContent = "Cargando...";
-        button.disabled = true;
-
-        // let customerEmail = null; // Inicializamos a null
-        // let customerId = null;    // Inicializamos a null  
-       
+        button.disabled = true;       
 
         try {
     
@@ -81,7 +77,7 @@ export function botonCellFormatter(cell, formatterParams, onRendered){
 
     if (result && result.url) {
         console.log(`[${priceId}] URL obtenida: ${result.url}. Redirigiendo...`);
-        window.location.href = result.url;
+        window.open(result.url, '_blank');
     } else {
         console.warn(`[${priceId}] Resultado de API no válido:`, result);
         console.log("No se pudo obtener el enlace de pago. Intenta de nuevo.");
