@@ -15,6 +15,9 @@ export const API_URL = (environment === 'dev') ? `${API_BASE_URL}dev${API_DOMAIN
  * @param {string} [customerEmail] - El email del cliente (opcional).
  * @param {string} [customerId] - El ID del cliente (opcional).
  * @param {string} [firebaseUser] - El ID del usuario de Firebase (opcional). <--- ¡NUEVO PARÁMETRO!
+ * @param {number} [unidades]
+ * @param {string} [mode]
+ * @param {string} [gaCliente]
  */
 export async function creaLinkSesion(priceId, customerEmail = null, customerId = null, firebaseUser = null, unidades = null, mode= null, gaCliente = null) {
     try {

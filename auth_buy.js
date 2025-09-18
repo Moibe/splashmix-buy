@@ -50,32 +50,3 @@ firebase.auth().onAuthStateChanged((user) => {
         //updateUI(null);
     }
 });
-
-// // Función para actualizar la interfaz de usuario
-// function updateUI(user) {
-//     if (user) {
-//         console.log("updateUI, actualizando...", user)
-//         // messageDiv.textContent = ``;
-//         // googleSignInButton.innerText = 
-        
-//         for (const message of messageDivs) {
-//             message.innerText = "";
-//           }
-
-
-//         for (const button of googleSignInButtons) {
-//             button.innerText = "Ir a la APP 👉🏻";
-//           }
-       
-//     } else {
-//         // Muestra el botón de inicio de sesión y oculta el de cierre de sesión
-//         for (const message of messageDivs) {
-//             message.innerText = "¡Prúebalo con tu foto ya mismo!";
-//           }
-
-
-//         for (const button of googleSignInButtons) {
-//             button.innerText = "Conecta con Google";
-//           }
-//     }
-// }
