@@ -77,7 +77,7 @@ export function botonCellFormatter(cell, formatterParams, onRendered){
 
     if (result && result.url) {
         console.log(`[${priceId}] URL obtenida: ${result.url}. Redirigiendo...`);
-        window.open(result.url, '_blank');
+        window.open(result.url, '_self');
     } else {
         console.warn(`[${priceId}] Resultado de API no válido:`, result);
         console.log("No se pudo obtener el enlace de pago. Intenta de nuevo.");
