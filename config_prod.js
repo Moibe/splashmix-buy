@@ -1,4 +1,4 @@
-const firebaseConfig = {
+const firebaseConfig_prod = {
   apiKey: "AIzaSyBSlzBn-wxB4PrldzfAF8_xtEW2E6HIqJ8",
   authDomain: "splashmix-ai.firebaseapp.com",
   projectId: "splashmix-ai",

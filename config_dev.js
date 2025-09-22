@@ -1,4 +1,4 @@
-const firebaseConfig = {
+const firebaseConfig_dev = {
   apiKey: "AIzaSyDGYZJ87hn-RfveqC_BydFQEJTMSvS7eK4",
   authDomain: "splashmix-88e15.firebaseapp.com",
   projectId: "splashmix-88e15",

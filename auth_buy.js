@@ -1,5 +1,5 @@
 //Conexión con Firebase
-firebase.initializeApp(firebaseConfig);
+firebase.initializeApp(firebaseConfig_dev); //ahora aquí cambiará entre si quieres usar firestore de producción o dev.
 
 let currentFirebaseUser = null; // Variable para almacenar el usuario actual
 
