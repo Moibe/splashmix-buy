@@ -1,0 +1,83 @@
+@keyframes animar_fondo {
+    from {
+        background-position: 0% 0%;
+    }
+    to {
+        background-position: 100% 100%;
+    }
+}
+
+.fondo-animado {
+    background: linear-gradient(135deg, #007bff, #1079d4, #175da8,#007bff);
+    background-size: 400% 400%;
+    animation: animar_fondo 15s ease infinite alternate;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0; 
+    font-family: 'Roboto', sans-serif;
+    background-color: #007bff;
+}
+
+/* New styles for the glassmorphism effect */
+.glass-effect {
+  /* Step 2.1: Make the background slightly transparent */
+  /* background-color: rgba(0, 123, 255, 1, 0.5); */
+  background-color:  rgba(255, 255, 255, 0.9);
+
+  /* Step 2.2: Apply the blur and backdrop-filter */
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px); /* For Safari support */
+  border: 1px solid rgba(0, 0, 0, 0.18); /* A subtle white border for the "glass" edge */
+  box-shadow: 0 8px 32px 0 rgba(255, 255, 255, 0.9);
+}
+
+
+.glass-effect .table tbody {
+    background-color: transparent !important;
+}
+
+.glass-effect .table {
+    background-color: transparent !important;
+}
+
+.glass-effect .table tr {
+    background-color: transparent !important;
+    border-bottom: none !important; /* Elimina la línea divisoria si aún existe */
+}
+
+.glass-effect .table td {
+    background-color: transparent !important;
+}
+
+.glass-effect .table thead {
+    background-color: transparent !important;
+    color: rgb(0, 0, 0);
+}
+
+/* Asegura que todo el texto de la tabla sea blanco */
+.glass-effect .table th {
+    background-color: transparent !important;
+    color: transparent !important;
+}
+.glass-effect .table td {
+    color: rgb(0, 0, 0) !important;
+}
+
+/* También puedes hacerlo para los íconos de Font Awesome */
+
+.glass-effect .table td i {
+    color: rgb(126, 9, 100);
+    background-color: transparent !important;    
+}
+
+/* Y para el efecto hover, para que no cambie el color del texto */
+.glass-effect .table-hover tbody tr:hover td,
+.glass-effect .table-hover tbody tr:hover th {
+    color: rgb(255, 255, 255) !important;
+    background-color: rgb(9, 82, 240) !important;
+}
