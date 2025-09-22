@@ -23,7 +23,7 @@ const loadScript = (src, isModule = false) => {
 loadScript(configFileName)
     .then(() => {
         console.log(`El archivo de configuración ${configFileName} se ha cargado correctamente.`);
-        // Una vez que la configuración está lista, carga auth_buy.js
+        // Una vez que la configuración está lista, carga auth_buy .js
         return loadScript('auth_buy.js', true);
     })
     .then(() => {
