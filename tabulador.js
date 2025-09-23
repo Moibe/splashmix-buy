@@ -10,17 +10,20 @@ var table = new Tabulator("#tabla_tabulator", {
 	headerVisible: false,
 	resizableColumns: false, 
  	columns:[ //Define Table Columns
-		{title:"", field:"cxt", width: "26%", headerHozAlign:"center", headerSort: false, hozAlign:"center", vertAlign:"middle"}, //, cssClass:"first-column-padding"		
-		{title:"", field:"paquete", width: "20%", headerHozAlign:"center", headerSort: false, hozAlign:"center", vertAlign:"middle"},	 	
-	 	{title:"", field:"costo", width: "27%", headerHozAlign:"center", headerSort: false, hozAlign:"center", vertAlign:"middle"},
+		{title:"", field:"cxt", width: "26%", hozAlign:"left", vertAlign:"middle", 
+			cssClass:"first-column-padding"
+		}, 		
+		{title:"", field:"paquete", width: "20%", hozAlign:"left", vertAlign:"middle"},	 	
+	 	{title:"", field:"costo", width: "27%", hozAlign:"left", vertAlign:"middle"},
 		{
             title:"", // Título de la columna
             field:"boton_texto", // Usa un campo existente para que Tabulator lo asigne
             formatter: botonCellFormatter, // <-- Aquí usas la función de formato
-            hozAlign:"center",
+            hozAlign:"left",
             width: "27%", // Ajusta el ancho según necesites
             headerSort:false,
-			vertAlign:"middle"
+			vertAlign:"middle",
+			cssClass:"last-column-padding"
         },	
  	],
 });

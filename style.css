@@ -126,11 +126,9 @@ div{
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 100vh; /* Para que se centre verticalmente */
-
-  /* NUEVO: Para que ocupe el 90% del ancho de la ventana */
-  width: 90vw; /* Usa 'vw' para el ancho de la ventana */
-  max-width: 90vw; /* Opcional pero recomendado para sobrescribir cualquier max-width de Bootstrap */
+  height: 100vh;   
+  width: 90vw; 
+  max-width: 90vw;
 }
 
 /* El resto de tu CSS para los contenedores rosas y las filas... */
@@ -185,19 +183,10 @@ div{
 
 .sombra_tabla {
     /* Una sombra muy fuerte y con color para que sea imposible no verla */
-    box-shadow: 0px 0px 0px 10px rgb(214, 247, 28), /* Un borde rojo para ver desbordamiento */
+    box-shadow: 0px 0px 0px 10px rgb(247, 28, 174), /* Un borde rojo para ver desbordamiento */
                 0px 8px 30px rgba(0, 0, 0, 0.5); /* Una sombra más pronunciada */
     border: none; /* Eliminar posibles bordes que interfieran */
 }
-
-/* .sombra_tabla{ */
-  /* width: 85%;
-  height: 85%;
-  margin-left: 10%; */
-  /* filter: drop-shadow(5px 5px 10px rgba(0, 0, 0, 0.5)); */
-  /* filter: drop-shadow(50px 50px rgba(6, 2, 71, 0.8)); */
-  /* box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
-} */
 
 .app-perspective {
   width: 100% !important;
@@ -617,10 +606,16 @@ p{
   max-width: 80%;
 }
 
+
+body{
+  font-family: 'Roboto', sans-serif;
+  font-size: 18px;
+  min-height: 100vh;
+}
+
 html,
-body,
 main {
-  min-height: 100%;
+  min-height: 100vh;
 }
 
 @-webkit-keyframes rubberBand {
@@ -671,37 +666,29 @@ main {
   }
 }
 
-button {
+/* button {
   padding: 10px 20px;
   background-color: #e938b4;
   color: white;
   border: none;
   cursor: pointer;
-  margin: 10px;
-}
+  
+} */
 
 button:hover {
   background-color: #c405a4cc;
 }
 
-button_test {
-  padding: 10px 20px;
-  background-color: #2b28f0;
-  color: white;
-  border: none;
-  cursor: pointer;
-  margin: 10px;
-}
-
 .boton_principal {
   display: inline-block;
-  padding: 6px 12px;
-  background-color: #f442b9; /* azul Google */
+  /* padding: 6px 12px; */
+  margin: 5px;
+  background-color: #4212f0; /* azul Google */
   color: white;
   text-decoration: none;
   border: none;
   border-radius: 6px;
-  font-size: 14px;
+  font-size: 1rem;
   font-family: inherit;
   cursor: pointer;
   text-align: center;
@@ -719,140 +706,81 @@ button_test {
     font-weight: bold;
 }
 
-/* Asegúrate de que este CSS se cargue *después* del CSS de Tabulator.js */
 
-.tabulator .tabulator-row.tabulator-row-even {
-    background-color: #ffffff !important; /* Blanco para filas pares */
+@keyframes animar_fondo {
+    from {
+        background-position: 0% 0%;
+    }
+    to {
+        background-position: 100% 100%;
+    }
 }
 
-.tabulator {
-    /* Define el radio de las esquinas. Puedes ajustar el valor (ej. 8px, 15px, etc.) */
-    border-radius: 8px; 
-    overflow: hidden;   
-
-    /* Opcional: Si tienes un borde exterior en la tabla, asegúrate de que también se redondee */
-    border: 1px solid #5a11e2; 
+.fondo-animado {
+    background: linear-gradient(135deg, #007bff, #1079d4, #175da8,#007bff);
+    background-size: 400% 400%;
+    animation: animar_fondo 15s ease infinite alternate;
 }
 
-/* Considera también redondear los encabezados y la última fila para una apariencia más uniforme */
-/* .tabulator .tabulator-header {
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
+/* New styles for the glassmorphism effect */
+.glass-effect {
+  /* Step 2.1: Make the background slightly transparent */
+  /* background-color: rgba(0, 123, 255, 1, 0.5); */
+  background-color:  rgba(255, 255, 255, 0.9);
+
+  /* Step 2.2: Apply the blur and backdrop-filter */
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px); /* For Safari support */
+  border: 1px solid rgba(0, 0, 0, 0.18); /* A subtle white border for the "glass" edge */
+  box-shadow: 0 8px 32px 0 rgba(255, 255, 255, 0.9);
 }
 
-.tabulator .tabulator-footer { 
-    border-bottom-left-radius: 8px;
-    border-bottom-right-radius: 8px;
-} 
-*/
 
-/* O, si prefieres que el fondo sea el color por defecto de su contenedor */
-
-.tabulator .tabulator-row.tabulator-row-even,
-.tabulator .tabulator-row.tabulator-row-odd {
+.glass-effect .table tbody {
     background-color: transparent !important;
 }
 
-
-/* Opcional: También puedes querer eliminar el color de hover si no quieres ese efecto */
-.tabulator .tabulator-row.tabulator-row:hover {
-    background-color: #F0F0F0; /* Un gris muy claro, puedes cambiar a #FFFFFF o transparent */
+.glass-effect .table {
+    background-color: transparent !important;
 }
 
-/* Asegúrate de que este CSS se cargue después de los estilos de Tabulator */
-
-/* Elimina el borde derecho de las celdas */
-/* .tabulator .tabulator-row .tabulator-cell {
-    border-right: none !important;
-} */
-
-/* Elimina el borde derecho de los encabezados de columna */
-/* .tabulator .tabulator-header .tabulator-col {
-    border-right: none !important;
-} */
-
-/* Opcional: Si notas que el último borde sigue apareciendo en alguna situación (aunque `border-right: none` debería ser suficiente) */
-/* .tabulator .tabulator-row .tabulator-cell:last-child {
-    border-right: none !important;
-}
-.tabulator .tabulator-header .tabulator-col:last-child {
-    border-right: none !important;
-} */
-
-/* === MODIFICACIONES PARA REDUCIR EL PADDING === */
-
-/* Para las celdas de datos */
-.tabulator .tabulator-row .tabulator-cell {
-    padding: 0px 0px 0px 0px !important; /* Ajusta estos valores */
-    /* border-right: 1px solid #ddd !important; */
-    border-bottom: none !important;
+.glass-effect .table tr {
+    background-color: transparent !important;
+    border-bottom: none !important; /* Elimina la línea divisoria si aún existe */
 }
 
-/* Para los encabezados de las columnas */
-/* .tabulator .tabulator-header .tabulator-col {
-    padding: 6px 8px !important;
-    border-right: 1px solid #ddd !important;
-    border-bottom: none !important;
-} */
-
-/* === FIN DE MODIFICACIONES === */
-
-/* --- MODIFICACIONES PARA QUITAR LÍNEAS VERTICALES --- */
-
-/* Para las celdas de datos */
-#tabla_tabulator.tabulator .tabulator-row .tabulator-cell {
-    border-right: none !important; /* ¡Quita el borde derecho! */
-    border-bottom: none !important; /* Asegura que no haya bordes inferiores en las celdas */
-    padding: 5px 0px 0px 0px !important; /* Mantén tu padding preferido */
+.glass-effect .table td {
+    background-color: transparent !important;
 }
 
-/* Para los encabezados de las columnas */
-/* #tabla_tabulator.tabulator .tabulator-header .tabulator-col {
-    border-right: none !important; 
-    border-bottom: none !important; 
-    padding: 4px 8px !important; 
-} */
-
-/* Asegurarse de que la última celda/columna tampoco tenga borde derecho (redundante con lo anterior, pero seguro) */
-#tabla_tabulator.tabulator .tabulator-row .tabulator-cell:last-child,
-#tabla_tabulator.tabulator .tabulator-header .tabulator-col:last-child {
-    border-right: none !important;}
-
-/* --- FIN DE MODIFICACIONES --- */
-
-/* --- MODIFICACIONES PARA ELIMINAR EL ARRASTRE VISUAL Y EL CURSOR --- */
-
-/* Eliminar el cursor de redimensión en los encabezados */
-#tabla_tabulator.tabulator .tabulator-col {
-    cursor: default !important; /* Cambia el cursor a la flecha estándar */
+.glass-effect .table thead {
+    background-color: transparent !important;
+    color: rgb(0, 0, 0);
 }
 
-/* Ocultar los "manejadores" de redimensión si Tabulator los está creando */
-#tabla_tabulator.tabulator .tabulator-col .tabulator-col-resize-handle {
-    display: none !important; /* Oculta los pequeños divs que permiten el arrastre */
+/* Asegura que todo el texto de la tabla sea blanco */
+.glass-effect .table th {
+    background-color: transparent !important;
+    color: transparent !important;
 }
-/* Asegúrate de que las áreas de la cabecera no permitan el texto arrastrable */
-#tabla_tabulator.tabulator .tabulator-header .tabulator-col .tabulator-col-content {
-    -webkit-user-select: none;  /* Desactiva selección de texto en Chrome/Safari */
-    -moz-user-select: none;     /* Desactiva selección de texto en Firefox */
-    -ms-user-select: none;      /* Desactiva selección de texto en IE/Edge */
-    user-select: none;          /* Desactiva selección de texto estándar */
+.glass-effect .table td {
+    color: rgb(0, 0, 0) !important;
 }
 
-/* --- FIN DE MODIFICACIONES --- */
+/* También puedes hacerlo para los íconos de Font Awesome */
 
-a {
-            text-decoration: none; /* Quita el subrayado por defecto de TODOS los enlaces */
-        }
+.glass-effect .table td i {
+    color: rgb(126, 9, 100);
+    background-color: transparent !important;    
+}
 
-a:hover {
-            text-decoration: underline; /* Opcional: Que aparezca al pasar el ratón */
-        }
+/* Y para el efecto hover, para que no cambie el color del texto */
+.glass-effect .table-hover tbody tr:hover td,
+.glass-effect .table-hover tbody tr:hover th {
+    color: rgb(255, 255, 255) !important;
+    background-color: rgb(9, 82, 240) !important;
+}
 
-/* #tabla_tabulator {    
-    padding-left: 15px !important; 
-} */
-
-#tabla_tabulator.tabulator .tabulator-row .tabulator-cell.first-column-padding {
-    padding-left: 30px !important; /* Ajusta este valor para el espacio deseado */
+div {
+  border: 0px solid yellow;
 }

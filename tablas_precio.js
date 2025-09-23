@@ -2,11 +2,11 @@
 const environment = 'dev'; //'dev' o 'prod'
 
 const tabledata_dev = [
-    {id:1, cxt:"👾10 imágenes", paquete:"$190 pesos", costo:"$19 x imagen",  mode: "payment", price_id: "price_1S1GF3ROVpWRmEfB6hRtG5Cy", imagenes: 10, boton_texto: "Comprar", boton:"<a href='' class='boton_principal'>Comprar</a>"},
-    {id:2, cxt:"👾40 imágenes", paquete:"$580 pesos", costo:"$14.5 x imagen",  mode: "payment", price_id: "price_1S1GLEROVpWRmEfBVlVTsuPC", imagenes: 40, boton_texto: "Comprar", boton:"<a href='' class='boton_principal'>Comprar</a>"},
-    {id:3, cxt:"👾80 imágenes", paquete:"$780 pesos", costo:"$9.75 x imagen",  mode: "payment", price_id: "price_1S1GMrROVpWRmEfBVqnTwG9g", imagenes: 80, boton_texto: "Comprar", boton:"<a href='' class='boton_principal'>Comprar</a>"},
-    {id:4, cxt:"👾320 imágenes", paquete:"$1600 pesos", costo:"$5 x imagen",  mode: "payment", price_id: "price_1S1GOSROVpWRmEfBvnjSrhQ9", imagenes: 320, boton_texto: "Comprar", boton:"<a href='' class='boton_principal'>Comprar</a>"},
-    {id:5, cxt:"👾1000 imágenes!", paquete:"$1900 pesos", costo:"$1.9 x imagen",  mode: "payment", price_id: "price_1S1GQPROVpWRmEfBYv6SoeuO", imagenes: 1000, boton_texto: "Comprar", boton:"<a href='' class='boton_principal'>Comprar</a>"},
+    {id:1, cxt:"👾10 imágenes", paquete:"$190 mxn", costo:"($19/imagen)",  mode: "payment", price_id: "price_1S1GF3ROVpWRmEfB6hRtG5Cy", imagenes: 10, boton_texto: "Comprar", boton:"<a href='' class='boton_principal'>Comprar</a>"},
+    {id:2, cxt:"👾40 imágenes", paquete:"$580 mxn", costo:"($14.5 x imagen)",  mode: "payment", price_id: "price_1S1GLEROVpWRmEfBVlVTsuPC", imagenes: 40, boton_texto: "Comprar", boton:"<a href='' class='boton_principal'>Comprar</a>"},
+    {id:3, cxt:"👾80 imágenes", paquete:"$780 mxn", costo:"($9.75 x imagen)",  mode: "payment", price_id: "price_1S1GMrROVpWRmEfBVqnTwG9g", imagenes: 80, boton_texto: "Comprar", boton:"<a href='' class='boton_principal'>Comprar</a>"},
+    {id:4, cxt:"👾320 imágenes", paquete:"$1600 mxn", costo:"($5 x imagen)",  mode: "payment", price_id: "price_1S1GOSROVpWRmEfBvnjSrhQ9", imagenes: 320, boton_texto: "Comprar", boton:"<a href='' class='boton_principal'>Comprar</a>"},
+    {id:5, cxt:"👾1000 imágenes!", paquete:"$1900 mxn", costo:"($1.9 x imagen)",  mode: "payment", price_id: "price_1S1GQPROVpWRmEfBYv6SoeuO", imagenes: 1000, boton_texto: "Comprar", boton:"<a href='' class='boton_principal'>Comprar</a>"},
 ];
 
 const tabledata_dev_world = [
