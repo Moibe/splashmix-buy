@@ -784,3 +784,22 @@ button:hover {
 div {
   border: 0px solid yellow;
 }
+
+@media (max-width: 576px) {
+    /* Reduce el tamaño de la fuente para que el texto ocupe menos espacio */
+    .glass-effect .table {
+        font-size: 0.8rem;
+    }
+
+    /* Reduce el padding para que las celdas sean más estrechas */
+    .glass-effect .table td,
+    .glass-effect .table th {
+        padding: 0.5rem;
+    }
+
+    /* Ajusta el tamaño de los botones para que quepan */
+    .glass-effect .table .btn {
+        padding: 0.2rem 0.5rem;
+        font-size: 0.7rem;
+    }
+}
