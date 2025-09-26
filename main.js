@@ -9,7 +9,7 @@ import { getFirebaseUser} from './auth_buy.js';
  */
 window.redirectToStripe = async function(priceId, unidades, mode) {
     try {
-        console.log("Entré a redirect 2 stripe:")
+        //console.log("Entré a redirect 2 stripe:")
         // console.log(`Llamando a la API para el priceId: ${priceId}`);
         // console.log(`Unidades: ${unidades}`);
 

@@ -8,7 +8,7 @@
 // 2. Accede a la variable globalmente por su nombre de string
 //const selectedConfig = window[configVariableName];
 
-varNombre = 'firebaseConfig_dev'
+let varNombre = 'firebaseConfig_dev'
 // 3. Inicializa Firebase
 firebase.initializeApp(varNombre); //Conexión con Firebase
 //firebase.initializeApp(firebaseConfig_dev); //ahora aquí cambiará entre si quieres usar firestore de producción o dev.
