@@ -1,5 +1,4 @@
 // link_manager.js
-console.log("Estoy en link manager...")
 document.addEventListener('DOMContentLoaded', () => {
     // 1. Obtiene el dominio actual de la página.
    

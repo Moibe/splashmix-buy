@@ -56,6 +56,7 @@ export async function creaLinkSesion(priceId, customerEmail = null, customerId =
         console.log("datos para enviar: ", datosParaEnviar)
         const formBody = new URLSearchParams(datosParaEnviar).toString();
         console.log("Esto es form body", formBody)
+        console.log("Y ésta es API URL: ", API_URL)
 
         // 1. Usar 'fetch' para hacer la solicitud HTTP con método POST
         const response = await fetch(API_URL, {
