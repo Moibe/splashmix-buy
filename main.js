@@ -39,7 +39,7 @@ window.redirectToStripe = async function(priceId, unidades, mode) {
 
         // Si la respuesta tiene una URL, redirige al usuario
         if (response && response.url) {
-            console.log("Redirigiendo a:", response.url);
+            //console.log("Redirigiendo a:", response.url);
             window.location.href = response.url;
         } else {
             console.error("La respuesta de la API no contiene una URL válida.");
