@@ -21,7 +21,6 @@ window.redirectToStripe = async function(priceId, unidades, mode) {
     let customerEmailToSend = null; // Variable para almacenar el email a enviar  
 
     if (firebaseUserObj) {
-        console.log("Entre a firebaseUser....")
         currentFirebaseUid = firebaseUserObj.uid; // El UID del usuario de Firebase
         console.log("Uid obtenido es: ", currentFirebaseUid)
         
