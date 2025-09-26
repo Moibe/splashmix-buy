@@ -60,7 +60,6 @@ export function botonCellFormatter(cell, formatterParams, onRendered){
         console.log(`Client ID: ${window.gaClientID}`);
         console.log(`[${priceId}] Usuario de Firebase detectado: ID=${currentFirebaseUid}, Email=${customerEmailToSend}`);
     } else {
-        console.log("Entré a firebase else...")
         console.log(`[${priceId}] No hay usuario de Firebase logueado. Se procederá sin email/ID de cliente.`);
     }
 
