@@ -32,11 +32,10 @@ export async function getFirebaseUserEmail() {
 }
 
 // Elementos del DOM
-const googleSignInButtons = document.getElementsByClassName('boton_firebase');
-const messageDivs = document.getElementsByClassName('mensaje_firebase');
-const logoutButton = document.getElementById('logout-button');
+// const googleSignInButtons = document.getElementsByClassName('boton_firebase');
+// const messageDivs = document.getElementsByClassName('mensaje_firebase');
+// const logoutButton = document.getElementById('logout-button');
 
-console.log("Estoy en auth_buy.js")
 
 // Listener para detectar el estado de autenticación
 firebase.auth().onAuthStateChanged((user) => {

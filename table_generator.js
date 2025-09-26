@@ -8,7 +8,6 @@ import { precios_dev, precios_prod } from './precios.js';
 // 3. Selecciona el set de datos correcto
 const precios = environment === 'dev' ? precios_dev : precios_prod;
 
-
 document.addEventListener('DOMContentLoaded', () => {
     const tableBody = document.getElementById('precios-table-body');
     

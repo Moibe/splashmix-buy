@@ -32,7 +32,7 @@ function injectGTM() {
           if (event.event === 'clientIDLoaded' && event.gaClientID) {
             // Guarda el Client ID en una variable global
             window.gaClientID = extraeClienteID(event.gaClientID);
-            console.log('Client ID guardado en la variable global:', window.gaClientID);
+            // console.log('Client ID guardado en la variable global:', window.gaClientID);
           }
         }
         return originalPush.apply(this, arguments);
