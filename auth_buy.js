@@ -6,10 +6,10 @@ const configVariableName = (environment === 'dev')
     : 'firebaseConfig_prod';
 
 // 2. Accede a la variable globalmente por su nombre de string
-const selectedConfig = window[configVariableName];
+//const selectedConfig = window[configVariableName];
 
 // 3. Inicializa Firebase
-firebase.initializeApp(selectedConfig); //Conexión con Firebase
+firebase.initializeApp(configVariableName); //Conexión con Firebase
 //firebase.initializeApp(firebaseConfig_dev); //ahora aquí cambiará entre si quieres usar firestore de producción o dev.
 
 let currentFirebaseUser = null; // Variable para almacenar el usuario actual
