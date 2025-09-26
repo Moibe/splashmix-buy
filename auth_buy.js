@@ -1,5 +1,16 @@
-//Conexión con Firebase
-firebase.initializeApp(firebaseConfig_dev); //ahora aquí cambiará entre si quieres usar firestore de producción o dev.
+import { environment } from './ambiente.js';
+
+// 1. Construye el nombre de la variable como un string
+const configVariableName = (environment === 'dev') 
+    ? 'firebaseConfig_dev' 
+    : 'firebaseConfig_prod';
+
+// 2. Accede a la variable globalmente por su nombre de string
+const selectedConfig = window[configVariableName];
+
+// 3. Inicializa Firebase
+firebase.initializeApp(selectedConfig); //Conexión con Firebase
+//firebase.initializeApp(firebaseConfig_dev); //ahora aquí cambiará entre si quieres usar firestore de producción o dev.
 
 let currentFirebaseUser = null; // Variable para almacenar el usuario actual
 
