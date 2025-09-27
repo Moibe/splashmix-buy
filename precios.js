@@ -1,7 +1,7 @@
 //Define los datos que serán usados por Tabulator
 //DEV
 export const precios_dev = [
-    {id:0, nombre:"🃏1 imagen", precio:"$0.10 mxn", cxt:"($0.1/imagen)",  mode: "payment", price_id: "price_1SC2vqIYi36CbmfWa8OOuQOP",  imagenes: 1},
+    {id:0, nombre:"🃏1 imagen", precio:"$0.10 mxn", cxt:"($0.1/imagen)",  mode: "payment", price_id: "price_1SC2nWROVpWRmEfBh85mNzdP",  imagenes: 1},
     {id:1, nombre:"🃏10 imágenes", precio:"$190 mxn", cxt:"($19/imagen)",  mode: "payment", price_id: "price_1S1GF3ROVpWRmEfB6hRtG5Cy",  imagenes: 10},
     {id:2, nombre:"🃏40 imágenes", precio:"$580 mxn", cxt:"($14.5/imagen)",  mode: "payment", price_id: "price_1S1GLEROVpWRmEfBVlVTsuPC", imagenes: 40},
     {id:3, nombre:"🃏80 imágenes", precio:"$780 mxn", cxt:"($9.75)/imagen",  mode: "payment", price_id: "price_1S1GMrROVpWRmEfBVqnTwG9g", imagenes: 80},
@@ -11,6 +11,7 @@ export const precios_dev = [
 
 //PROD
 export const precios_prod = [
+    {id:0, nombre:"🃏1 imagen", precio:"$0.10 mxn", cxt:"($0.1/imagen)",  mode: "payment", price_id: "price_1SC2vqIYi36CbmfWa8OOuQOP",  imagenes: 1},
     {id:1, nombre:"🃏10 imágenes", precio:"$190 mxn", cxt:"($19/imagen)",  mode: "payment", price_id: "price_1SBRWMIYi36CbmfWEVM1T8nC",  imagenes: 10},
     {id:2, nombre:"🃏40 imágenes", precio:"$580 mxn", cxt:"($14.5/imagen)",  mode: "payment", price_id: "price_1SBRSzIYi36CbmfWDtRx2ic7", imagenes: 40},
     {id:3, nombre:"🃏80 imágenes", precio:"$780 mxn", cxt:"($9.75)/imagen",  mode: "payment", price_id: "price_1SBRVNIYi36CbmfWsQyoKpTq", imagenes: 80},
