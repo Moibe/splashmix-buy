@@ -3,12 +3,35 @@ import { creaLinkSesion } from './api.js';
 import { getFirebaseUser} from './auth_buy.js';
 
 /**
+ * Función para mostrar el modal de carga
+ */
+function showLoadingModal() {
+    const loadingModal = document.getElementById('loadingModal');
+    if (loadingModal) {
+        loadingModal.classList.remove('hidden');
+    }
+}
+
+/**
+ * Función para ocultar el modal de carga
+ */
+function hideLoadingModal() {
+    const loadingModal = document.getElementById('loadingModal');
+    if (loadingModal) {
+        loadingModal.classList.add('hidden');
+    }
+}
+
+/**
  * Función para redirigir al usuario a la URL de pago de Stripe.
  * @param {string} priceId El ID del precio a comprar.
  * @param {number} unidades Las unidades del plan (ej. 10, 40, etc.).
  */
 window.redirectToStripe = async function(priceId, unidades, mode) {
     try {
+        // Mostrar el modal de carga inmediatamente
+        showLoadingModal();
+        
         //console.log("Entré a redirect 2 stripe:")
         // console.log(`Llamando a la API para el priceId: ${priceId}`);
         // console.log(`Unidades: ${unidades}`);
@@ -43,10 +66,12 @@ window.redirectToStripe = async function(priceId, unidades, mode) {
             window.location.href = response.url;
         } else {
             console.error("La respuesta de la API no contiene una URL válida.");
+            hideLoadingModal();
         }
     } catch (error) {
         // Manejo de errores en caso de que la llamada a la API falle
         console.error("Hubo un error al procesar la compra:", error);
+        hideLoadingModal();
         alert("Ocurrió un error al procesar tu solicitud. Por favor, intenta de nuevo más tarde.");
     }
 };
