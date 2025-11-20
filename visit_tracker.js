@@ -76,14 +76,14 @@ setTimeout(async () => {
             }
         }
 
-        // Registrar la visita cuando el documento esté listo
-        console.log("📍 [visit_tracker.js] Agregando listener a DOMContentLoaded...");
-
-        document.addEventListener('DOMContentLoaded', async () => {
-            console.log("🚀 [visit_tracker.js] DOMContentLoaded disparado - Registrando visita...");
+        // Esperar un poco más para asegurar que Firebase esté completamente listo
+        console.log("📍 [visit_tracker.js] Esperando 500ms más antes de registrar visita...");
+        
+        setTimeout(async () => {
+            console.log("🚀 [visit_tracker.js] Iniciando registro de visita...");
             const resultado = await registrarVisita();
-            console.log("🚀 [visit_tracker.js] DOMContentLoaded - Resultado de registrarVisita():", resultado);
-        });
+            console.log("🚀 [visit_tracker.js] Resultado de registrarVisita():", resultado);
+        }, 500);
 
         console.log("✅ [visit_tracker.js] MÓDULO COMPLETAMENTE CARGADO Y LISTO");
 
