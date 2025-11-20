@@ -145,19 +145,5 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <script type="module" src="main.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="cards.js" defer></script>   
-
-    <script>
-        // Versión más robusta
-        async function registroAutomatico() {
-            // Espera a que Firebase esté listo
-            const usuario = await getFirebaseUser();
-            if (usuario) {
-                await registrarVisita();
-            }
-        }
-
-        // Ejecuta cuando el script se carga
-        registroAutomatico();
-    </script>
 </body>
 </html>
