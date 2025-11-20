@@ -20,17 +20,21 @@ setTimeout(async () => {
         console.log("✅ [visit_tracker.js] Módulos importados correctamente");
 
         /**
-         * Obtener la fecha actual en formato YYYY-MM-DD
+         * Obtener la fecha y hora actual en formato YYYY-MM-DD HH:00 (por hora)
          */
-        function obtenerFechaHoy() {
-            const hoy = new Date();
-            return hoy.toISOString().split('T')[0];
+        function obtenerFechaHoraActual() {
+            const ahora = new Date();
+            const año = ahora.getFullYear();
+            const mes = String(ahora.getMonth() + 1).padStart(2, '0');
+            const día = String(ahora.getDate()).padStart(2, '0');
+            const hora = String(ahora.getHours()).padStart(2, '0');
+            return `${año}-${mes}-${día} ${hora}:00`;
         }
 
         /**
-         * Verificar si ya se registró una visita hoy en localStorage
+         * Verificar si ya se registró una visita en la última hora en localStorage
          */
-        function yaVisitóHoy(uid) {
+        function yaVisitóEstaHora(uid) {
             const key = `visita_${uid}`;
             const datosGuardados = localStorage.getItem(key);
             
@@ -39,17 +43,16 @@ setTimeout(async () => {
                 return false;
             }
             
-            const { fecha, timestamp } = JSON.parse(datosGuardados);
-            const fechaGuardada = fecha;
-            const fechaHoy = obtenerFechaHoy();
+            const { fechaHora, timestamp } = JSON.parse(datosGuardados);
+            const fechaHoraActual = obtenerFechaHoraActual();
             
-            if (fechaGuardada === fechaHoy) {
-                console.log(`📍 [visit_tracker.js] localStorage - Ya visitó hoy (${fechaHoy})`);
+            if (fechaHora === fechaHoraActual) {
+                console.log(`📍 [visit_tracker.js] localStorage - Ya visitó esta hora (${fechaHoraActual})`);
                 console.log(`📍 [visit_tracker.js] localStorage - Última visita: ${new Date(timestamp).toLocaleString()}`);
                 return true;
             }
             
-            console.log(`📍 [visit_tracker.js] localStorage - Última visita fue en ${fechaGuardada}, hoy es ${fechaHoy}`);
+            console.log(`📍 [visit_tracker.js] localStorage - Última visita fue en ${fechaHora}, ahora es ${fechaHoraActual}`);
             return false;
         }
 
@@ -59,7 +62,7 @@ setTimeout(async () => {
         function guardarVisitaEnLocalStorage(uid) {
             const key = `visita_${uid}`;
             const datosVisita = {
-                fecha: obtenerFechaHoy(),
+                fechaHora: obtenerFechaHoraActual(),
                 timestamp: Date.now()
             };
             localStorage.setItem(key, JSON.stringify(datosVisita));
@@ -68,17 +71,16 @@ setTimeout(async () => {
         }
 
         /**
-         * Verificar en Firestore si ya visitó hoy
+         * Verificar en Firestore si ya visitó en la última hora
          */
-        async function yaVisitóHoyEnFirestore(uid) {
+        async function yaVisitóEstaHoraEnFirestore(uid) {
             try {
-                console.log(`📝 [visit_tracker.js] Verificando en Firestore si visitó hoy...`);
+                console.log(`📝 [visit_tracker.js] Verificando en Firestore si visitó en la última hora...`);
                 
-                const hoy = new Date();
-                hoy.setHours(0, 0, 0, 0); // Inicio del día
+                const ahora = new Date();
+                const hace1Hora = new Date(ahora.getTime() - 60 * 60 * 1000); // 1 hora atrás
                 
-                const mañana = new Date(hoy);
-                mañana.setDate(mañana.getDate() + 1); // Inicio del día siguiente
+                console.log(`📝 [visit_tracker.js] Buscando visitas entre ${hace1Hora.toLocaleString()} y ${ahora.toLocaleString()}`);
                 
                 const db = firebase.firestore();
                 
@@ -86,17 +88,17 @@ setTimeout(async () => {
                     .collection('usuarios')
                     .doc(uid)
                     .collection('movimientos')
-                    .where('fecha', '>=', hoy)
-                    .where('fecha', '<', mañana)
+                    .where('fecha', '>=', hace1Hora)
+                    .where('fecha', '<=', ahora)
                     .where('movimiento', '==', 'visita a la página de compras')
                     .get();
                 
                 if (!snapshot.empty) {
-                    console.log(`✅ [visit_tracker.js] Firestore - Ya hay ${snapshot.size} visita(s) registrada(s) hoy`);
+                    console.log(`✅ [visit_tracker.js] Firestore - Ya hay ${snapshot.size} visita(s) en la última hora`);
                     return true;
                 }
                 
-                console.log(`📝 [visit_tracker.js] Firestore - No hay visitas registradas hoy`);
+                console.log(`📝 [visit_tracker.js] Firestore - No hay visitas en la última hora`);
                 return false;
             } catch (error) {
                 console.error('❌ [visit_tracker.js] Error al verificar en Firestore:', error.message);
@@ -130,15 +132,15 @@ setTimeout(async () => {
 
                 // VERIFICACIÓN 1: Verificar localStorage
                 console.log("\n🔍 [visit_tracker.js] === VERIFICACIÓN 1: localStorage ===");
-                if (yaVisitóHoy(uid)) {
-                    console.log("⏭️ [visit_tracker.js] Saltando registro - Ya visitó hoy (según localStorage)");
+                if (yaVisitóEstaHora(uid)) {
+                    console.log("⏭️ [visit_tracker.js] Saltando registro - Ya visitó en la última hora (según localStorage)");
                     return false;
                 }
 
                 // VERIFICACIÓN 2: Verificar Firestore
                 console.log("\n🔍 [visit_tracker.js] === VERIFICACIÓN 2: Firestore ===");
-                if (await yaVisitóHoyEnFirestore(uid)) {
-                    console.log("⏭️ [visit_tracker.js] Saltando registro - Ya visitó hoy (según Firestore)");
+                if (await yaVisitóEstaHoraEnFirestore(uid)) {
+                    console.log("⏭️ [visit_tracker.js] Saltando registro - Ya visitó en la última hora (según Firestore)");
                     // Guardar en localStorage también
                     guardarVisitaEnLocalStorage(uid);
                     return false;
