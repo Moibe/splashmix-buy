@@ -1,11 +1,14 @@
 /**
  * firestore_db.js
  * Módulo para manejar todas las operaciones con Firestore
+ * Usa firebase-firestore-compat para compatibilidad con firebase-app-compat
  */
 
 import { environment } from './ambiente.js';
 import { getFirebaseUser } from './auth_buy.js';
-import { getFirestore, collection, doc, setDoc, getDoc, getDocs, query, where, updateDoc, deleteDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
+
+// Usar firebase.firestore() de la versión compat
+// Necesitamos cargar el script de firestore-compat en el HTML
 
 // Obtener la instancia de Firestore (se inicializa después de que Firebase esté listo)
 let db = null;
@@ -14,7 +17,10 @@ let db = null;
 export function initializeFirestore(firebaseApp) {
     console.log("🔥 [firestore_db.js] initializeFirestore() - Inicializando...");
     console.log("🔥 [firestore_db.js] firebaseApp:", firebaseApp);
-    db = getFirestore(firebaseApp);
+    
+    // Usar firebase.firestore() en lugar de getFirestore() para compat
+    db = firebase.firestore();
+    
     console.log(`✅ [firestore_db.js] Firestore inicializado en modo ${environment}`);
     console.log("✅ [firestore_db.js] db instancia:", db);
     return db;

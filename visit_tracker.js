@@ -14,7 +14,6 @@ setTimeout(async () => {
     
     try {
         const { getFirebaseUser } = await import('./auth_buy.js');
-        const { getFirestore, collection, addDoc, serverTimestamp } = await import("https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js");
 
         console.log("✅ [visit_tracker.js] Módulos importados correctamente");
 
@@ -40,7 +39,7 @@ setTimeout(async () => {
                 console.log("✅ [visit_tracker.js] Email del usuario:", usuario.email);
 
                 console.log("📝 [visit_tracker.js] Obteniendo instancia de Firestore...");
-                const db = getFirestore();
+                const db = firebase.firestore();
                 console.log("✅ [visit_tracker.js] Firestore obtenido:", db);
 
                 const uid = usuario.uid;
@@ -50,15 +49,17 @@ setTimeout(async () => {
 
                 // Crear referencia a la subcolección movimientos del usuario
                 console.log(`📝 [visit_tracker.js] Creando referencia a colección: usuario/${uid}/movimientos`);
-                const movimientosRef = collection(db, 'usuario', uid, 'movimientos');
-                console.log("✅ [visit_tracker.js] Referencia creada:", movimientosRef);
-
-                // Crear documento de movimiento
+                
+                // Crear documento de movimiento usando firebase.firestore() compat
                 console.log("📝 [visit_tracker.js] Agregando documento a Firestore...");
-                const docRef = await addDoc(movimientosRef, {
-                    fecha: serverTimestamp(),
-                    movimiento: 'visita a la página de compras'
-                });
+                const docRef = await firebase.firestore()
+                    .collection('usuario')
+                    .doc(uid)
+                    .collection('movimientos')
+                    .add({
+                        fecha: firebase.firestore.FieldValue.serverTimestamp(),
+                        movimiento: 'visita a la página de compras'
+                    });
 
                 console.log('✅ [visit_tracker.js] Visita registrada exitosamente');
                 console.log('✅ [visit_tracker.js] ID del documento creado:', docRef.id);
