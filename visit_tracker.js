@@ -48,12 +48,12 @@ setTimeout(async () => {
                 console.log(`📝 [visit_tracker.js] Registrando visita para usuario: ${uid}`);
 
                 // Crear referencia a la subcolección movimientos del usuario
-                console.log(`📝 [visit_tracker.js] Creando referencia a colección: usuario/${uid}/movimientos`);
+                console.log(`📝 [visit_tracker.js] Creando referencia a colección: usuarios/${uid}/movimientos`);
                 
                 // Crear documento de movimiento usando firebase.firestore() compat
                 console.log("📝 [visit_tracker.js] Agregando documento a Firestore...");
                 const docRef = await firebase.firestore()
-                    .collection('usuario')
+                    .collection('usuarios')
                     .doc(uid)
                     .collection('movimientos')
                     .add({
@@ -63,7 +63,7 @@ setTimeout(async () => {
 
                 console.log('✅ [visit_tracker.js] Visita registrada exitosamente');
                 console.log('✅ [visit_tracker.js] ID del documento creado:', docRef.id);
-                console.log('✅ [visit_tracker.js] Ruta completa: usuario/' + uid + '/movimientos/' + docRef.id);
+                console.log('✅ [visit_tracker.js] Ruta completa: usuarios/' + uid + '/movimientos/' + docRef.id);
                 
                 return true;
 
