@@ -1,12 +1,18 @@
 import { environment } from './ambiente.js';
+import { initializeFirestore } from './firestore_db.js';
+
+let firebaseApp;
 
 if (environment === 'dev') {
     console.log("Inicializando Firebase en modo Desarrollo.");
-    firebase.initializeApp(firebaseConfig_dev);
+    firebaseApp = firebase.initializeApp(firebaseConfig_dev);
 } else {
     console.log("Inicializando Firebase en modo Producción.");
-    firebase.initializeApp(firebaseConfig_prod);
+    firebaseApp = firebase.initializeApp(firebaseConfig_prod);
 }
+
+// Inicializar Firestore
+initializeFirestore(firebaseApp);
 
 let currentFirebaseUser = null; // Variable para almacenar el usuario actual
 
