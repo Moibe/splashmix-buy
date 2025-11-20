@@ -50,20 +50,27 @@ setTimeout(async () => {
                 // Crear referencia a la subcolección movimientos del usuario
                 console.log(`📝 [visit_tracker.js] Creando referencia a colección: usuarios/${uid}/movimientos`);
                 
-                // Crear documento de movimiento usando firebase.firestore() compat
+                // Crear documento de movimiento usando timestamp como ID
                 console.log("📝 [visit_tracker.js] Agregando documento a Firestore...");
+                
+                // Generar timestamp actual en milisegundos
+                const timestamp = Date.now();
+                console.log(`📝 [visit_tracker.js] Timestamp generado: ${timestamp}`);
+                
                 const docRef = await firebase.firestore()
                     .collection('usuarios')
                     .doc(uid)
                     .collection('movimientos')
-                    .add({
+                    .doc(timestamp.toString())
+                    .set({
                         fecha: firebase.firestore.FieldValue.serverTimestamp(),
-                        movimiento: 'visita a la página de compras'
+                        movimiento: 'visita a la página de compras',
+                        timestamp: timestamp
                     });
 
                 console.log('✅ [visit_tracker.js] Visita registrada exitosamente');
-                console.log('✅ [visit_tracker.js] ID del documento creado:', docRef.id);
-                console.log('✅ [visit_tracker.js] Ruta completa: usuarios/' + uid + '/movimientos/' + docRef.id);
+                console.log('✅ [visit_tracker.js] ID del documento creado:', timestamp);
+                console.log('✅ [visit_tracker.js] Ruta completa: usuarios/' + uid + '/movimientos/' + timestamp);
                 
                 return true;
 
