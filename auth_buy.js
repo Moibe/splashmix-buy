@@ -1,26 +1,39 @@
 import { environment } from './ambiente.js';
 import { initializeFirestore } from './firestore_db.js';
 
+console.log("📌 [auth_buy.js] INICIANDO - Detectando entorno...");
+console.log(`📌 [auth_buy.js] Ambiente: ${environment}`);
+
 let firebaseApp;
 
 if (environment === 'dev') {
-    console.log("Inicializando Firebase en modo Desarrollo.");
+    console.log("🔧 [auth_buy.js] Inicializando Firebase en modo DESARROLLO");
     firebaseApp = firebase.initializeApp(firebaseConfig_dev);
 } else {
-    console.log("Inicializando Firebase en modo Producción.");
+    console.log("🔧 [auth_buy.js] Inicializando Firebase en modo PRODUCCIÓN");
     firebaseApp = firebase.initializeApp(firebaseConfig_prod);
 }
 
+console.log("✅ [auth_buy.js] Firebase inicializado");
+
 // Inicializar Firestore
+console.log("🔥 [auth_buy.js] Inicializando Firestore...");
 initializeFirestore(firebaseApp);
+console.log("✅ [auth_buy.js] Firestore inicializado");
 
 let currentFirebaseUser = null; // Variable para almacenar el usuario actual
+
+console.log("👤 [auth_buy.js] Configurando listener de autenticación...");
 
 const initialAuthStateResolved = new Promise(resolve => {
     firebase.auth().onAuthStateChanged((user) => {
         currentFirebaseUser = user; // Actualiza la variable con el usuario actual
-        console.log("Firebase Auth State Changed. User:", user ? user.uid : "No user");
-        //updateUI(user); // Llama a tu función existente para actualizar la UI
+        if (user) {
+            console.log("🟢 [auth_buy.js] Usuario DETECTADO - UID:", user.uid);
+            console.log("🟢 [auth_buy.js] Email:", user.email);
+        } else {
+            console.log("🔴 [auth_buy.js] NO hay usuario autenticado");
+        }
         resolve(user); // Resuelve la promesa con el objeto de usuario (o null)
     });
 });
@@ -28,7 +41,9 @@ const initialAuthStateResolved = new Promise(resolve => {
 // Exporta una función asíncrona para obtener el objeto completo del usuario de Firebase.
 // Si se llama antes de que Firebase haya determinado el estado inicial, esperará.
 export async function getFirebaseUser() {
+    console.log("📞 [auth_buy.js] getFirebaseUser() llamado - esperando estado inicial...");
     await initialAuthStateResolved; // Asegura que el estado inicial ya ha sido verificado
+    console.log("📞 [auth_buy.js] getFirebaseUser() resuelto - Usuario:", currentFirebaseUser ? currentFirebaseUser.uid : 'null');
     return currentFirebaseUser;
 }
 
@@ -48,11 +63,9 @@ export async function getFirebaseUserEmail() {
 firebase.auth().onAuthStateChanged((user) => {
     if (user) {
         // El usuario ha iniciado sesión
-        console.log("El usuario está logueado...")
-        //updateUI(user);
+        console.log("🟢 [auth_buy.js] Listener: Usuario logueado - UID:", user.uid);
     } else {
         // El usuario ha cerrado sesión o no ha iniciado sesión
-        console.log("El usuario no está logueado...")
-        //updateUI(null);
+        console.log("🔴 [auth_buy.js] Listener: Usuario NO logueado");
     }
 });

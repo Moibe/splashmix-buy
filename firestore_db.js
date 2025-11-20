@@ -12,16 +12,22 @@ let db = null;
 
 // Función para inicializar Firestore (se ejecuta después de que Firebase esté inicializado)
 export function initializeFirestore(firebaseApp) {
+    console.log("🔥 [firestore_db.js] initializeFirestore() - Inicializando...");
+    console.log("🔥 [firestore_db.js] firebaseApp:", firebaseApp);
     db = getFirestore(firebaseApp);
-    console.log(`Firestore inicializado en modo ${environment}`);
+    console.log(`✅ [firestore_db.js] Firestore inicializado en modo ${environment}`);
+    console.log("✅ [firestore_db.js] db instancia:", db);
     return db;
 }
 
 // Obtener la instancia de Firestore
 function getDB() {
+    console.log("🔍 [firestore_db.js] getDB() - Obteniendo instancia de Firestore...");
     if (!db) {
+        console.error("❌ [firestore_db.js] ERROR: Firestore NO ha sido inicializado");
         throw new Error('Firestore no ha sido inicializado. Asegúrate de llamar a initializeFirestore() primero.');
     }
+    console.log("✅ [firestore_db.js] db instancia disponible");
     return db;
 }
 
