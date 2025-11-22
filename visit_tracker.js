@@ -163,12 +163,13 @@ setTimeout(async () => {
                 console.log(`\n💾 [visit_tracker.js] Paso 4: Registrando visita en Firestore...`);
                 const db = firebase.firestore();
                 const timestamp = Date.now();
+                const movimientoId = `${timestamp}-buyweb`;
                 
                 await db
                     .collection('usuarios')
                     .doc(documentId)
                     .collection('movimientos')
-                    .doc(timestamp.toString())
+                    .doc(movimientoId)
                     .set({
                         fecha: firebase.firestore.FieldValue.serverTimestamp(),
                         movimiento: 'visita a la página de compras',
@@ -176,7 +177,7 @@ setTimeout(async () => {
                     });
 
                 console.log(`✅ [visit_tracker.js] Visita registrada exitosamente`);
-                console.log(`✅ [visit_tracker.js] Firestore path: usuarios/${documentId}/movimientos/${timestamp}`);
+                console.log(`✅ [visit_tracker.js] Firestore path: usuarios/${documentId}/movimientos/${movimientoId}`);
                 
                 // 5. Guardar en localStorage
                 console.log(`\n💾 [visit_tracker.js] Paso 5: Guardando en localStorage...`);

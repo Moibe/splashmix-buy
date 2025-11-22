@@ -255,12 +255,13 @@ export async function registrarCompra(userId, priceId, imagenes, monto) {
         console.log(`\n💾 [firestore_db.js] Paso 2: Registrando movimiento de compra...`);
         const db = getDB();
         const timestamp = Date.now();
+        const movimientoId = `${timestamp}-buyweb`;
         
         await db
             .collection('usuarios')
             .doc(documentId)
             .collection('movimientos')
-            .doc(timestamp.toString())
+            .doc(movimientoId)
             .set({
                 fecha: firebase.firestore.FieldValue.serverTimestamp(),
                 movimiento: 'compra de imágenes',
@@ -271,10 +272,10 @@ export async function registrarCompra(userId, priceId, imagenes, monto) {
             });
         
         console.log(`✅ [firestore_db.js] Compra registrada exitosamente`);
-        console.log(`✅ [firestore_db.js] Ruta: usuarios/${documentId}/movimientos/${timestamp}`);
+        console.log(`✅ [firestore_db.js] Ruta: usuarios/${documentId}/movimientos/${movimientoId}`);
         console.log(`✅ [firestore_db.js] ===== COMPRA COMPLETADA =====\n`);
         
-        return timestamp.toString();
+        return movimientoId;
     } catch (error) {
         console.error('❌ [firestore_db.js] Error al registrar compra:', error.message);
         throw error;
