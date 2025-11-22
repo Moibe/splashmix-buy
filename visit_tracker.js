@@ -20,6 +20,36 @@ setTimeout(async () => {
         console.log("✅ [visit_tracker.js] Módulos importados correctamente");
 
         /**
+         * Buscar el documento del usuario por su UID en el campo 'uid'
+         * Retorna el ID del documento (timestamp-uid-correo)
+         */
+        async function obtenerDocumentoUsuarioPorUID(uidFirebase) {
+            try {
+                console.log(`📝 [visit_tracker.js] Buscando documento de usuario con UID: ${uidFirebase}`);
+                
+                const db = firebase.firestore();
+                
+                const snapshot = await db
+                    .collection('usuarios')
+                    .where('uid', '==', uidFirebase)
+                    .limit(1)
+                    .get();
+                
+                if (snapshot.empty) {
+                    console.error(`❌ [visit_tracker.js] No se encontró documento de usuario con UID: ${uidFirebase}`);
+                    return null;
+                }
+                
+                const docId = snapshot.docs[0].id;
+                console.log(`✅ [visit_tracker.js] Documento encontrado - ID: ${docId}`);
+                return docId;
+            } catch (error) {
+                console.error('❌ [visit_tracker.js] Error al buscar documento del usuario:', error.message);
+                return null;
+            }
+        }
+
+        /**
          * Obtener la fecha y hora actual en formato YYYY-MM-DD HH:00 (por hora)
          */
         function obtenerFechaHoraActual() {
@@ -33,13 +63,14 @@ setTimeout(async () => {
 
         /**
          * Verificar si ya se registró una visita en la última hora en localStorage
+         * Usa el documentId (timestamp-uid-correo) como clave
          */
-        function yaVisitóEstaHora(uid) {
-            const key = `visita_${uid}`;
+        function yaVisitóEstaHora(documentId) {
+            const key = `visita_${documentId}`;
             const datosGuardados = localStorage.getItem(key);
             
             if (!datosGuardados) {
-                console.log(`📍 [visit_tracker.js] localStorage - No hay visita registrada para ${uid}`);
+                console.log(`📍 [visit_tracker.js] localStorage - No hay visita registrada para ${documentId}`);
                 return false;
             }
             
@@ -58,22 +89,24 @@ setTimeout(async () => {
 
         /**
          * Guardar visita en localStorage
+         * Usa el documentId (timestamp-uid-correo) como clave
          */
-        function guardarVisitaEnLocalStorage(uid) {
-            const key = `visita_${uid}`;
+        function guardarVisitaEnLocalStorage(documentId) {
+            const key = `visita_${documentId}`;
             const datosVisita = {
                 fechaHora: obtenerFechaHoraActual(),
                 timestamp: Date.now()
             };
             localStorage.setItem(key, JSON.stringify(datosVisita));
-            console.log(`✅ [visit_tracker.js] localStorage - Visita guardada para ${uid}`);
+            console.log(`✅ [visit_tracker.js] localStorage - Visita guardada para ${documentId}`);
             console.log(`✅ [visit_tracker.js] localStorage - Datos:`, datosVisita);
         }
 
         /**
          * Verificar en Firestore si ya visitó en la última hora
+         * Usa el documentId (timestamp-uid-correo) para acceder a la subcolección
          */
-        async function yaVisitóEstaHoraEnFirestore(uid) {
+        async function yaVisitóEstaHoraEnFirestore(documentId) {
             try {
                 console.log(`📝 [visit_tracker.js] Verificando en Firestore si visitó en la última hora...`);
                 
@@ -86,7 +119,7 @@ setTimeout(async () => {
                 
                 const snapshot = await db
                     .collection('usuarios')
-                    .doc(uid)
+                    .doc(documentId)
                     .collection('movimientos')
                     .where('fecha', '>=', hace1Hora)
                     .where('fecha', '<=', ahora)
@@ -112,61 +145,57 @@ setTimeout(async () => {
          * Crea un documento en la subcolección movimientos del usuario
          */
         async function registrarVisita() {
-            console.log("📝 [visit_tracker.js] registrarVisita() - INICIANDO...");
+            console.log(`\n🔄 [visit_tracker.js] ===== INICIANDO REGISTRO DE VISITA =====`);
+            console.log(`🔄 [visit_tracker.js] Hora: ${new Date().toLocaleString()}`);
             
             try {
-                console.log("📝 [visit_tracker.js] Obteniendo usuario de Firebase...");
-                // Obtener el usuario autenticado
+                // 1. Obtener usuario de Firebase
+                console.log(`\n📡 [visit_tracker.js] Paso 1: Obteniendo usuario de Firebase...`);
                 const usuario = await getFirebaseUser();
-
+                
                 if (!usuario) {
-                    console.warn('⚠️ [visit_tracker.js] No hay usuario autenticado. No se registrará la visita.');
-                    return false;
+                    console.error('❌ [visit_tracker.js] No hay usuario autenticado');
+                    return;
                 }
-
-                console.log("✅ [visit_tracker.js] Usuario obtenido");
-                console.log("✅ [visit_tracker.js] UID del usuario:", usuario.uid);
-                console.log("✅ [visit_tracker.js] Email del usuario:", usuario.email);
-
+                
                 const uid = usuario.uid;
-
-                // VERIFICACIÓN 1: Verificar localStorage
-                console.log("\n🔍 [visit_tracker.js] === VERIFICACIÓN 1: localStorage ===");
-                if (yaVisitóEstaHora(uid)) {
-                    console.log("⏭️ [visit_tracker.js] Saltando registro - Ya visitó en la última hora (según localStorage)");
-                    return false;
+                const email = usuario.email;
+                console.log(`✅ [visit_tracker.js] Usuario encontrado - UID: ${uid}, Email: ${email}`);
+                
+                // 1.5 Obtener el document ID del usuario en Firestore
+                console.log(`\n🔍 [visit_tracker.js] Paso 1.5: Buscando documento del usuario en Firestore...`);
+                const documentId = await obtenerDocumentoUsuarioPorUID(uid);
+                
+                if (!documentId) {
+                    console.error('❌ [visit_tracker.js] No se encontró el documento del usuario en Firestore');
+                    return;
                 }
-
-                // VERIFICACIÓN 2: Verificar Firestore
-                console.log("\n🔍 [visit_tracker.js] === VERIFICACIÓN 2: Firestore ===");
-                if (await yaVisitóEstaHoraEnFirestore(uid)) {
-                    console.log("⏭️ [visit_tracker.js] Saltando registro - Ya visitó en la última hora (según Firestore)");
-                    // Guardar en localStorage también
-                    guardarVisitaEnLocalStorage(uid);
-                    return false;
+                
+                console.log(`✅ [visit_tracker.js] Documento encontrado - ID: ${documentId}`);
+                
+                // 2. Verificar en localStorage
+                console.log(`\n📂 [visit_tracker.js] Paso 2: Verificando localStorage...`);
+                if (yaVisitóEstaHora(documentId)) {
+                    console.log(`⏸️  [visit_tracker.js] Registro cancelado - Última visita en localStorage es reciente`);
+                    return;
                 }
-
-                // REGISTRAR VISITA
-                console.log("\n📝 [visit_tracker.js] === REGISTRANDO VISITA ===");
-                console.log("📝 [visit_tracker.js] Obteniendo instancia de Firestore...");
+                
+                // 3. Verificar en Firestore
+                console.log(`\n🔍 [visit_tracker.js] Paso 3: Verificando Firestore...`);
+                if (await yaVisitóEstaHoraEnFirestore(documentId)) {
+                    console.log(`⏸️  [visit_tracker.js] Registro cancelado - Última visita en Firestore es reciente`);
+                    guardarVisitaEnLocalStorage(documentId);
+                    return;
+                }
+                
+                // 4. Registrar visita en Firestore
+                console.log(`\n💾 [visit_tracker.js] Paso 4: Registrando visita en Firestore...`);
                 const db = firebase.firestore();
-                console.log("✅ [visit_tracker.js] Firestore obtenido");
-
-                console.log(`📝 [visit_tracker.js] Registrando visita para usuario: ${uid}`);
-
-                // Crear referencia a la subcolección movimientos del usuario
-                console.log(`📝 [visit_tracker.js] Creando referencia a colección: usuarios/${uid}/movimientos`);
-                
-                // Crear documento de movimiento usando timestamp como ID
-                console.log("📝 [visit_tracker.js] Agregando documento a Firestore...");
-                
-                // Generar timestamp actual en milisegundos
                 const timestamp = Date.now();
-                console.log(`📝 [visit_tracker.js] Timestamp generado: ${timestamp}`);
                 
-                const docRef = await firebase.firestore()
+                await db
                     .collection('usuarios')
-                    .doc(uid)
+                    .doc(documentId)
                     .collection('movimientos')
                     .doc(timestamp.toString())
                     .set({
@@ -175,21 +204,19 @@ setTimeout(async () => {
                         timestamp: timestamp
                     });
 
-                console.log('✅ [visit_tracker.js] Visita registrada exitosamente');
-                console.log('✅ [visit_tracker.js] ID del documento creado:', timestamp);
-                console.log('✅ [visit_tracker.js] Ruta completa: usuarios/' + uid + '/movimientos/' + timestamp);
+                console.log(`✅ [visit_tracker.js] Visita registrada exitosamente`);
+                console.log(`✅ [visit_tracker.js] Firestore path: usuarios/${documentId}/movimientos/${timestamp}`);
                 
-                // Guardar en localStorage para evitar duplicados en esta sesión
-                guardarVisitaEnLocalStorage(uid);
+                // 5. Guardar en localStorage
+                console.log(`\n💾 [visit_tracker.js] Paso 5: Guardando en localStorage...`);
+                guardarVisitaEnLocalStorage(documentId);
                 
-                return true;
-
+                console.log(`\n✅ [visit_tracker.js] ===== REGISTRO COMPLETADO =====\n`);
+                
             } catch (error) {
                 console.error('❌ [visit_tracker.js] ERROR al registrar la visita:', error);
                 console.error('❌ [visit_tracker.js] Tipo de error:', error.code);
                 console.error('❌ [visit_tracker.js] Mensaje:', error.message);
-                console.error('❌ [visit_tracker.js] Stack:', error.stack);
-                return false;
             }
         }
 
@@ -198,8 +225,7 @@ setTimeout(async () => {
         
         setTimeout(async () => {
             console.log("🚀 [visit_tracker.js] Iniciando registro de visita...");
-            const resultado = await registrarVisita();
-            console.log("🚀 [visit_tracker.js] Resultado de registrarVisita():", resultado ? "✅ REGISTRADO" : "⏭️ SALTADO");
+            await registrarVisita();
         }, 500);
 
         console.log("✅ [visit_tracker.js] MÓDULO COMPLETAMENTE CARGADO Y LISTO");
