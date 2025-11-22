@@ -193,9 +193,9 @@ export async function deleteDocument(collectionName, docId) {
 
 /**
  * Buscar el documento del usuario por su UID en el campo 'uid'
- * Retorna el ID del documento (timestamp-uid-correo)
+ * Retorna el ID del documento (timestamp-uid-correo) y sus datos (incluyendo tokens)
  * @param {string} uidFirebase - UID de Firebase Auth
- * @returns {Promise<string|null>} ID del documento del usuario
+ * @returns {Promise<{docId: string, tokens: number}|null>} Objeto con ID del documento y tokens
  */
 export async function obtenerDocumentoUsuarioPorUID(uidFirebase) {
     try {
@@ -215,8 +215,11 @@ export async function obtenerDocumentoUsuarioPorUID(uidFirebase) {
         }
         
         const docId = snapshot.docs[0].id;
-        console.log(`✅ [firestore_db.js] Documento encontrado - ID: ${docId}`);
-        return docId;
+        const docData = snapshot.docs[0].data();
+        const tokens = docData.tokens || 0;
+        
+        console.log(`✅ [firestore_db.js] Documento encontrado - ID: ${docId}, Tokens: ${tokens}`);
+        return { docId, tokens };
     } catch (error) {
         console.error('❌ [firestore_db.js] Error al buscar documento del usuario:', error.message);
         return null;
@@ -242,14 +245,16 @@ export async function registrarCompra(userId, priceId, imagenes, monto) {
         
         // 1. Obtener el documento del usuario
         console.log(`\n📝 [firestore_db.js] Paso 1: Buscando documento del usuario...`);
-        const documentId = await obtenerDocumentoUsuarioPorUID(userId);
+        const usuarioData = await obtenerDocumentoUsuarioPorUID(userId);
         
-        if (!documentId) {
+        if (!usuarioData) {
             console.error('❌ [firestore_db.js] No se encontró el documento del usuario');
             throw new Error('No se encontró el documento del usuario en Firestore');
         }
         
-        console.log(`✅ [firestore_db.js] Documento encontrado: ${documentId}`);
+        const documentId = usuarioData.docId;
+        const tokens = usuarioData.tokens;
+        console.log(`✅ [firestore_db.js] Documento encontrado: ${documentId}, Tokens: ${tokens}`);
         
         // 2. Registrar movimiento de compra
         console.log(`\n💾 [firestore_db.js] Paso 2: Registrando movimiento de compra...`);
@@ -267,7 +272,8 @@ export async function registrarCompra(userId, priceId, imagenes, monto) {
                 movimiento: 'compra de imágenes',
                 priceId: priceId,
                 imagenes: imagenes,
-                monto: monto
+                monto: monto,
+                tokens: tokens
             });
         
         console.log(`✅ [firestore_db.js] Compra registrada exitosamente`);

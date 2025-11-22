@@ -135,14 +135,16 @@ setTimeout(async () => {
                 
                 // 1.5 Obtener el document ID del usuario en Firestore
                 console.log(`\n🔍 [visit_tracker.js] Paso 1.5: Buscando documento del usuario en Firestore...`);
-                const documentId = await obtenerDocumentoUsuarioPorUID(uid);
+                const usuarioData = await obtenerDocumentoUsuarioPorUID(uid);
                 
-                if (!documentId) {
+                if (!usuarioData) {
                     console.error('❌ [visit_tracker.js] No se encontró el documento del usuario en Firestore');
                     return;
                 }
                 
-                console.log(`✅ [visit_tracker.js] Documento encontrado - ID: ${documentId}`);
+                const documentId = usuarioData.docId;
+                const tokens = usuarioData.tokens;
+                console.log(`✅ [visit_tracker.js] Documento encontrado - ID: ${documentId}, Tokens: ${tokens}`);
                 
                 // 2. Verificar en localStorage
                 console.log(`\n📂 [visit_tracker.js] Paso 2: Verificando localStorage...`);
@@ -172,7 +174,8 @@ setTimeout(async () => {
                     .doc(movimientoId)
                     .set({
                         fecha: firebase.firestore.FieldValue.serverTimestamp(),
-                        movimiento: 'visita a la página de compras'
+                        movimiento: 'visita a la página de compras',
+                        tokens: tokens
                     });
 
                 console.log(`✅ [visit_tracker.js] Visita registrada exitosamente`);
