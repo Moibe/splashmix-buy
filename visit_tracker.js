@@ -16,38 +16,9 @@ setTimeout(async () => {
     
     try {
         const { getFirebaseUser } = await import('./auth_buy.js');
+        const { obtenerDocumentoUsuarioPorUID } = await import('./firestore_db.js');
 
         console.log("✅ [visit_tracker.js] Módulos importados correctamente");
-
-        /**
-         * Buscar el documento del usuario por su UID en el campo 'uid'
-         * Retorna el ID del documento (timestamp-uid-correo)
-         */
-        async function obtenerDocumentoUsuarioPorUID(uidFirebase) {
-            try {
-                console.log(`📝 [visit_tracker.js] Buscando documento de usuario con UID: ${uidFirebase}`);
-                
-                const db = firebase.firestore();
-                
-                const snapshot = await db
-                    .collection('usuarios')
-                    .where('uid', '==', uidFirebase)
-                    .limit(1)
-                    .get();
-                
-                if (snapshot.empty) {
-                    console.error(`❌ [visit_tracker.js] No se encontró documento de usuario con UID: ${uidFirebase}`);
-                    return null;
-                }
-                
-                const docId = snapshot.docs[0].id;
-                console.log(`✅ [visit_tracker.js] Documento encontrado - ID: ${docId}`);
-                return docId;
-            } catch (error) {
-                console.error('❌ [visit_tracker.js] Error al buscar documento del usuario:', error.message);
-                return null;
-            }
-        }
 
         /**
          * Obtener la fecha y hora actual en formato YYYY-MM-DD HH:00 (por hora)

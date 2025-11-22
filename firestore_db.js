@@ -192,8 +192,98 @@ export async function deleteDocument(collectionName, docId) {
 }
 
 /**
- * Función auxiliar para registrar una compra en Firestore
- * Útil para tu proyecto de compras
+ * Buscar el documento del usuario por su UID en el campo 'uid'
+ * Retorna el ID del documento (timestamp-uid-correo)
+ * @param {string} uidFirebase - UID de Firebase Auth
+ * @returns {Promise<string|null>} ID del documento del usuario
+ */
+export async function obtenerDocumentoUsuarioPorUID(uidFirebase) {
+    try {
+        console.log(`📝 [firestore_db.js] Buscando documento de usuario con UID: ${uidFirebase}`);
+        
+        const db = getDB();
+        
+        const snapshot = await db
+            .collection('usuarios')
+            .where('uid', '==', uidFirebase)
+            .limit(1)
+            .get();
+        
+        if (snapshot.empty) {
+            console.error(`❌ [firestore_db.js] No se encontró documento de usuario con UID: ${uidFirebase}`);
+            return null;
+        }
+        
+        const docId = snapshot.docs[0].id;
+        console.log(`✅ [firestore_db.js] Documento encontrado - ID: ${docId}`);
+        return docId;
+    } catch (error) {
+        console.error('❌ [firestore_db.js] Error al buscar documento del usuario:', error.message);
+        return null;
+    }
+}
+
+/**
+ * Registrar una compra en la subcollección movimientos del usuario
+ * Usa el documento composite (timestamp-uid-correo) del usuario
+ * @param {string} userId - UID del usuario de Firebase
+ * @param {string} priceId - ID del precio comprado
+ * @param {number} imagenes - Cantidad de imágenes
+ * @param {number} monto - Monto pagado
+ * @returns {Promise<string>} ID del documento de movimiento
+ */
+export async function registrarCompra(userId, priceId, imagenes, monto) {
+    try {
+        console.log(`\n💳 [firestore_db.js] ===== REGISTRANDO COMPRA =====`);
+        console.log(`💳 [firestore_db.js] Usuario UID: ${userId}`);
+        console.log(`💳 [firestore_db.js] Price ID: ${priceId}`);
+        console.log(`💳 [firestore_db.js] Imágenes: ${imagenes}`);
+        console.log(`💳 [firestore_db.js] Monto: ${monto}`);
+        
+        // 1. Obtener el documento del usuario
+        console.log(`\n📝 [firestore_db.js] Paso 1: Buscando documento del usuario...`);
+        const documentId = await obtenerDocumentoUsuarioPorUID(userId);
+        
+        if (!documentId) {
+            console.error('❌ [firestore_db.js] No se encontró el documento del usuario');
+            throw new Error('No se encontró el documento del usuario en Firestore');
+        }
+        
+        console.log(`✅ [firestore_db.js] Documento encontrado: ${documentId}`);
+        
+        // 2. Registrar movimiento de compra
+        console.log(`\n💾 [firestore_db.js] Paso 2: Registrando movimiento de compra...`);
+        const db = getDB();
+        const timestamp = Date.now();
+        
+        await db
+            .collection('usuarios')
+            .doc(documentId)
+            .collection('movimientos')
+            .doc(timestamp.toString())
+            .set({
+                fecha: firebase.firestore.FieldValue.serverTimestamp(),
+                movimiento: 'compra de imágenes',
+                priceId: priceId,
+                imagenes: imagenes,
+                monto: monto,
+                timestamp: timestamp
+            });
+        
+        console.log(`✅ [firestore_db.js] Compra registrada exitosamente`);
+        console.log(`✅ [firestore_db.js] Ruta: usuarios/${documentId}/movimientos/${timestamp}`);
+        console.log(`✅ [firestore_db.js] ===== COMPRA COMPLETADA =====\n`);
+        
+        return timestamp.toString();
+    } catch (error) {
+        console.error('❌ [firestore_db.js] Error al registrar compra:', error.message);
+        throw error;
+    }
+}
+
+/**
+ * Función auxiliar para registrar una compra en Firestore (DEPRECADA - usar registrarCompra)
+ * Mantener solo para compatibilidad hacia atrás
  * @param {string} userId - UID del usuario
  * @param {string} priceId - ID del precio comprado
  * @param {number} imagenes - Cantidad de imágenes
@@ -202,16 +292,8 @@ export async function deleteDocument(collectionName, docId) {
  */
 export async function logPurchase(userId, priceId, imagenes, monto) {
     try {
-        const purchaseData = {
-            userId,
-            priceId,
-            imagenes,
-            monto,
-            purchaseDate: serverTimestamp(),
-            status: 'completed'
-        };
-
-        return await createDocument('purchases', purchaseData);
+        // Usar la nueva función que registra en la subcollección correcta
+        return await registrarCompra(userId, priceId, imagenes, monto);
     } catch (error) {
         console.error('Error al registrar compra:', error);
         throw error;
