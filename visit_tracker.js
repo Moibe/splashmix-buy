@@ -172,8 +172,7 @@ setTimeout(async () => {
                     .doc(movimientoId)
                     .set({
                         fecha: firebase.firestore.FieldValue.serverTimestamp(),
-                        movimiento: 'visita a la página de compras',
-                        timestamp: timestamp
+                        movimiento: 'visita a la página de compras'
                     });
 
                 console.log(`✅ [visit_tracker.js] Visita registrada exitosamente`);

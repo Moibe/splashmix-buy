@@ -267,8 +267,7 @@ export async function registrarCompra(userId, priceId, imagenes, monto) {
                 movimiento: 'compra de imágenes',
                 priceId: priceId,
                 imagenes: imagenes,
-                monto: monto,
-                timestamp: timestamp
+                monto: monto
             });
         
         console.log(`✅ [firestore_db.js] Compra registrada exitosamente`);
