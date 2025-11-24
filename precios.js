@@ -61,10 +61,15 @@ function buscarTexto(textos, id_tipo_producto, id_pais) {
  */
 async function obtenerPreciosDelAPI() {
     try {
-        console.log(`📡 [precios.js] Obteniendo precios desde API: ${API_BASE_URL}/precios`);
+        // Filtrar por ambiente (dev/prod)
+        const ambienteActual = ambienteMap[environment] || 'production';
+        console.log(`🔍 [precios.js] Filtrando por ambiente: ${ambienteActual}`);
+        
+        const urlConFiltro = `${API_BASE_URL}/precios?ambiente=${ambienteActual}`;
+        console.log(`📡 [precios.js] Obteniendo precios desde API: ${urlConFiltro}`);
         
         const [responsePrecios, textos] = await Promise.all([
-            fetch(`${API_BASE_URL}/precios`),
+            fetch(urlConFiltro),
             obtenerTextosDelAPI()
         ]);
         
@@ -73,17 +78,12 @@ async function obtenerPreciosDelAPI() {
         }
         
         const resultado = await responsePrecios.json();
-        console.log(`✅ [precios.js] Se obtuvieron ${resultado.total} precios de la API`);
+        console.log(`✅ [precios.js] Se obtuvieron ${resultado.total} precios de la API para ambiente: ${ambienteActual}`);
         
-        // Filtrar por ambiente (dev/prod)
-        const ambienteActual = ambienteMap[environment] || 'production';
-        console.log(`🔍 [precios.js] Filtrando por ambiente: ${ambienteActual}`);
-        
-        const preciosFiltrados = resultado.data.filter(precio => precio.ambiente === ambienteActual);
-        console.log(`✅ [precios.js] Se filtraron ${preciosFiltrados.length} precios para ambiente: ${ambienteActual}`);
+        const preciosData = resultado.data;
         
         // Mapear los datos de la BD a la estructura esperada por table_generator.js
-        const preciosFormateados = preciosFiltrados.map(precio => {
+        const preciosFormateados = preciosData.map(precio => {
             // Buscar los textos correctos (singular/plural) para este precio
             const textosPrecio = buscarTexto(textos, precio.id_tipo_producto, precio.id_pais);
             

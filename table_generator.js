@@ -18,17 +18,16 @@ document.addEventListener('DOMContentLoaded', async () => {
         console.log(`📡 [table_generator.js] Intentando obtener precios de la API...`);
         precios = await obtenerPreciosDelAPI();
         
-        // TEMPORALMENTE: Sin fallback para verificar que carga de la API
         if (precios.length === 0) {
-            console.error(`❌ [table_generator.js] API retornó vacío - Sin fallback (verificación)`);
-            throw new Error('API retornó vacío');
+            console.warn(`⚠️  [table_generator.js] API retornó vacío, usando datos hardcodeados`);
+            precios = environment === 'dev' ? precios_dev : precios_prod;
         } else {
             console.log(`✅ [table_generator.js] Precios obtenidos de la API exitosamente`);
         }
     } catch (error) {
         console.error(`❌ [table_generator.js] Error al obtener precios de API:`, error);
-        console.error(`❌ [table_generator.js] Fallback deshabilitado para verificación`);
-        precios = [];
+        console.warn(`⚠️  [table_generator.js] Usando datos hardcodeados como fallback`);
+        precios = environment === 'dev' ? precios_dev : precios_prod;
     }
 
     let tableHTML = '';
