@@ -9,9 +9,9 @@ const isDevelopment = window.location.hostname === 'localhost' || window.locatio
 // URL base de la API según el ambiente
 const API_BASE_URL = isDevelopment 
     ? 'http://127.0.0.1:8000'
-    : 'http://165.22.53.200:8000';
+    : 'http://localhost:8000';
 
-console.log(`🌐 [precios.js] Ambiente detectado: ${isDevelopment ? 'DESARROLLO (localhost)' : 'PRODUCCIÓN (165.22.53.200)'}`);
+console.log(`🌐 [precios.js] Ambiente detectado: ${isDevelopment ? 'DESARROLLO (localhost)' : 'PRODUCCIÓN (server localhost)'}`);
 console.log(`🌐 [precios.js] URL de API: ${API_BASE_URL}`);
 
 // Mapeo del ambiente a los valores de la BD
