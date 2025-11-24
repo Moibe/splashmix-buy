@@ -21,6 +21,41 @@ const ambienteMap = {
 };
 
 /**
+ * Obtiene los textos (singular/plural) desde la API
+ * @returns {Promise<Array>} Array de textos
+ */
+async function obtenerTextosDelAPI() {
+    try {
+        console.log(`📡 [precios.js] Obteniendo textos desde API: ${API_BASE_URL}/textos`);
+        
+        const response = await fetch(`${API_BASE_URL}/textos`);
+        
+        if (!response.ok) {
+            throw new Error(`Error HTTP: ${response.status}`);
+        }
+        
+        const resultado = await response.json();
+        console.log(`✅ [precios.js] Se obtuvieron ${resultado.total} textos de la API`);
+        return resultado.data;
+    } catch (error) {
+        console.error('❌ [precios.js] Error al obtener textos:', error.message);
+        return [];
+    }
+}
+
+/**
+ * Busca el texto (singular/plural) para una combinación de tipo_producto + pais
+ * @param {Array} textos - Array de textos obtenidos de la API
+ * @param {number} id_tipo_producto - ID del tipo de producto
+ * @param {string} id_pais - ISO del país (ej: MXN, USD)
+ * @returns {Object} {unidad: singular, unidades: plural}
+ */
+function buscarTexto(textos, id_tipo_producto, id_pais) {
+    const texto = textos.find(t => t.id_tipo_producto === id_tipo_producto && t.id_pais === id_pais);
+    return texto ? { unidad: texto.unidad, unidades: texto.unidades } : { unidad: 'imagen', unidades: 'imágenes' };
+}
+
+/**
  * Obtiene los precios desde la API
  * @returns {Promise<Array>} Array de precios formateados
  */
@@ -28,13 +63,16 @@ async function obtenerPreciosDelAPI() {
     try {
         console.log(`📡 [precios.js] Obteniendo precios desde API: ${API_BASE_URL}/precios`);
         
-        const response = await fetch(`${API_BASE_URL}/precios`);
+        const [responsePrecios, textos] = await Promise.all([
+            fetch(`${API_BASE_URL}/precios`),
+            obtenerTextosDelAPI()
+        ]);
         
-        if (!response.ok) {
-            throw new Error(`Error HTTP: ${response.status}`);
+        if (!responsePrecios.ok) {
+            throw new Error(`Error HTTP: ${responsePrecios.status}`);
         }
         
-        const resultado = await response.json();
+        const resultado = await responsePrecios.json();
         console.log(`✅ [precios.js] Se obtuvieron ${resultado.total} precios de la API`);
         
         // Filtrar por ambiente (dev/prod)
@@ -46,11 +84,17 @@ async function obtenerPreciosDelAPI() {
         
         // Mapear los datos de la BD a la estructura esperada por table_generator.js
         const preciosFormateados = preciosFiltrados.map(precio => {
+            // Buscar los textos correctos (singular/plural) para este precio
+            const textosPrecio = buscarTexto(textos, precio.id_tipo_producto, precio.id_pais);
+            
+            // Usar el texto singular o plural según la cantidad
+            const textoPrincipal = precio.producto_cantidad === 1 ? textosPrecio.unidad : textosPrecio.unidades;
+            
             return {
                 id: precio.id,
-                nombre: `🃏${precio.producto_cantidad} imagen${precio.producto_cantidad !== 1 ? 's' : ''}`,
-                precio: `${precio.pais_simbolo}${precio.cantidad_precio} ${precio.pais_nombre}`,
-                cxt: `(${precio.pais_simbolo}${precio.ratio_imagen}/${precio.tipo_producto_nombre})`,
+                nombre: `🃏${precio.producto_cantidad} ${textoPrincipal}`,
+                precio: `${precio.pais_simbolo}${precio.cantidad_precio} ${precio.id_pais}`,
+                cxt: `(${precio.pais_simbolo}${precio.ratio_imagen}/${textosPrecio.unidad})`,
                 mode: "payment",
                 price_id: precio.price_id,
                 imagenes: precio.producto_cantidad
@@ -87,6 +131,6 @@ export const precios_prod = [
     {id:5, nombre:"🃏1000 imágenes", precio:"$1900 mxn", cxt:"($1.9/imagen)",  mode: "payment", price_id: "price_1SBPjIIYi36CbmfWOkNXYLcl", imagenes: 1000},
 ];
 
-// Exportar función para obtener precios dinámicamente
-export { obtenerPreciosDelAPI };
+// Exportar funciones para obtener datos dinámicamente
+export { obtenerPreciosDelAPI, obtenerTextosDelAPI };
 
