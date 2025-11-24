@@ -1,21 +1,38 @@
 // table_generator.js
 
 import { environment } from './ambiente.js'; 
-// 1. Importa ambos sets de datos desde tu archivo precios.js
-// Asegúrate de que el path sea correcto
-import { precios_dev, precios_prod } from './precios.js';
+import { obtenerPreciosDelAPI, precios_dev, precios_prod } from './precios.js';
 
-// 3. Selecciona el set de datos correcto
-const precios = environment === 'dev' ? precios_dev : precios_prod;
-
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
     const tableBody = document.getElementById('precios-table-body');
     
     if (!tableBody) return; 
 
+    console.log(`📍 [table_generator.js] Iniciando carga de precios...`);
+    console.log(`📍 [table_generator.js] Ambiente: ${environment}`);
+
+    let precios = [];
+
+    try {
+        // Intentar obtener precios de la API
+        console.log(`📡 [table_generator.js] Intentando obtener precios de la API...`);
+        precios = await obtenerPreciosDelAPI();
+        
+        if (precios.length === 0) {
+            console.warn(`⚠️  [table_generator.js] API retornó vacío, usando datos hardcodeados`);
+            precios = environment === 'dev' ? precios_dev : precios_prod;
+        } else {
+            console.log(`✅ [table_generator.js] Precios obtenidos de la API exitosamente`);
+        }
+    } catch (error) {
+        console.error(`❌ [table_generator.js] Error al obtener precios de API:`, error);
+        console.warn(`⚠️  [table_generator.js] Usando datos hardcodeados como fallback`);
+        precios = environment === 'dev' ? precios_dev : precios_prod;
+    }
+
     let tableHTML = '';
 
-    // Itera sobre el set de datos seleccionado (precios_dev o precios_prod)
+    // Itera sobre los precios
     precios.forEach(item => {
         
         tableHTML += `
@@ -38,4 +55,5 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Inserta todo el HTML de las filas en la tabla
     tableBody.innerHTML = tableHTML;
+    console.log(`✅ [table_generator.js] Tabla generada con ${precios.length} filas`);
 });
