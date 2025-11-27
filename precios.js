@@ -136,18 +136,18 @@ async function obtenerPreciosDelAPI() {
         // Obtener el país del usuario
         const paisUsuario = await obtenerPaisDelUsuario();
         
-        // Si no se encuentra país, retornar vacío
+        // Si no se encuentra país, usar fallback
         if (!paisUsuario || paisUsuario === 'null') {
-            console.warn(`⚠️ [precios.js] País del usuario es inválido o null, retornando array vacío`);
-            console.warn(`⚠️ [precios.js] paisUsuario recibido: "${paisUsuario}"`);
-            return [];
+            console.warn(`⚠️ [precios.js] País del usuario es inválido o null, usando fallback: MXN`);
+            usofallbackPais = true;
+            return obtenerPreciosConFallback('MXN');
         }
         
-        // Filtrar por ambiente (dev/prod)
+        // Intentar obtener precios con el país encontrado
         const ambienteActual = ambienteMap[environment] || 'production';
         console.log(`🔍 [precios.js] Filtrando por ambiente: ${ambienteActual}, país: ${paisUsuario}`);
         
-        const urlConFiltro = `${API_BASE_URL}/precios?ambiente=${ambienteActual}&pais=${paisUsuario}`;
+        const urlConFiltro = `${API_BASE_URL}/precios?ambiente=${ambienteActual}&iso_alpha2=${paisUsuario}`;
         console.log(`📡 [precios.js] Obteniendo precios desde API: ${urlConFiltro}`);
         
         const [responsePrecios, textos] = await Promise.all([
@@ -162,6 +162,15 @@ async function obtenerPreciosDelAPI() {
         const resultado = await responsePrecios.json();
         console.log(`✅ [precios.js] Se obtuvieron ${resultado.total} precios de la API para ambiente: ${ambienteActual}, país: ${paisUsuario}`);
         
+        // Si el país encontrado no tiene precios, usar fallback
+        if (!resultado.data || resultado.data.length === 0) {
+            console.warn(`⚠️ [precios.js] El país ${paisUsuario} no tiene precios, usando fallback: MXN`);
+            usofallbackPais = true;
+            return obtenerPreciosConFallback('MXN');
+        }
+        
+        // El país tiene precios, usarlos
+        usofallbackPais = false;
         const preciosData = resultado.data;
         
         // Mapear los datos de la BD a la estructura esperada por table_generator.js
@@ -188,9 +197,22 @@ async function obtenerPreciosDelAPI() {
     } catch (error) {
         console.error('❌ [precios.js] Error al obtener precios:', error.message);
         console.error('❌ [precios.js] Stack:', error.stack);
-        // Retornar array vacío en caso de error
-        return [];
+        // En caso de error, usar fallback
+        usofallbackPais = true;
+        return obtenerPreciosConFallback('MXN');
     }
+}
+
+/**
+ * Obtiene precios del fallback (datos hardcodeados)
+ * @param {string} pais - País del fallback
+ * @returns {Array} Array de precios formateados
+ */
+function obtenerPreciosConFallback(pais) {
+    console.log(`📦 [precios.js] Usando datos hardcodeados (fallback) para: ${pais}`);
+    const precios = environment === 'dev' ? precios_dev : precios_prod;
+    console.log(`✅ [precios.js] Retornando ${precios.length} precios del fallback`);
+    return precios;
 }
 
 // Datos para dev (mantener como fallback)
