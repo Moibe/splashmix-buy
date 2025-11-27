@@ -84,6 +84,7 @@ async function obtenerPaisDelUsuario() {
         console.error(`❌ [precios.js] Stack:`, error.stack);
         return null;
     }
+}
 
 /**
  * Obtiene los textos (singular/plural) desde la API
