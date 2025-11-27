@@ -138,7 +138,7 @@ async function obtenerPreciosDelAPI() {
         
         // Si no se encuentra país, usar fallback
         if (!paisUsuario || paisUsuario === 'null') {
-            console.warn(`⚠️ [precios.js] País del usuario es inválido o null, usando fallback: MXN`);
+            console.warn(`%c⚠️ [FALLBACK ACTIVADO] País del usuario es inválido o null, usando fallback: MXN`, 'color: #ff9800; font-weight: bold; font-size: 12px;');
             usofallbackPais = true;
             return obtenerPreciosConFallback('MXN');
         }
@@ -164,7 +164,7 @@ async function obtenerPreciosDelAPI() {
         
         // Si el país encontrado no tiene precios, usar fallback
         if (!resultado.data || resultado.data.length === 0) {
-            console.warn(`⚠️ [precios.js] El país ${paisUsuario} no tiene precios, usando fallback: MXN`);
+            console.warn(`%c⚠️ [FALLBACK ACTIVADO] País ${paisUsuario} no tiene precios en la BD. Usando datos por defecto (MXN)`, 'color: #ff9800; font-weight: bold; font-size: 12px;');
             usofallbackPais = true;
             return obtenerPreciosConFallback('MXN');
         }
@@ -195,8 +195,8 @@ async function obtenerPreciosDelAPI() {
         console.log(`✅ [precios.js] Precios formateados:`, preciosFormateados);
         return preciosFormateados;
     } catch (error) {
-        console.error('❌ [precios.js] Error al obtener precios:', error.message);
-        console.error('❌ [precios.js] Stack:', error.stack);
+        console.error(`%c❌ [FALLBACK ACTIVADO] Error al obtener precios: ${error.message}`, 'color: #f44336; font-weight: bold; font-size: 12px;');
+        console.error('Stack:', error.stack);
         // En caso de error, usar fallback
         usofallbackPais = true;
         return obtenerPreciosConFallback('MXN');
@@ -209,9 +209,8 @@ async function obtenerPreciosDelAPI() {
  * @returns {Array} Array de precios formateados
  */
 function obtenerPreciosConFallback(pais) {
-    console.log(`📦 [precios.js] Usando datos hardcodeados (fallback) para: ${pais}`);
+    console.log(`%c📦 [FALLBACK] Retornando ${environment === 'dev' ? precios_dev.length : precios_prod.length} precios hardcodeados (${pais})`, 'color: #4caf50; font-weight: bold; font-size: 12px;');
     const precios = environment === 'dev' ? precios_dev : precios_prod;
-    console.log(`✅ [precios.js] Retornando ${precios.length} precios del fallback`);
     return precios;
 }
 
