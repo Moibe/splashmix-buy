@@ -37,24 +37,41 @@ async function obtenerPaisDelUsuario() {
         return paisLocalStorage;
     }
     
+    console.log(`🌍 [precios.js] ⚠️ No se encontró país en localStorage (country_geolocation, country_header, country_ip)`);
+    
     // 2. Si no está en localStorage, consultar Firestore
     try {
         const user = await getFirebaseUser();
-        if (user) {
-            console.log(`🔍 [precios.js] Usuario autenticado, buscando país en Firestore...`);
-            
-            // Obtener el documento del usuario usando la función existente
-            const usuarioData = await obtenerDocumentoUsuarioPorUID(user.uid);
-            
-            if (usuarioData && usuarioData.pais) {
-                console.log(`🌍 [precios.js] País obtenido de Firestore: ${usuarioData.pais}`);
-                // Guardar en localStorage para próximas consultas
-                localStorage.setItem('country_geolocation', usuarioData.pais);
-                return usuarioData.pais;
-            }
+        
+        if (!user) {
+            console.warn(`⚠️ [precios.js] No hay usuario autenticado en Firebase, no se puede consultar Firestore`);
+            return null;
+        }
+        
+        console.log(`🔍 [precios.js] Usuario autenticado, buscando país en Firestore...`);
+        console.log(`🔍 [precios.js] UID del usuario: ${user.uid}`);
+        
+        // Obtener el documento del usuario usando la función existente
+        const usuarioData = await obtenerDocumentoUsuarioPorUID(user.uid);
+        
+        if (!usuarioData) {
+            console.warn(`⚠️ [precios.js] No se encontró documento del usuario en Firestore`);
+            return null;
+        }
+        
+        if (usuarioData.pais) {
+            console.log(`🌍 [precios.js] País obtenido de Firestore: ${usuarioData.pais}`);
+            // Guardar en localStorage para próximas consultas
+            localStorage.setItem('country_geolocation', usuarioData.pais);
+            return usuarioData.pais;
+        } else {
+            console.warn(`⚠️ [precios.js] El usuario no tiene país configurado en Firestore`);
+            return null;
         }
     } catch (error) {
-        console.warn(`⚠️ [precios.js] Error al consultar Firestore:`, error.message);
+        console.error(`❌ [precios.js] Error al consultar Firestore:`, error.message);
+        console.error(`❌ [precios.js] Stack:`, error.stack);
+        return null;
     }
     
     // 3. Fallback a país por defecto (México)
@@ -107,8 +124,9 @@ async function obtenerPreciosDelAPI() {
         const paisUsuario = await obtenerPaisDelUsuario();
         
         // Si no se encuentra país, retornar vacío
-        if (!paisUsuario) {
-            console.warn(`⚠️ [precios.js] No se encontró país del usuario, retornando array vacío`);
+        if (!paisUsuario || paisUsuario === 'null') {
+            console.warn(`⚠️ [precios.js] País del usuario es inválido o null, retornando array vacío`);
+            console.warn(`⚠️ [precios.js] paisUsuario recibido: "${paisUsuario}"`);
             return [];
         }
         
