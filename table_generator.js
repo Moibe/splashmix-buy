@@ -18,16 +18,24 @@ document.addEventListener('DOMContentLoaded', async () => {
         console.log(`📡 [table_generator.js] Intentando obtener precios de la API...`);
         precios = await obtenerPreciosDelAPI();
         
-        if (precios.length === 0) {
-            console.warn(`⚠️  [table_generator.js] API retornó vacío, usando datos hardcodeados`);
-            precios = environment === 'dev' ? precios_dev : precios_prod;
-        } else {
+        // COMENTADO TEMPORALMENTE PARA PRUEBAS - Ver si hay precios válidos
+        // if (precios.length === 0) {
+        //     console.warn(`⚠️  [table_generator.js] API retornó vacío, usando datos hardcodeados`);
+        //     precios = environment === 'dev' ? precios_dev : precios_prod;
+        // } else {
+        //     console.log(`✅ [table_generator.js] Precios obtenidos de la API exitosamente`);
+        // }
+        
+        if (precios.length > 0) {
             console.log(`✅ [table_generator.js] Precios obtenidos de la API exitosamente`);
+        } else {
+            console.warn(`⚠️  [table_generator.js] API retornó vacío - sin fallback (modo prueba)`);
         }
     } catch (error) {
         console.error(`❌ [table_generator.js] Error al obtener precios de API:`, error);
-        console.warn(`⚠️  [table_generator.js] Usando datos hardcodeados como fallback`);
-        precios = environment === 'dev' ? precios_dev : precios_prod;
+        console.warn(`⚠️  [table_generator.js] Sin fallback en modo prueba`);
+        // COMENTADO TEMPORALMENTE PARA PRUEBAS
+        // precios = environment === 'dev' ? precios_dev : precios_prod;
     }
 
     let tableHTML = '';

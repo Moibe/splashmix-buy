@@ -2,6 +2,8 @@
 //Ahora se obtienen dinámicamente desde la API
 
 import { environment } from './ambiente.js';
+import { getFirebaseUser } from './auth_buy.js';
+import { obtenerDocumentoUsuarioPorUID } from './firestore_db.js';
 
 // Detectar si está en desarrollo o producción
 const isDevelopment = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
@@ -19,6 +21,46 @@ const ambienteMap = {
     'dev': 'sandbox',
     'prod': 'production'
 };
+
+/**
+ * Obtiene el país del usuario desde localStorage o Firestore
+ * @returns {Promise<string>} Código del país (ej: MXN, USD)
+ */
+async function obtenerPaisDelUsuario() {
+    // 1. Intentar obtener de localStorage en orden de prioridad
+    const paisLocalStorage = localStorage.getItem('country_geolocation') 
+        || localStorage.getItem('country_header') 
+        || localStorage.getItem('country_ip');
+    
+    if (paisLocalStorage) {
+        console.log(`🌍 [precios.js] País obtenido de localStorage: ${paisLocalStorage}`);
+        return paisLocalStorage;
+    }
+    
+    // 2. Si no está en localStorage, consultar Firestore
+    try {
+        const user = await getFirebaseUser();
+        if (user) {
+            console.log(`🔍 [precios.js] Usuario autenticado, buscando país en Firestore...`);
+            
+            // Obtener el documento del usuario usando la función existente
+            const usuarioData = await obtenerDocumentoUsuarioPorUID(user.uid);
+            
+            if (usuarioData && usuarioData.pais) {
+                console.log(`🌍 [precios.js] País obtenido de Firestore: ${usuarioData.pais}`);
+                // Guardar en localStorage para próximas consultas
+                localStorage.setItem('country_geolocation', usuarioData.pais);
+                return usuarioData.pais;
+            }
+        }
+    } catch (error) {
+        console.warn(`⚠️ [precios.js] Error al consultar Firestore:`, error.message);
+    }
+    
+    // 3. Fallback a país por defecto (México)
+    console.log(`🌍 [precios.js] No se encontró país en localStorage ni Firestore`);
+    return null;
+}
 
 /**
  * Obtiene los textos (singular/plural) desde la API
@@ -61,11 +103,20 @@ function buscarTexto(textos, id_tipo_producto, id_pais) {
  */
 async function obtenerPreciosDelAPI() {
     try {
+        // Obtener el país del usuario
+        const paisUsuario = await obtenerPaisDelUsuario();
+        
+        // Si no se encuentra país, retornar vacío
+        if (!paisUsuario) {
+            console.warn(`⚠️ [precios.js] No se encontró país del usuario, retornando array vacío`);
+            return [];
+        }
+        
         // Filtrar por ambiente (dev/prod)
         const ambienteActual = ambienteMap[environment] || 'production';
-        console.log(`🔍 [precios.js] Filtrando por ambiente: ${ambienteActual}`);
+        console.log(`🔍 [precios.js] Filtrando por ambiente: ${ambienteActual}, país: ${paisUsuario}`);
         
-        const urlConFiltro = `${API_BASE_URL}/precios?ambiente=${ambienteActual}`;
+        const urlConFiltro = `${API_BASE_URL}/precios?ambiente=${ambienteActual}&iso_alpha2=${paisUsuario}`;
         console.log(`📡 [precios.js] Obteniendo precios desde API: ${urlConFiltro}`);
         
         const [responsePrecios, textos] = await Promise.all([
@@ -78,7 +129,7 @@ async function obtenerPreciosDelAPI() {
         }
         
         const resultado = await responsePrecios.json();
-        console.log(`✅ [precios.js] Se obtuvieron ${resultado.total} precios de la API para ambiente: ${ambienteActual}`);
+        console.log(`✅ [precios.js] Se obtuvieron ${resultado.total} precios de la API para ambiente: ${ambienteActual}, país: ${paisUsuario}`);
         
         const preciosData = resultado.data;
         

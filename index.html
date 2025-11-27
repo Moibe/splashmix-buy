@@ -123,6 +123,21 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     </div>                
             </div>    
             <div class=" col-md-6">                
+                    <div style="margin-bottom: 15px; display: flex; gap: 10px; align-items: center; justify-content: flex-end;">
+                        <label for="countrySelector" style="margin: 0; font-weight: 500;">🌍 Selecciona tu país:</label>
+                        <select id="countrySelector" class="form-select form-select-sm" style="width: auto; flex: 0 0 auto;">
+                            <option value="MXN">🇲🇽 México (MXN)</option>
+                            <option value="USD">🇺🇸 Estados Unidos (USD)</option>
+                            <option value="AED">🇦🇪 Emiratos Árabes (AED)</option>
+                            <option value="ARS">🇦🇷 Argentina (ARS)</option>
+                            <option value="BRL">🇧🇷 Brasil (BRL)</option>
+                            <option value="COP">🇨🇴 Colombia (COP)</option>
+                            <option value="CLP">🇨🇱 Chile (CLP)</option>
+                            <option value="PEN">🇵🇪 Perú (PEN)</option>
+                            <option value="EUR">🇪🇺 Europa (EUR)</option>
+                            <option value="GBP">🇬🇧 Reino Unido (GBP)</option>
+                        </select>
+                    </div>
                     
                     <div class="table-responsive rounded-3 overflow-hidden glass-effect">
         <table class="table table-hover w-100 table-borderless text-start">
@@ -141,6 +156,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <script type="module" src="auth_buy.js"></script>
     <script type="module" src="firestore_db.js"></script>
     <script type="module" src="visit_tracker.js"></script>
+    <script type="module" src="country_selector.js"></script>
     <script type="module" src="table_generator.js"></script>
     <script type="module" src="api.js"></script>
     <script type="module" src="main.js"></script>
