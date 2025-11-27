@@ -147,7 +147,7 @@ async function obtenerPreciosDelAPI() {
         const ambienteActual = ambienteMap[environment] || 'production';
         console.log(`🔍 [precios.js] Filtrando por ambiente: ${ambienteActual}, país: ${paisUsuario}`);
         
-        const urlConFiltro = `${API_BASE_URL}/precios?ambiente=${ambienteActual}&iso_alpha2=${paisUsuario}`;
+        const urlConFiltro = `${API_BASE_URL}/precios?ambiente=${ambienteActual}&pais=${paisUsuario}`;
         console.log(`📡 [precios.js] Obteniendo precios desde API: ${urlConFiltro}`);
         
         const [responsePrecios, textos] = await Promise.all([
