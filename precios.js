@@ -22,6 +22,9 @@ const ambienteMap = {
     'prod': 'production'
 };
 
+// Variable para indicar si se usó fallback de país
+let usofallbackPais = false;
+
 /**
  * Obtiene el país del usuario desde localStorage o Firestore
  * @returns {Promise<string>} Código del país (ej: MXN, USD)
@@ -82,6 +85,11 @@ async function obtenerPaisDelUsuario() {
         console.error(`❌ [precios.js] Stack:`, error.stack);
         return null;
     }
+    
+    // 3. Fallback a país por defecto (México)
+    console.log(`🌍 [precios.js] No se encontró país en localStorage ni Firestore, usando fallback: MXN`);
+    usofallbackPais = true;
+    return 'MXN';
 }
 
 /**
@@ -206,5 +214,5 @@ export const precios_prod = [
 ];
 
 // Exportar funciones para obtener datos dinámicamente
-export { obtenerPreciosDelAPI, obtenerTextosDelAPI };
+export { obtenerPreciosDelAPI, obtenerTextosDelAPI, usofallbackPais };
 

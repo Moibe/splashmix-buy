@@ -1,14 +1,33 @@
 // country_selector.js
 
-import { obtenerPreciosDelAPI } from './precios.js';
+import { obtenerPreciosDelAPI, usofallbackPais } from './precios.js';
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
     const countrySelector = document.getElementById('countrySelector');
+    const countrySelectorContainer = countrySelector?.parentElement;
     const tableBody = document.getElementById('precios-table-body');
     
     if (!countrySelector || !tableBody) return;
     
     console.log(`📍 [country_selector.js] Selector de país inicializado`);
+    
+    // Esperar a que table_generator.js ejecute obtenerPreciosDelAPI()
+    await new Promise(resolve => setTimeout(resolve, 500));
+    
+    // Revisar si se usó fallback
+    if (!usofallbackPais) {
+        console.log(`✅ [country_selector.js] País encontrado en localStorage o Firestore, ocultando dropdown`);
+        if (countrySelectorContainer) {
+            countrySelectorContainer.style.display = 'none';
+        }
+        return;
+    }
+    
+    // Si llegó aquí, se usó fallback, mostrar el dropdown
+    console.log(`🌍 [country_selector.js] Se usó fallback, mostrando dropdown de países`);
+    if (countrySelectorContainer) {
+        countrySelectorContainer.style.display = 'flex';
+    }
     
     // Escuchar cambios en el selector
     countrySelector.addEventListener('change', async (e) => {
