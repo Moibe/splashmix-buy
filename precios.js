@@ -28,16 +28,27 @@ const ambienteMap = {
  */
 async function obtenerPaisDelUsuario() {
     // 1. Intentar obtener de localStorage en orden de prioridad
-    const paisLocalStorage = localStorage.getItem('country_geolocation') 
-        || localStorage.getItem('country_header') 
-        || localStorage.getItem('country_ip');
+    console.log(`🌍 [precios.js] === BUSCANDO PAÍS ===`);
     
-    if (paisLocalStorage) {
-        console.log(`🌍 [precios.js] País obtenido de localStorage: ${paisLocalStorage}`);
+    const pais1 = localStorage.getItem('country_geolocation');
+    console.log(`🌍 [precios.js] localStorage.getItem('country_geolocation'): ${pais1}`);
+    
+    const pais2 = localStorage.getItem('country_header');
+    console.log(`🌍 [precios.js] localStorage.getItem('country_header'): ${pais2}`);
+    
+    const pais3 = localStorage.getItem('country_ip');
+    console.log(`🌍 [precios.js] localStorage.getItem('country_ip'): ${pais3}`);
+    
+    const paisLocalStorage = pais1 || pais2 || pais3;
+    console.log(`🌍 [precios.js] paisLocalStorage final: ${paisLocalStorage}`);
+    
+    if (paisLocalStorage && paisLocalStorage !== 'null') {
+        console.log(`✅ [precios.js] País obtenido de localStorage: ${paisLocalStorage}`);
         return paisLocalStorage;
     }
     
     console.log(`🌍 [precios.js] ⚠️ No se encontró país en localStorage (country_geolocation, country_header, country_ip)`);
+    console.log(`🌍 [precios.js] Procediendo a buscar en Firestore...`);
     
     // 2. Si no está en localStorage, consultar Firestore
     try {
@@ -73,11 +84,6 @@ async function obtenerPaisDelUsuario() {
         console.error(`❌ [precios.js] Stack:`, error.stack);
         return null;
     }
-    
-    // 3. Fallback a país por defecto (México)
-    console.log(`🌍 [precios.js] No se encontró país en localStorage ni Firestore`);
-    return null;
-}
 
 /**
  * Obtiene los textos (singular/plural) desde la API
