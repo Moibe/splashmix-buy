@@ -192,10 +192,11 @@ export async function deleteDocument(collectionName, docId) {
 }
 
 /**
- * Buscar el documento del usuario por su UID en el campo 'uid'
- * Retorna el ID del documento (timestamp-uid-correo) y sus datos (incluyendo tokens)
+ * Buscar el documento del usuario por su UID
+ * Busca en la colección usuarios donde el campo 'uid' coincida, luego retorna todos sus datos
+ * El ID del documento es timestamp-uid-correo pero se identifica por el campo uid
  * @param {string} uidFirebase - UID de Firebase Auth
- * @returns {Promise<{docId: string, tokens: number}|null>} Objeto con ID del documento y tokens
+ * @returns {Promise<{docId: string, tokens: number, pais: string, email: string, uid: string}|null>} Objeto con datos del usuario
  */
 export async function obtenerDocumentoUsuarioPorUID(uidFirebase) {
     try {
@@ -203,6 +204,7 @@ export async function obtenerDocumentoUsuarioPorUID(uidFirebase) {
         
         const db = getDB();
         
+        // Buscar por el campo 'uid' en la colección usuarios
         const snapshot = await db
             .collection('usuarios')
             .where('uid', '==', uidFirebase)
@@ -214,12 +216,24 @@ export async function obtenerDocumentoUsuarioPorUID(uidFirebase) {
             return null;
         }
         
-        const docId = snapshot.docs[0].id;
+        const docId = snapshot.docs[0].id;  // timestamp-uid-correo
         const docData = snapshot.docs[0].data();
-        const tokens = docData.tokens || 0;
         
-        console.log(`✅ [firestore_db.js] Documento encontrado - ID: ${docId}, Tokens: ${tokens}`);
-        return { docId, tokens };
+        console.log(`✅ [firestore_db.js] Documento encontrado - ID: ${docId}`);
+        console.log(`✅ [firestore_db.js] Datos del usuario:`, {
+            uid: docData.uid,
+            email: docData.email,
+            pais: docData.pais,
+            tokens: docData.tokens
+        });
+        
+        return {
+            docId,           // timestamp-uid-correo
+            tokens: docData.tokens || 0,
+            pais: docData.pais,
+            email: docData.email,
+            uid: docData.uid
+        };
     } catch (error) {
         console.error('❌ [firestore_db.js] Error al buscar documento del usuario:', error.message);
         return null;
