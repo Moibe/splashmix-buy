@@ -192,11 +192,10 @@ export async function deleteDocument(collectionName, docId) {
 }
 
 /**
- * Buscar el documento del usuario por su UID
- * Busca en la colección usuarios donde el campo 'uid' coincida, luego retorna todos sus datos
- * El ID del documento es timestamp-uid-correo pero se identifica por el campo uid
+ * Buscar el documento del usuario por su UID y obtener su país
+ * Busca en los campos: country_geolocation → country_header → country_ip
  * @param {string} uidFirebase - UID de Firebase Auth
- * @returns {Promise<{docId: string, tokens: number, pais: string, email: string, uid: string}|null>} Objeto con datos del usuario
+ * @returns {Promise<{docId: string, tokens: number, country: string, email: string, uid: string}|null>}
  */
 export async function obtenerDocumentoUsuarioPorUID(uidFirebase) {
     try {
@@ -204,7 +203,6 @@ export async function obtenerDocumentoUsuarioPorUID(uidFirebase) {
         
         const db = getDB();
         
-        // Buscar por el campo 'uid' en la colección usuarios
         const snapshot = await db
             .collection('usuarios')
             .where('uid', '==', uidFirebase)
@@ -216,21 +214,18 @@ export async function obtenerDocumentoUsuarioPorUID(uidFirebase) {
             return null;
         }
         
-        const docId = snapshot.docs[0].id;  // timestamp-uid-correo
+        const docId = snapshot.docs[0].id;
         const docData = snapshot.docs[0].data();
         
         console.log(`✅ [firestore_db.js] Documento encontrado - ID: ${docId}`);
-        console.log(`✅ [firestore_db.js] Datos del usuario:`, {
-            uid: docData.uid,
-            email: docData.email,
-            pais: docData.pais,
-            tokens: docData.tokens
-        });
+        
+        // Obtener país del primer campo que tenga valor
+        const country = docData.country_geolocation || docData.country_header || docData.country_ip;
         
         return {
-            docId,           // timestamp-uid-correo
+            docId,
             tokens: docData.tokens || 0,
-            pais: docData.pais,
+            country: country,
             email: docData.email,
             uid: docData.uid
         };

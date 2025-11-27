@@ -70,11 +70,9 @@ async function obtenerPaisDelUsuario() {
             return null;
         }
         
-        if (usuarioData.pais) {
-            console.log(`🌍 [precios.js] País obtenido de Firestore: ${usuarioData.pais}`);
-            // Guardar en localStorage para próximas consultas
-            localStorage.setItem('country_geolocation', usuarioData.pais);
-            return usuarioData.pais;
+        if (usuarioData && usuarioData.country) {
+            console.log(`🌍 [precios.js] País obtenido de Firestore: ${usuarioData.country}`);
+            return usuarioData.country;
         } else {
             console.warn(`⚠️ [precios.js] El usuario no tiene país configurado en Firestore`);
             return null;
