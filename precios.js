@@ -26,6 +26,14 @@ const ambienteMap = {
 let usofallbackPais = false;
 
 /**
+ * Obtiene el estado actual del fallback
+ * @returns {boolean} true si se usó fallback, false si no
+ */
+function getUsofallbackPais() {
+    return usofallbackPais;
+}
+
+/**
  * Obtiene el país del usuario desde localStorage o Firestore
  * @returns {Promise<string>} Código del país (ej: MXN, USD)
  */
@@ -236,5 +244,5 @@ export const precios_prod = [
 ];
 
 // Exportar funciones para obtener datos dinámicamente
-export { obtenerPreciosDelAPI, obtenerTextosDelAPI, usofallbackPais };
+export { obtenerPreciosDelAPI, obtenerTextosDelAPI, getUsofallbackPais };
 

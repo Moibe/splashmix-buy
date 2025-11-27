@@ -1,6 +1,6 @@
 // country_selector.js
 
-import { usofallbackPais } from './precios.js';
+import { getUsofallbackPais } from './precios.js';
 
 document.addEventListener('DOMContentLoaded', async () => {
     const countrySelector = document.getElementById('countrySelector');
@@ -20,8 +20,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         await new Promise(resolve => setTimeout(resolve, 100));
         waited++;
         
-        // Verificar si ya se actualizó usofallbackPais
-        const currentFallbackStatus = usofallbackPais;
+        // Verificar si ya se actualizó usofallbackPais usando la función getter
+        const currentFallbackStatus = getUsofallbackPais();
         console.log(`🔄 [country_selector.js] Esperando... usofallbackPais = ${currentFallbackStatus} (intento ${waited}/${maxWait})`);
         
         if (currentFallbackStatus !== undefined) {
@@ -29,10 +29,11 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     }
     
-    // Revisar si se usó fallback
-    console.log(`✅ [country_selector.js] Verificando estado final: usofallbackPais = ${usofallbackPais}`);
+    // Revisar si se usó fallback usando la función getter
+    const fallbackStatus = getUsofallbackPais();
+    console.log(`✅ [country_selector.js] Verificando estado final: usofallbackPais = ${fallbackStatus}`);
     
-    if (!usofallbackPais) {
+    if (!fallbackStatus) {
         console.log(`✅ [country_selector.js] País encontrado en localStorage o Firestore, ocultando dropdown`);
         if (countrySelectorContainer) {
             countrySelectorContainer.style.display = 'none';
