@@ -24,7 +24,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         const currentFallbackStatus = getUsofallbackPais();
         console.log(`🔄 [country_selector.js] Esperando... usofallbackPais = ${currentFallbackStatus} (intento ${waited}/${maxWait})`);
         
-        if (currentFallbackStatus !== undefined) {
+        // Solo salir del bucle si el estado es diferente de null (ya se determinó)
+        if (currentFallbackStatus !== null) {
             break;
         }
     }

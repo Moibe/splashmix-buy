@@ -22,12 +22,12 @@ const ambienteMap = {
     'prod': 'production'
 };
 
-// Variable para indicar si se usó fallback de país
-let usofallbackPais = false;
+// Variable para indicar si se usó fallback de país (null = pendiente, true = sí, false = no)
+let usofallbackPais = null;
 
 /**
  * Obtiene el estado actual del fallback
- * @returns {boolean} true si se usó fallback, false si no
+ * @returns {boolean|null} true si se usó fallback, false si no, null si está pendiente
  */
 function getUsofallbackPais() {
     return usofallbackPais;
