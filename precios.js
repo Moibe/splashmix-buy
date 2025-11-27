@@ -46,7 +46,7 @@ async function obtenerPaisDelUsuario() {
     console.log(`🌍 [precios.js] paisLocalStorage final: ${paisLocalStorage}`);
     
     if (paisLocalStorage && paisLocalStorage !== 'null') {
-        console.log(`✅ [precios.js] País obtenido de localStorage: ${paisLocalStorage}`);
+        console.log(`%c✅ [PAÍS ENCONTRADO] localStorage: ${paisLocalStorage}`, 'color: #2196f3; font-weight: bold; font-size: 12px; background: #e3f2fd; padding: 4px 8px;');
         return paisLocalStorage;
     }
     
@@ -74,7 +74,7 @@ async function obtenerPaisDelUsuario() {
         }
         
         if (usuarioData && usuarioData.country) {
-            console.log(`🌍 [precios.js] País obtenido de Firestore: ${usuarioData.country}`);
+            console.log(`%c✅ [PAÍS ENCONTRADO] Firestore: ${usuarioData.country}`, 'color: #2196f3; font-weight: bold; font-size: 12px; background: #e3f2fd; padding: 4px 8px;');
             return usuarioData.country;
         } else {
             console.warn(`⚠️ [precios.js] El usuario no tiene país configurado en Firestore`);
@@ -160,17 +160,18 @@ async function obtenerPreciosDelAPI() {
         }
         
         const resultado = await responsePrecios.json();
-        console.log(`✅ [precios.js] Se obtuvieron ${resultado.total} precios de la API para ambiente: ${ambienteActual}, país: ${paisUsuario}`);
+        console.log(`%c✅ [${resultado.total} REGISTROS] API retornó ${resultado.total} precios para ${paisUsuario}`, 'color: #4caf50; font-weight: bold; font-size: 12px; background: #e8f5e9; padding: 4px 8px;');
         
         // Si el país encontrado no tiene precios, usar fallback
         if (!resultado.data || resultado.data.length === 0) {
-            console.warn(`%c⚠️ [FALLBACK ACTIVADO] País ${paisUsuario} no tiene precios en la BD. Usando datos por defecto (MXN)`, 'color: #ff9800; font-weight: bold; font-size: 12px;');
+            console.warn(`%c⚠️ [FALLBACK ACTIVADO - 0 REGISTROS] País ${paisUsuario} no tiene precios. Usando datos por defecto (MXN)`, 'color: #ff9800; font-weight: bold; font-size: 12px; background: #fff3e0; padding: 4px 8px;');
             usofallbackPais = true;
             return obtenerPreciosConFallback('MXN');
         }
         
         // El país tiene precios, usarlos
         usofallbackPais = false;
+        console.log(`%c🎯 [USANDO API] Mostrando ${resultado.data.length} precios del país ${paisUsuario}`, 'color: #9c27b0; font-weight: bold; font-size: 12px; background: #f3e5f5; padding: 4px 8px;');
         const preciosData = resultado.data;
         
         // Mapear los datos de la BD a la estructura esperada por table_generator.js
