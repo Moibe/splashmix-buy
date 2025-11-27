@@ -1,10 +1,10 @@
 // country_selector.js
 
-import { obtenerPreciosDelAPI, usofallbackPais } from './precios.js';
+import { usofallbackPais } from './precios.js';
 
 document.addEventListener('DOMContentLoaded', async () => {
     const countrySelector = document.getElementById('countrySelector');
-    const countrySelectorContainer = countrySelector?.parentElement;
+    const countrySelectorContainer = document.getElementById('countrySelectorContainer');
     const tableBody = document.getElementById('precios-table-body');
     
     if (!countrySelector || !tableBody) return;
@@ -12,9 +12,26 @@ document.addEventListener('DOMContentLoaded', async () => {
     console.log(`📍 [country_selector.js] Selector de país inicializado`);
     
     // Esperar a que table_generator.js ejecute obtenerPreciosDelAPI()
-    await new Promise(resolve => setTimeout(resolve, 500));
+    // Esperamos más tiempo y verificamos el valor de usofallbackPais
+    let maxWait = 50; // 5 segundos máximo
+    let waited = 0;
+    
+    while (waited < maxWait) {
+        await new Promise(resolve => setTimeout(resolve, 100));
+        waited++;
+        
+        // Verificar si ya se actualizó usofallbackPais
+        const currentFallbackStatus = usofallbackPais;
+        console.log(`🔄 [country_selector.js] Esperando... usofallbackPais = ${currentFallbackStatus} (intento ${waited}/${maxWait})`);
+        
+        if (currentFallbackStatus !== undefined) {
+            break;
+        }
+    }
     
     // Revisar si se usó fallback
+    console.log(`✅ [country_selector.js] Verificando estado final: usofallbackPais = ${usofallbackPais}`);
+    
     if (!usofallbackPais) {
         console.log(`✅ [country_selector.js] País encontrado en localStorage o Firestore, ocultando dropdown`);
         if (countrySelectorContainer) {
@@ -24,7 +41,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
     
     // Si llegó aquí, se usó fallback, mostrar el dropdown
-    console.log(`🌍 [country_selector.js] Se usó fallback, mostrando dropdown de países`);
+    console.log(`%c🌍 [country_selector.js] Se usó fallback, MOSTRANDO dropdown de países`, 'color: #ff6b6b; font-weight: bold; font-size: 12px;');
     if (countrySelectorContainer) {
         countrySelectorContainer.style.display = 'flex';
     }
