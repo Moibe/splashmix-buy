@@ -5,11 +5,18 @@ import { obtenerPreciosDelAPI, precios_dev, precios_prod } from './precios.js';
 
 document.addEventListener('DOMContentLoaded', async () => {
     const tableBody = document.getElementById('precios-table-body');
+    const loadingModal = document.getElementById('loadingModal');
     
     if (!tableBody) return; 
 
     console.log(`📍 [table_generator.js] Iniciando carga de precios...`);
     console.log(`📍 [table_generator.js] Ambiente: ${environment}`);
+
+    // Mostrar modal de carga
+    if (loadingModal) {
+        loadingModal.classList.remove('hidden');
+        console.log(`⏳ [table_generator.js] Mostrando modal de carga...`);
+    }
 
     let precios = [];
 
@@ -36,6 +43,12 @@ document.addEventListener('DOMContentLoaded', async () => {
         console.warn(`⚠️  [table_generator.js] Sin fallback en modo prueba`);
         // COMENTADO TEMPORALMENTE PARA PRUEBAS
         // precios = environment === 'dev' ? precios_dev : precios_prod;
+    } finally {
+        // Ocultar modal de carga cuando termina (éxito o error)
+        if (loadingModal) {
+            loadingModal.classList.add('hidden');
+            console.log(`✅ [table_generator.js] Modal de carga ocultado`);
+        }
     }
 
     let tableHTML = '';

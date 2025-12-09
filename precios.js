@@ -190,11 +190,14 @@ async function obtenerPreciosDelAPI() {
             // Usar el texto singular o plural según la cantidad
             const textoPrincipal = precio.producto_cantidad === 1 ? textosPrecio.unidad : textosPrecio.unidades;
             
+            // Calcular el ratio de imagen (precio por unidad)
+            const ratioImagen = (precio.cantidad_precio / precio.producto_cantidad).toFixed(2);
+            
             return {
                 id: precio.id,
                 nombre: `🃏${precio.producto_cantidad} ${textoPrincipal}`,
                 precio: `${precio.pais_simbolo}${precio.cantidad_precio} ${precio.id_pais}`,
-                cxt: `(${precio.pais_simbolo}${precio.ratio_imagen}/${textosPrecio.unidad})`,
+                cxt: `(${precio.pais_simbolo}${ratioImagen}/${textosPrecio.unidad})`,
                 mode: "payment",
                 price_id: precio.price_id,
                 imagenes: precio.producto_cantidad
