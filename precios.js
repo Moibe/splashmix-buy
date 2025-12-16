@@ -22,6 +22,50 @@ const ambienteMap = {
     'prod': 'production'
 };
 
+// Mapeo de países que comparten moneda (convertir a código de moneda)
+const paisAMonedaMap = {
+    'ES': 'EUR',      // España → Euro
+    'FR': 'EUR',      // Francia → Euro
+    'IT': 'EUR',      // Italia → Euro
+    'DE': 'EUR',      // Alemania → Euro
+    'PT': 'EUR',      // Portugal → Euro
+    'NL': 'EUR',      // Países Bajos → Euro
+    'BE': 'EUR',      // Bélgica → Euro
+    'AT': 'EUR',      // Austria → Euro
+    'GR': 'EUR',      // Grecia → Euro
+    'IE': 'EUR',      // Irlanda → Euro
+    'FI': 'EUR',      // Finlandia → Euro
+    'LU': 'EUR',      // Luxemburgo → Euro
+    'CY': 'EUR',      // Chipre → Euro
+    'MT': 'EUR',      // Malta → Euro
+    'SK': 'EUR',      // Eslovaquia → Euro
+    'SI': 'EUR'       // Eslovenia → Euro
+};
+
+/**
+ * Convierte un código de país a su moneda correspondiente
+ * @param {string} pais - Código del país (ej: ES, EUR, MXN)
+ * @returns {string} Código de moneda (ej: EUR, USD, MXN)
+ */
+function convertirPaisAMoneda(pais) {
+    if (!pais) return pais;
+    
+    // Si el país está en el mapa, convertir a moneda
+    if (paisAMonedaMap[pais]) {
+        console.log(`💱 [precios.js] Convertiendo país ${pais} a moneda ${paisAMonedaMap[pais]}`);
+        return paisAMonedaMap[pais];
+    }
+    
+    // Si ya es un código de moneda (3 caracteres), retornar tal cual
+    if (pais.length === 3) {
+        return pais;
+    }
+    
+    // Sino, retornar como está
+    return pais;
+}
+
+
 // Variable para indicar si se usó fallback de país (null = pendiente, true = sí, false = no)
 let usofallbackPais = null;
 
@@ -151,11 +195,14 @@ async function obtenerPreciosDelAPI() {
             return obtenerPreciosConFallback('MXN');
         }
         
+        // Convertir país a moneda si es necesario (ej: ES → EUR)
+        const paisParaAPI = convertirPaisAMoneda(paisUsuario);
+        
         // Intentar obtener precios con el país encontrado
         const ambienteActual = ambienteMap[environment] || 'production';
-        console.log(`🔍 [precios.js] Filtrando por ambiente: ${ambienteActual}, país: ${paisUsuario}`);
+        console.log(`🔍 [precios.js] Filtrando por ambiente: ${ambienteActual}, país detectado: ${paisUsuario}, moneda a usar: ${paisParaAPI}`);
         
-        const urlConFiltro = `${API_BASE_URL}/precios?ambiente=${ambienteActual}&pais=${paisUsuario}`;
+        const urlConFiltro = `${API_BASE_URL}/precios?ambiente=${ambienteActual}&pais=${paisParaAPI}`;
         console.log(`📡 [precios.js] Obteniendo precios desde API: ${urlConFiltro}`);
         
         const [responsePrecios, textos] = await Promise.all([
