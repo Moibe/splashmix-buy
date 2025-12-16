@@ -22,46 +22,41 @@ const ambienteMap = {
     'prod': 'production'
 };
 
-// Mapeo de países que comparten moneda (convertir a código de moneda)
+// Mapeo de países que comparten moneda (convertir a código ISO alpha-2 de la BD)
 const paisAMonedaMap = {
-    'ES': 'EUR',      // España → Euro
-    'FR': 'EUR',      // Francia → Euro
-    'IT': 'EUR',      // Italia → Euro
-    'DE': 'EUR',      // Alemania → Euro
-    'PT': 'EUR',      // Portugal → Euro
-    'NL': 'EUR',      // Países Bajos → Euro
-    'BE': 'EUR',      // Bélgica → Euro
-    'AT': 'EUR',      // Austria → Euro
-    'GR': 'EUR',      // Grecia → Euro
-    'IE': 'EUR',      // Irlanda → Euro
-    'FI': 'EUR',      // Finlandia → Euro
-    'LU': 'EUR',      // Luxemburgo → Euro
-    'CY': 'EUR',      // Chipre → Euro
-    'MT': 'EUR',      // Malta → Euro
-    'SK': 'EUR',      // Eslovaquia → Euro
-    'SI': 'EUR'       // Eslovenia → Euro
+    'ES': 'EU',       // España → EU (Eurozone)
+    'FR': 'EU',       // Francia → EU (Eurozone)
+    'IT': 'EU',       // Italia → EU (Eurozone)
+    'DE': 'EU',       // Alemania → EU (Eurozone)
+    'PT': 'EU',       // Portugal → EU (Eurozone)
+    'NL': 'EU',       // Países Bajos → EU (Eurozone)
+    'BE': 'EU',       // Bélgica → EU (Eurozone)
+    'AT': 'EU',       // Austria → EU (Eurozone)
+    'GR': 'EU',       // Grecia → EU (Eurozone)
+    'IE': 'EU',       // Irlanda → EU (Eurozone)
+    'FI': 'EU',       // Finlandia → EU (Eurozone)
+    'LU': 'EU',       // Luxemburgo → EU (Eurozone)
+    'CY': 'EU',       // Chipre → EU (Eurozone)
+    'MT': 'EU',       // Malta → EU (Eurozone)
+    'SK': 'EU',       // Eslovaquia → EU (Eurozone)
+    'SI': 'EU'        // Eslovenia → EU (Eurozone)
 };
 
 /**
- * Convierte un código de país a su moneda correspondiente
- * @param {string} pais - Código del país (ej: ES, EUR, MXN)
- * @returns {string} Código de moneda (ej: EUR, USD, MXN)
+ * Convierte un código de país a su iso_alpha2 correspondiente en la BD
+ * @param {string} pais - Código del país (ej: ES, MX, FR)
+ * @returns {string} Código ISO alpha-2 para la BD (ej: EU, MX, EU)
  */
 function convertirPaisAMoneda(pais) {
     if (!pais) return pais;
     
-    // Si el país está en el mapa, convertir a moneda
+    // Si el país está en el mapa, convertir al código ISO correspondiente
     if (paisAMonedaMap[pais]) {
-        console.log(`💱 [precios.js] Convertiendo país ${pais} a moneda ${paisAMonedaMap[pais]}`);
+        console.log(`💱 [precios.js] Convertiendo país ${pais} a ISO alpha-2 ${paisAMonedaMap[pais]}`);
         return paisAMonedaMap[pais];
     }
     
-    // Si ya es un código de moneda (3 caracteres), retornar tal cual
-    if (pais.length === 3) {
-        return pais;
-    }
-    
-    // Sino, retornar como está
+    // Si no está en el mapa, retornar como está (asumiendo que ya es un código válido)
     return pais;
 }
 
