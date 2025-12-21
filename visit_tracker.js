@@ -146,6 +146,10 @@ setTimeout(async () => {
                 const tokens = usuarioData.tokens;
                 console.log(`✅ [visit_tracker.js] Documento encontrado - ID: ${documentId}, Tokens: ${tokens}`);
                 
+                // Guardar el documentId en una variable global para reutilizarlo en main.js
+                window.documentoUsuarioActual = documentId;
+                console.log(`✅ [visit_tracker.js] documentId guardado en window.documentoUsuarioActual`);
+                
                 // 2. Verificar en localStorage
                 console.log(`\n📂 [visit_tracker.js] Paso 2: Verificando localStorage...`);
                 if (yaVisitóEstaHora(documentId)) {

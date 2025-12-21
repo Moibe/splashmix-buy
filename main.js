@@ -1,7 +1,6 @@
 // main.js
 import { creaLinkSesion } from './api.js';
 import { getFirebaseUser} from './auth_buy.js';
-import { obtenerDocumentoUsuarioPorUID } from './firestore_db.js';
 
 /**
  * Función para mostrar el modal de carga
@@ -49,15 +48,9 @@ window.redirectToStripe = async function(priceId, unidades, mode) {
         currentFirebaseUid = firebaseUserObj.uid; // El UID del usuario de Firebase
         console.log("Uid obtenido es: ", currentFirebaseUid)
         
-        // Obtener el ID del documento de Firestore (timestamp-uid-email)
-        try {
-            const usuarioData = await obtenerDocumentoUsuarioPorUID(currentFirebaseUid);
-            documentoUsuarioId = usuarioData ? usuarioData.docId : null;
-            console.log("📄 ID del documento de usuario obtenido: ", documentoUsuarioId);
-        } catch (error) {
-            console.error("❌ Error al obtener el ID del documento de usuario: ", error);
-            documentoUsuarioId = null;
-        }
+        // Reutilizar el documentId obtenido en visit_tracker.js
+        documentoUsuarioId = window.documentoUsuarioActual || null;
+        console.log("📄 ID del documento de usuario (reutilizado de visit_tracker): ", documentoUsuarioId);
         
         // Recuerda el prefijo 'string' si tu backend lo sigue esperando para el email
         customerEmailToSend = firebaseUserObj.email ? `${firebaseUserObj.email}` : null; 
