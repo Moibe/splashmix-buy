@@ -51,7 +51,8 @@ window.redirectToStripe = async function(priceId, unidades, mode) {
         
         // Obtener el ID del documento de Firestore (timestamp-uid-email)
         try {
-            documentoUsuarioId = await obtenerDocumentoUsuarioPorUID(currentFirebaseUid);
+            const usuarioData = await obtenerDocumentoUsuarioPorUID(currentFirebaseUid);
+            documentoUsuarioId = usuarioData ? usuarioData.docId : null;
             console.log("📄 ID del documento de usuario obtenido: ", documentoUsuarioId);
         } catch (error) {
             console.error("❌ Error al obtener el ID del documento de usuario: ", error);
@@ -69,9 +70,8 @@ window.redirectToStripe = async function(priceId, unidades, mode) {
     }
         
         // Llama a tu función de la API con los nuevos parámetros
-        // Usar documentoUsuarioId si está disponible, sino usar currentFirebaseUid como fallback
-        const usuarioIdParaAPI = documentoUsuarioId || currentFirebaseUid;
-        const response = await creaLinkSesion(priceId, customerEmailToSend, null, usuarioIdParaAPI, unidades, mode, window.gaClientID);
+        // Enviar documentoUsuarioId (timestamp-uid-email)
+        const response = await creaLinkSesion(priceId, customerEmailToSend, null, documentoUsuarioId, unidades, mode, window.gaClientID);
 
         // Si la respuesta tiene una URL, redirige al usuario
         if (response && response.url) {
